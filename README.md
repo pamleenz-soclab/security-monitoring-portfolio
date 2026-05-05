@@ -60,7 +60,10 @@ security-monitoring-portfolio/
 │       ├── authlog-fake-admin-sanitized.txt
 │       └── wazuh-alerts-fake-admin-sanitized.txt
 └── screenshots/
-    └── README.md
+├── 01-agent-active.png
+├── 02-threat-hunting-filtered-events.png
+├── 03a-event-detail-core-fields.png
+└── 03b-event-detail-rule-mitre-fields.png
 ```
 
 ## Security and Privacy Rules
