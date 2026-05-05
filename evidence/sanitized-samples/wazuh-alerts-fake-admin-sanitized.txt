@@ -1,0 +1,3 @@
+Apr 30 06:47:10 soc-lab-ubuntu-target-01 sshd[50657]: Invalid user fake-admin from 203.0.113.10 port 63879
+Apr 30 06:47:10 soc-lab-ubuntu-target-01 sshd[50659]: Invalid user fake-admin from 203.0.113.10 port 63880
+Apr 30 06:47:11 soc-lab-ubuntu-target-01 sshd[50661]: Invalid user fake-admin from 203.0.113.10 port 63881
