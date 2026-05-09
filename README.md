@@ -82,6 +82,7 @@ The lab currently validates the pipeline from controlled security activity to:
 | `scenarios/04-port-scanning-investigation/triage-note.md` | SOC-style triage note for port scanning visibility analysis |
 | `scenarios/04-port-scanning-investigation/investigation-report.md` | Investigation report correlating scanner-side output, tcpdump evidence, auth.log, and Wazuh alert review |
 | `scenarios/04-port-scanning-investigation/recommended-actions.md` | Recommended actions for improving port-scan detection coverage |
+| `docs/month-02-summary.md` | Month 2 summary covering authentication investigation, benign positive analysis, and port scanning detection gap |
 | `evidence/sanitized-samples/scenario-02/` | Sanitized evidence files for Scenario 02 |
 | `evidence/sanitized-samples/scenario-03/` | Sanitized evidence files for Scenario 03 |
 | `evidence/sanitized-samples/scenario-04/` | Sanitized evidence files for Scenario 04 |
