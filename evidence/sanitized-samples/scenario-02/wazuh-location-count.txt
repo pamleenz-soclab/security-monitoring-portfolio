@@ -1,0 +1,2 @@
+3 "location":"/var/log/auth.log"
+3 "location":"journald"

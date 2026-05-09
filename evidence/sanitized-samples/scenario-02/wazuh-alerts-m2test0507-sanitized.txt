@@ -1,0 +1,32 @@
+Scenario 02 Wazuh Alert Evidence Summary
+
+Search keyword:
+m2test0507
+
+Observed Wazuh alert records:
+6
+
+Rule details:
+- rule.id: 5710
+- rule.level: 5
+- rule.description: sshd: Attempt to login using a non-existent user
+- rule.groups: syslog, sshd, authentication_failed, invalid_login
+
+Agent details:
+- agent.id: 001
+- agent.name: soc-lab-ubuntu-target-01
+- agent.ip: 10.126.0.3
+- manager.name: soc-lab-wazuh-server
+
+MITRE ATT&CK mapping:
+- T1110.001 Password Guessing
+- T1021.004 SSH
+
+Sanitized full_log example:
+Invalid user m2test0507 from [SOURCE_IP_REDACTED] port [SOURCE_PORT]
+
+Assessment:
+True Positive — Authorized Lab Simulation
+
+Note:
+Wazuh displayed 6 alert records because the same 3 SSH invalid-user events were collected from both /var/log/auth.log and journald.

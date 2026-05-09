@@ -52,8 +52,8 @@ Apr 30 06:47:11 soc-lab-ubuntu-target-01 sshd[50661]: Invalid user fake-admin fr
 | Field | Value |
 |-------|-------|
 | `@timestamp` | `Apr 30, 2026 @ 18:47:12.620` |
-| `GeoLocation.country_name` | `New Zealand` |
-| `GeoLocation.location` | `{ "lon": 174, "lat": -41 }` |
+| `GeoLocation.country_name` | `[GEOLOCATION_REDACTED]` |
+| `GeoLocation.location` | `[GEOLOCATION_REDACTED]` |
 | `_index` | `wazuh-alerts-4.x-2026.04.30` |
 | `agent.id` | `1` |
 | `agent.ip` | `10.126.0.3` |
