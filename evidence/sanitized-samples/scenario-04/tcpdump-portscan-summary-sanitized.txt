@@ -1,0 +1,46 @@
+04:11:45.224982 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [.], ack 230977219, win 4091, length 0
+04:11:45.226019 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [.], ack 257, win 4092, length 0
+04:11:45.229970 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [.], ack 361, win 4095, length 0
+04:11:45.230999 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [.], ack 549, win 4094, length 0
+04:11:45.259001 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [.], ack 653, win 4095, length 0
+04:11:49.801657 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [P.], seq 0:36, ack 653, win 4096, length 36
+04:11:49.836257 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [.], ack 689, win 4096, length 0
+04:11:49.913376 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [P.], seq 36:72, ack 689, win 4096, length 36
+04:11:49.947622 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [.], ack 725, win 4096, length 0
+04:11:50.180972 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [P.], seq 72:108, ack 725, win 4096, length 36
+04:11:50.215356 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [.], ack 761, win 4096, length 0
+04:11:50.381315 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [P.], seq 108:144, ack 761, win 4096, length 36
+04:11:50.415856 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [.], ack 797, win 4096, length 0
+04:11:50.712118 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [P.], seq 144:180, ack 797, win 4096, length 36
+04:11:50.746478 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [.], ack 1073, win 4092, length 0
+04:12:02.112017 eth0  In  IP [SOURCE_IP_REDACTED].34641 > [TARGET_PUBLIC_IP_REDACTED].21: Flags [SEW], seq 3500469021, win 65535, options [mss 1250,nop,wscale 6,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,sackOK,eol], length 0
+04:12:02.153886 eth0  In  IP [SOURCE_IP_REDACTED].38829 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [SEW], seq 4178647520, win 65535, options [mss 1250,nop,wscale 6,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,sackOK,eol], length 0
+04:12:02.186810 eth0  In  IP [SOURCE_IP_REDACTED].38829 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [.], ack 2852565333, win 4096, length 0
+04:12:02.189777 eth0  In  IP [SOURCE_IP_REDACTED].38829 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [F.], seq 0, ack 1, win 4096, length 0
+04:12:02.234901 eth0  In  IP [SOURCE_IP_REDACTED].38829 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [R], seq 4178647522, win 0, length 0
+04:12:02.235219 eth0  In  IP [SOURCE_IP_REDACTED].38829 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [R], seq 4178647522, win 0, length 0
+04:12:04.219282 eth0  In  IP [SOURCE_IP_REDACTED].38454 > [TARGET_PUBLIC_IP_REDACTED].80: Flags [SEW], seq 560909922, win 65535, options [mss 1250,nop,wscale 6,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,sackOK,eol], length 0
+04:12:04.267677 eth0  In  IP [SOURCE_IP_REDACTED].3335 > [TARGET_PUBLIC_IP_REDACTED].110: Flags [SEW], seq 2431313137, win 65535, options [mss 1250,nop,wscale 6,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,sackOK,eol], length 0
+04:12:05.330030 eth0  In  IP [SOURCE_IP_REDACTED].49601 > [TARGET_PUBLIC_IP_REDACTED].143: Flags [SEW], seq 4176344871, win 65535, options [mss 1250,nop,wscale 6,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,sackOK,eol], length 0
+04:12:05.373899 eth0  In  IP [SOURCE_IP_REDACTED].4166 > [TARGET_PUBLIC_IP_REDACTED].443: Flags [SEW], seq 1181415716, win 65535, options [mss 1250,nop,wscale 6,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,sackOK,eol], length 0
+04:12:06.433052 eth0  In  IP [SOURCE_IP_REDACTED].21001 > [TARGET_PUBLIC_IP_REDACTED].3389: Flags [S], seq 2094902399, win 65535, options [mss 1250,nop,wscale 6,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,sackOK,eol], length 0
+04:12:07.492148 eth0  In  IP [SOURCE_IP_REDACTED].36273 > [TARGET_PUBLIC_IP_REDACTED].5601: Flags [S], seq 2248358691, win 65535, options [mss 1250,nop,wscale 6,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,sackOK,eol], length 0
+04:12:07.540574 eth0  In  IP [SOURCE_IP_REDACTED].57895 > [TARGET_PUBLIC_IP_REDACTED].8080: Flags [S], seq 3952992623, win 65535, options [mss 1250,nop,wscale 6,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,sackOK,eol], length 0
+04:12:07.584758 eth0  In  IP [SOURCE_IP_REDACTED].53298 > [TARGET_PUBLIC_IP_REDACTED].8443: Flags [S], seq 1300183754, win 65535, options [mss 1250,nop,wscale 6,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,sackOK,eol], length 0
+04:12:07.633897 eth0  In  IP [SOURCE_IP_REDACTED].2804 > [TARGET_PUBLIC_IP_REDACTED].9200: Flags [S], seq 3079925292, win 65535, options [mss 1250,nop,wscale 6,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,sackOK,eol], length 0
+04:12:07.679000 eth0  In  IP [SOURCE_IP_REDACTED].60675 > [TARGET_PUBLIC_IP_REDACTED].9300: Flags [S], seq 3241810762, win 65535, options [mss 1250,nop,wscale 6,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,sackOK,eol], length 0
+04:12:07.727865 eth0  In  IP [SOURCE_IP_REDACTED].32426 > [TARGET_PUBLIC_IP_REDACTED].1514: Flags [S], seq 950547319, win 65535, options [mss 1250,nop,wscale 6,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,sackOK,eol], length 0
+04:12:07.771608 eth0  In  IP [SOURCE_IP_REDACTED].25550 > [TARGET_PUBLIC_IP_REDACTED].1515: Flags [S], seq 3304093447, win 65535, options [mss 1250,nop,wscale 6,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,sackOK,eol], length 0
+04:12:07.814915 eth0  In  IP [SOURCE_IP_REDACTED].58257 > [TARGET_PUBLIC_IP_REDACTED].55000: Flags [S], seq 240483200, win 65535, options [mss 1250,nop,wscale 6,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,nop,sackOK,eol], length 0
+04:13:13.086852 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [P.], seq 180:216, ack 1073, win 4096, length 36
+04:13:13.121988 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [.], ack 1109, win 4096, length 0
+04:13:13.206514 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [P.], seq 216:252, ack 1109, win 4096, length 36
+04:13:13.240874 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [.], ack 1145, win 4096, length 0
+04:13:13.470146 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [P.], seq 252:288, ack 1145, win 4096, length 36
+04:13:13.504318 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [.], ack 1181, win 4096, length 0
+04:13:13.659661 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [P.], seq 288:324, ack 1181, win 4096, length 36
+04:13:13.693864 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [.], ack 1217, win 4096, length 0
+04:13:14.000496 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [P.], seq 324:360, ack 1217, win 4096, length 36
+04:13:14.034840 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [.], ack 1493, win 4092, length 0
+04:13:22.426390 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [P.], seq 360:412, ack 1493, win 4096, length 52
+04:13:22.448696 eth0  In  IP [SOURCE_IP_REDACTED].38793 > [TARGET_PUBLIC_IP_REDACTED].22: Flags [P.], seq 412:464, ack 1493, win 4096, length 52

@@ -1,0 +1,40 @@
+Checking TCP port 21
+nc: connectx to [TARGET_PUBLIC_IP_REDACTED] port 21 (tcp) failed: Connection refused
+Checking TCP port 22
+Connection to [TARGET_PUBLIC_IP_REDACTED] port 22 [tcp/ssh] succeeded!
+Checking TCP port 25
+nc: connectx to [TARGET_PUBLIC_IP_REDACTED] port 25 (tcp) failed: Operation timed out
+Checking TCP port 53
+nc: connectx to [TARGET_PUBLIC_IP_REDACTED] port 53 (tcp) failed: Operation timed out
+Checking TCP port 80
+nc: connectx to [TARGET_PUBLIC_IP_REDACTED] port 80 (tcp) failed: Connection refused
+Checking TCP port 110
+nc: connectx to [TARGET_PUBLIC_IP_REDACTED] port 110 (tcp) failed: Connection refused
+Checking TCP port 139
+nc: connectx to [TARGET_PUBLIC_IP_REDACTED] port 139 (tcp) failed: Operation timed out
+Checking TCP port 143
+nc: connectx to [TARGET_PUBLIC_IP_REDACTED] port 143 (tcp) failed: Connection refused
+Checking TCP port 443
+nc: connectx to [TARGET_PUBLIC_IP_REDACTED] port 443 (tcp) failed: Connection refused
+Checking TCP port 445
+nc: connectx to [TARGET_PUBLIC_IP_REDACTED] port 445 (tcp) failed: Operation timed out
+Checking TCP port 3389
+nc: connectx to [TARGET_PUBLIC_IP_REDACTED] port 3389 (tcp) failed: Connection refused
+Checking TCP port 5000
+nc: connectx to [TARGET_PUBLIC_IP_REDACTED] port 5000 (tcp) failed: Operation timed out
+Checking TCP port 5601
+nc: connectx to [TARGET_PUBLIC_IP_REDACTED] port 5601 (tcp) failed: Connection refused
+Checking TCP port 8080
+nc: connectx to [TARGET_PUBLIC_IP_REDACTED] port 8080 (tcp) failed: Connection refused
+Checking TCP port 8443
+nc: connectx to [TARGET_PUBLIC_IP_REDACTED] port 8443 (tcp) failed: Connection refused
+Checking TCP port 9200
+nc: connectx to [TARGET_PUBLIC_IP_REDACTED] port 9200 (tcp) failed: Connection refused
+Checking TCP port 9300
+nc: connectx to [TARGET_PUBLIC_IP_REDACTED] port 9300 (tcp) failed: Connection refused
+Checking TCP port 1514
+nc: connectx to [TARGET_PUBLIC_IP_REDACTED] port 1514 (tcp) failed: Connection refused
+Checking TCP port 1515
+nc: connectx to [TARGET_PUBLIC_IP_REDACTED] port 1515 (tcp) failed: Connection refused
+Checking TCP port 55000
+nc: connectx to [TARGET_PUBLIC_IP_REDACTED] port 55000 (tcp) failed: Connection refused

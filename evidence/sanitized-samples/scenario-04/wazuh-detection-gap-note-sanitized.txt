@@ -1,0 +1,5 @@
+No clear Wazuh port-scan alert was observed for the Scenario 04 scan window.
+
+The controlled TCP port scan was confirmed using tcpdump on the Ubuntu Target, but Wazuh alerts for the same source IP were limited to SSH-related events such as authentication success or invalid-user activity.
+
+This indicates a detection gap in the current lab configuration: host authentication logs alone are not sufficient to reliably detect network-layer port scanning.

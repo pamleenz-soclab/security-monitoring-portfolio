@@ -1,0 +1,1 @@
+May  9 04:12:02 soc-lab-ubuntu-target-01 sshd[163581]: Connection closed by [SOURCE_IP_REDACTED] port 38829
