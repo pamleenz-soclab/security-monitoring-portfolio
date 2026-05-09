@@ -1,43 +1,145 @@
 # Security Monitoring and Incident Response Portfolio
 
-This repository documents a hands-on security monitoring lab built to simulate core Security Operations Center (SOC) and Security Engineering workflows.
+This repository documents a hands-on security monitoring lab designed to simulate core SOC (Security Operations Center) and Security Engineering workflows.
+
+The current focus is Linux SSH (Secure Shell) authentication monitoring, Wazuh SIEM / XDR (Security Information and Event Management / Extended Detection and Response) alert validation, raw log validation, MITRE ATT&CK mapping, SOC-style triage notes, and detection engineering observations.
+
+> Public version note: real public IP addresses, credentials, private dashboard URLs, and sensitive screenshots must be sanitized before publishing.
 
 ## Lab Overview
 
-The lab is hosted in DigitalOcean and uses a Wazuh SIEM / XDR server to monitor a Linux endpoint. Scenario 01 validates the pipeline from SSH authentication activity to endpoint logging, Wazuh alerting, and SOC-style triage.
+The lab is hosted in DigitalOcean and uses a Wazuh SIEM / XDR server to monitor a Linux endpoint.
 
-> Public version note: Real public IP addresses, credentials, and screenshots should be sanitized before publishing this repository.
+The lab currently validates the pipeline from controlled SSH authentication activity to:
+
+- Linux endpoint logging
+- Wazuh Agent collection
+- Wazuh alert generation
+- Wazuh Dashboard investigation
+- Raw log validation
+- SOC-style alert triage reporting
+- Detection engineering observations
 
 ## Current Lab Components
 
 | Component | Role |
-|-----------|------|
-| MacBook Air | SSH administration client and controlled test source |
-| Wazuh Server | SIEM / XDR server, dashboard, manager, indexer, Filebeat |
-| Ubuntu Target Endpoint | Monitored Linux endpoint and authorized attack target |
+|---|---|
+| MacBook Air | SSH administration client, browser access point, and controlled test source |
+| Wazuh Server | SIEM / XDR server, Wazuh Manager, Wazuh Indexer, Wazuh Dashboard, and Filebeat |
+| Ubuntu Target Endpoint | Monitored Linux endpoint and authorized test target |
 | Wazuh Agent | Endpoint log collector installed on the Ubuntu Target |
+
+## Core Skills Demonstrated
+
+| Skill Area | Evidence in This Portfolio |
+|---|---|
+| Alert triage | SOC-style triage notes for SSH authentication alerts |
+| Raw log validation | `/var/log/auth.log`, `journald`, and Wazuh `alerts.json` review |
+| SIEM validation | Wazuh Rule 5710 validation and Dashboard screenshots |
+| Detection engineering | Duplicate ingestion and keyword over-collection observations |
+| MITRE ATT&CK mapping | T1110.001 Password Guessing and T1021.004 SSH |
+| Reporting | Investigation reports, recommended actions, and sanitized evidence |
+| Evidence handling | Sanitized logs and screenshots organized by scenario |
+
+## Completed Scenarios
+
+| Scenario | Title | Assessment | Key Learning |
+|---|---|---|---|
+| Scenario 01 | SSH Invalid User Authentication Attempt Investigation | True Positive — Authorized Lab Simulation | Validated the Wazuh monitoring pipeline after enabling `/var/log/auth.log` collection |
+| Scenario 02 | Repeated SSH Invalid-User Authentication Attempts | True Positive — Authorized Lab Simulation | Identified repeated invalid-user behavior and duplicate alert ingestion from `/var/log/auth.log` and `journald` |
+| Scenario 03 | Benign Authentication Failure Case | Benign Positive | Demonstrated that a valid alert can be benign when the activity is isolated, controlled, and explainable |
 
 ## Month 1 Deliverables
 
 | File | Purpose |
-|------|---------|
-| `docs/lab-architecture.md` | Documents the cloud SOC lab architecture, including Wazuh Server, Ubuntu Target, MacBook admin client, and network communication paths. |
-| `docs/data-source-inventory.md` | Lists available log sources, key Wazuh fields, and monitoring coverage for SSH authentication investigation. |
-| `templates/alert-triage-template.md` | Reusable SOC alert triage template for future investigations. |
-| `scenarios/01-ssh-invalid-user/README.md` | Scenario 01 overview, including objective, environment, detection result, and investigation summary. |
-| `scenarios/01-ssh-invalid-user/triage-note.md` | Completed SOC-style alert triage note based on the reusable alert triage template. |
-| `scenarios/01-ssh-invalid-user/investigation-report.md` | Full investigation report for SSH invalid-user authentication attempts. |
-| `scenarios/01-ssh-invalid-user/recommended-actions.md` | Detailed remediation and detection improvement actions with command explanations. |
-| `evidence/sanitized-samples/` | Sanitized sample evidence for public portfolio use, including endpoint logs and Wazuh alert logs. |
-| `screenshots/README.md` | Placeholder and guidance for storing sanitized screenshots from Wazuh Dashboard and lab validation steps. |
+|---|---|
+| `docs/lab-architecture.md` | Documents the cloud SOC lab architecture, including Wazuh Server, Ubuntu Target, MacBook admin client, and network communication paths |
+| `docs/data-source-inventory.md` | Lists available log sources, key Wazuh fields, and monitoring coverage for SSH authentication investigation |
+| `templates/alert-triage-template.md` | Reusable SOC alert triage template for future investigations |
+| `scenarios/01-ssh-invalid-user/README.md` | Scenario 01 overview, objective, environment, detection result, and investigation summary |
+| `scenarios/01-ssh-invalid-user/triage-note.md` | Completed SOC-style alert triage note |
+| `scenarios/01-ssh-invalid-user/investigation-report.md` | Full investigation report for SSH invalid-user authentication attempts |
+| `scenarios/01-ssh-invalid-user/recommended-actions.md` | Remediation and detection improvement actions |
+
+## Month 2 Deliverables
+
+| File | Purpose |
+|---|---|
+| `scenarios/02-ssh-repeated-failure/README.md` | Scenario 02 overview for repeated SSH invalid-user authentication attempts |
+| `scenarios/02-ssh-repeated-failure/triage-note.md` | SOC-style triage note for repeated invalid-user SSH activity |
+| `scenarios/02-ssh-repeated-failure/investigation-report.md` | Investigation report comparing raw endpoint event count and Wazuh alert count |
+| `scenarios/02-ssh-repeated-failure/recommended-actions.md` | Recommended actions for repeated invalid-user SSH activity |
+| `scenarios/03-benign-authentication-failure/README.md` | Scenario 03 overview for a benign SSH authentication failure |
+| `scenarios/03-benign-authentication-failure/triage-note.md` | SOC-style triage note classifying the alert as benign positive |
+| `scenarios/03-benign-authentication-failure/investigation-report.md` | Investigation report with timeline, evidence, MITRE ATT&CK mapping, and comparison with Scenario 02 |
+| `scenarios/03-benign-authentication-failure/recommended-actions.md` | Recommended actions, detection engineering notes, and production response guidance |
+| `evidence/sanitized-samples/scenario-02/` | Sanitized evidence files for Scenario 02 |
+| `evidence/sanitized-samples/scenario-03/` | Sanitized evidence files for Scenario 03 |
+| `screenshots/scenario-02/` | Sanitized Wazuh Dashboard screenshots for Scenario 02 |
+| `screenshots/scenario-03/` | Sanitized Wazuh Dashboard screenshots for Scenario 03 |
 
 ## Scenario 01
 
 **Title:** SSH Invalid User Authentication Attempt Investigation
 
-**Goal:** Generate controlled SSH invalid-user authentication attempts against a monitored Ubuntu endpoint, verify raw Linux authentication logs, confirm Wazuh alert generation, and write a SOC-style alert triage report.
+**Goal:** Generate a controlled SSH invalid-user authentication attempt against a monitored Ubuntu endpoint, verify raw Linux authentication logs, confirm Wazuh alert generation, and write a SOC-style alert triage report.
 
 **Key result:** The monitoring pipeline was validated after configuring the Wazuh Agent to collect `/var/log/auth.log`.
+
+**Main lesson:** A SIEM alert must be validated against raw endpoint logs. If the endpoint log source is not collected, the SIEM may not alert even when the raw event exists.
+
+## Scenario 02
+
+**Title:** Repeated SSH Invalid-User Authentication Attempts
+
+**Goal:** Simulate repeated SSH invalid-user authentication attempts and investigate them using raw Linux logs, Wazuh alerts, Wazuh Dashboard fields, and MITRE ATT&CK mapping.
+
+**Assessment:** True Positive — Authorized Lab Simulation
+
+**Key findings:**
+
+- The Ubuntu endpoint recorded three core SSH invalid-user events.
+- Wazuh displayed six relevant SSH Rule 5710 alert records.
+- The difference was caused by duplicate ingestion from two Linux log sources:
+  - `/var/log/auth.log`
+  - `journald`
+- The alert count did not equal the actual endpoint event count.
+- The behavior was treated as suspicious brute-force-style activity in detection context, although it was generated as an authorized lab simulation.
+
+**Main lesson:** SOC analysts should validate SIEM alert counts against raw endpoint logs because duplicate ingestion can inflate alert volume.
+
+## Scenario 03
+
+**Title:** Benign Authentication Failure Case
+
+**Goal:** Simulate and investigate a single benign SSH authentication failure, then compare it against the repeated invalid-user pattern from Scenario 02.
+
+**Assessment:** Benign Positive
+
+**Key findings:**
+
+- The Ubuntu endpoint recorded one core SSH invalid-user event.
+- Wazuh generated two relevant SSH Rule 5710 alert records because the same event was collected from both `/var/log/auth.log` and `journald`.
+- A broad keyword search returned extra sudo-related alerts, showing that SOC analysts should filter by `rule.id`, `rule.description`, `decoder.name`, and log source.
+- The event was not a false positive because the activity really occurred and was correctly detected.
+- The event was assessed as benign because it was isolated, controlled, and showed no evidence of compromise.
+
+**Evidence note:** `pre-simulation-baseline.txt` is intentionally empty. It records that no matching core SSH invalid-user event existed for `m2benign0509` before the simulation.
+
+**Main lesson:** A technically valid alert is not automatically malicious. Context, frequency, source, successful-login evidence, and follow-on behavior are required for correct triage.
+
+## Scenario Comparison
+
+| Item | Scenario 01 | Scenario 02 | Scenario 03 |
+|---|---|---|---|
+| Activity type | Single invalid-user SSH attempt | Repeated invalid-user SSH attempts | Single benign invalid-user SSH attempt |
+| Main username | `fake-admin` | `m2test0507` | `m2benign0509` |
+| Main Wazuh rule | 5710 | 5710 | 5710 |
+| Raw core event count | 1 | 3 | 1 |
+| Relevant Wazuh SSH alert count | 1 after collection fix | 6 | 2 |
+| Duplicate ingestion finding | Not primary focus | Yes | Yes |
+| Final assessment | True Positive — Authorized Lab Simulation | True Positive — Authorized Lab Simulation | Benign Positive |
+| Main learning point | Enable and validate log collection | Alert count may be inflated | Valid alert can still be benign |
 
 ## Repository Structure
 
@@ -50,55 +152,54 @@ security-monitoring-portfolio/
 ├── templates/
 │   └── alert-triage-template.md
 ├── scenarios/
-│   └── 01-ssh-invalid-user/
+│   ├── 01-ssh-invalid-user/
+│   │   ├── README.md
+│   │   ├── triage-note.md
+│   │   ├── investigation-report.md
+│   │   └── recommended-actions.md
+│   ├── 02-ssh-repeated-failure/
+│   │   ├── README.md
+│   │   ├── triage-note.md
+│   │   ├── investigation-report.md
+│   │   └── recommended-actions.md
+│   └── 03-benign-authentication-failure/
 │       ├── README.md
 │       ├── triage-note.md
 │       ├── investigation-report.md
 │       └── recommended-actions.md
 ├── evidence/
 │   └── sanitized-samples/
-│       ├── authlog-fake-admin-sanitized.txt
-│       └── wazuh-alerts-fake-admin-sanitized.txt
+│       ├── scenario-01/
+│       ├── scenario-02/
+│       └── scenario-03/
 └── screenshots/
-├── 01-agent-active.png
-├── 02-threat-hunting-filtered-events.png
-├── 03a-event-detail-core-fields.png
-└── 03b-event-detail-rule-mitre-fields.png
+    ├── scenario-01/
+    ├── scenario-02/
+    └── scenario-03/
 ```
 
 ## Security and Privacy Rules
 
-Do not publish real public IP addresses, credentials, real company logs, private dashboard screenshots, or cloud provider metadata that should remain private.
+Do not publish:
 
----
+- Real public IP addresses
+- Credentials
+- Private dashboard URLs
+- Real company logs
+- Real user data
+- Unsanitized screenshots
+- Cloud provider metadata that should remain private
 
-## Scenario 03
+All public evidence must use placeholders such as:
 
-**Title:** Benign Authentication Failure Case
+```text
+[SOURCE_IP_REDACTED]
+[TARGET_PUBLIC_IP_REDACTED]
+[WAZUH_SERVER_PUBLIC_IP_REDACTED]
+```
 
-**Goal:** Simulate and investigate a single benign SSH authentication failure, then compare it against repeated invalid-user activity from Scenario 02.
+## Portfolio Direction
 
-**Assessment:** Benign Positive
+This repository is part of a 12-month plan to build a cybersecurity portfolio approximating enterprise SOC and Security Engineering workflows.
 
-**Key findings:**
-
-- The Ubuntu endpoint recorded one core SSH invalid-user event.
-- Wazuh generated two relevant SSH Rule 5710 alert records because the same event was collected from both `/var/log/auth.log` and `journald`.
-- A broad keyword search returned extra sudo-related alerts, showing that SOC analysts should filter by `rule.id`, `rule.description`, `decoder.name`, and log source.
-- The event was not a false positive because the activity really occurred and was correctly detected.
-- The event was assessed as benign because it was isolated, controlled, and showed no evidence of compromise.
-
-**Scenario files:**
-
-| File | Description |
-|---|---|
-| `scenarios/03-benign-authentication-failure/README.md` | Scenario overview, objective, evidence summary, and learning outcome |
-| `scenarios/03-benign-authentication-failure/triage-note.md` | SOC-style alert triage note |
-| `scenarios/03-benign-authentication-failure/investigation-report.md` | Full investigation report with timeline, evidence, MITRE ATT&CK mapping, and comparison with Scenario 02 |
-| `scenarios/03-benign-authentication-failure/recommended-actions.md` | Recommended actions, detection engineering notes, and production response guidance |
-| `evidence/sanitized-samples/scenario-03/` | Sanitized evidence files for Scenario 03 |
-| `screenshots/scenario-03/` | Sanitized Wazuh Dashboard screenshots |
-
-**Evidence note:**
-
-`pre-simulation-baseline.txt` is intentionally empty. It records that no matching core SSH invalid-user event existed for `m2benign0509` before the simulation.
+The current phase focuses on authentication monitoring, alert validation, raw log correlation, SOC-style reporting, and detection engineering observations.
