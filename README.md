@@ -69,3 +69,36 @@ security-monitoring-portfolio/
 ## Security and Privacy Rules
 
 Do not publish real public IP addresses, credentials, real company logs, private dashboard screenshots, or cloud provider metadata that should remain private.
+
+---
+
+## Scenario 03
+
+**Title:** Benign Authentication Failure Case
+
+**Goal:** Simulate and investigate a single benign SSH authentication failure, then compare it against repeated invalid-user activity from Scenario 02.
+
+**Assessment:** Benign Positive
+
+**Key findings:**
+
+- The Ubuntu endpoint recorded one core SSH invalid-user event.
+- Wazuh generated two relevant SSH Rule 5710 alert records because the same event was collected from both `/var/log/auth.log` and `journald`.
+- A broad keyword search returned extra sudo-related alerts, showing that SOC analysts should filter by `rule.id`, `rule.description`, `decoder.name`, and log source.
+- The event was not a false positive because the activity really occurred and was correctly detected.
+- The event was assessed as benign because it was isolated, controlled, and showed no evidence of compromise.
+
+**Scenario files:**
+
+| File | Description |
+|---|---|
+| `scenarios/03-benign-authentication-failure/README.md` | Scenario overview, objective, evidence summary, and learning outcome |
+| `scenarios/03-benign-authentication-failure/triage-note.md` | SOC-style alert triage note |
+| `scenarios/03-benign-authentication-failure/investigation-report.md` | Full investigation report with timeline, evidence, MITRE ATT&CK mapping, and comparison with Scenario 02 |
+| `scenarios/03-benign-authentication-failure/recommended-actions.md` | Recommended actions, detection engineering notes, and production response guidance |
+| `evidence/sanitized-samples/scenario-03/` | Sanitized evidence files for Scenario 03 |
+| `screenshots/scenario-03/` | Sanitized Wazuh Dashboard screenshots |
+
+**Evidence note:**
+
+`pre-simulation-baseline.txt` is intentionally empty. It records that no matching core SSH invalid-user event existed for `m2benign0509` before the simulation.
