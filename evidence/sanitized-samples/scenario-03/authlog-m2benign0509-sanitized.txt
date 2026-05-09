@@ -1,0 +1,2 @@
+May  9 03:03:03 soc-lab-ubuntu-target-01 sshd[162845]: Invalid user m2benign0509 from [SOURCE_IP_REDACTED] port 59491
+May  9 03:03:03 soc-lab-ubuntu-target-01 sshd[162845]: Connection closed by invalid user m2benign0509 [SOURCE_IP_REDACTED] port 59491 [preauth]
