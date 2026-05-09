@@ -63,6 +63,8 @@ The lab currently validates the pipeline from controlled security activity to:
 | `scenarios/01-ssh-invalid-user/triage-note.md` | Completed SOC-style alert triage note |
 | `scenarios/01-ssh-invalid-user/investigation-report.md` | Full investigation report for SSH invalid-user authentication attempts |
 | `scenarios/01-ssh-invalid-user/recommended-actions.md` | Remediation and detection improvement actions |
+| `evidence/sanitized-samples/scenario-01/` | Sanitized evidence files for Scenario 01 |
+| `screenshots/scenario-01/` | Sanitized Wazuh Dashboard screenshots for Scenario 01 |
 
 ## Month 2 Deliverables
 
