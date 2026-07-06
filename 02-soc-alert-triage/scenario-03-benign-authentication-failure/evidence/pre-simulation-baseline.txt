@@ -1,0 +1,24 @@
+Pre-simulation Baseline Check
+
+Scenario:
+scenario-03-benign-authentication-failure
+
+Purpose:
+This file records the intended baseline check before generating the controlled benign SSH authentication failure.
+
+Baseline objective:
+- Confirm whether there were existing SSH authentication failure events before the simulation.
+- Help distinguish pre-existing authentication noise from events generated during this scenario.
+- Support comparison between pre-simulation and post-simulation evidence.
+
+Note:
+The original raw command output for the pre-simulation baseline was not preserved during the lab run. This file is retained because it is referenced by the scenario README as part of the evidence structure.
+
+The investigation conclusion for this scenario is based on the captured post-simulation evidence, including:
+- authlog-m2benign0509-sanitized.txt
+- wazuh-ssh-alerts-m2benign0509-json.txt
+- wazuh-location-count.txt
+- wazuh-ssh-alert-count.txt
+
+Interpretation:
+Because the original baseline output is unavailable, this file should not be treated as raw evidence. It documents the baseline check purpose and the evidence limitation.
