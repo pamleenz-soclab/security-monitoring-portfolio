@@ -102,9 +102,9 @@ In a production environment, repeated SSH invalid-user authentication attempts m
 
 | Screenshot | Description |
 |---|---|
-| `../../screenshots/scenario-02/01-scenario-02-dashboard-filtered-events.png` | Wazuh Dashboard filtered event list showing 6 hits for `m2test0507` |
-| `../../screenshots/scenario-02/02-scenario-02-event-detail-core-fields.png` | Event details showing agent, source user, decoder, full log, and location |
-| `../../screenshots/scenario-02/03-scenario-02-event-detail-rule-mitre-fields.png` | Event details showing Wazuh rule and MITRE ATT&CK mapping |
+| `screenshots/01-scenario-02-dashboard-filtered-events.png` | Wazuh Dashboard filtered event list showing 6 hits for `m2test0507` |
+| `screenshots/02-scenario-02-event-detail-core-fields.png` | Event details showing agent, source user, decoder, full log, and location |
+| `screenshots/03-scenario-02-event-detail-rule-mitre-fields.png` | Event details showing Wazuh rule and MITRE ATT&CK mapping |
 
 ## Related Files
 
@@ -113,7 +113,7 @@ In a production environment, repeated SSH invalid-user authentication attempts m
 | `triage-note.md` | SOC-style alert triage note |
 | `investigation-report.md` | Detailed technical investigation report |
 | `recommended-actions.md` | Recommended containment, hardening, and detection improvement actions |
-| `../../evidence/sanitized-samples/scenario-02/` | Sanitized supporting evidence files |
+| `evidence/` | Sanitized supporting evidence files |
 
 ## Key Learning Points
 

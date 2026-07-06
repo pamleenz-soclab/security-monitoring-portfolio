@@ -113,7 +113,7 @@ The Ubuntu endpoint recorded 3 core `Invalid user m2test0507` events in `/var/lo
 Evidence file:
 
 ```text
-../../evidence/sanitized-samples/scenario-02/authlog-m2test0507-sanitized.txt
+evidence/authlog-m2test0507-sanitized.txt
 ```
 
 Expected sanitized example:
@@ -139,7 +139,7 @@ Wazuh generated alerts for the same activity.
 Evidence file:
 
 ```text
-../../evidence/sanitized-samples/scenario-02/wazuh-alerts-m2test0507-sanitized.txt
+evidence/wazuh-alerts-m2test0507-sanitized.txt
 ```
 
 Wazuh displayed 6 alert records for `m2test0507`.
@@ -153,7 +153,7 @@ This did not mean 6 separate SSH attempts occurred. Further investigation showed
 Evidence file:
 
 ```text
-../../evidence/sanitized-samples/scenario-02/wazuh-location-count.txt
+evidence/wazuh-location-count.txt
 ```
 
 Observed location count:
@@ -171,9 +171,9 @@ This confirms duplicate ingestion across two Linux log sources.
 
 | Screenshot | Description |
 |---|---|
-| `../../screenshots/scenario-02/01-scenario-02-dashboard-filtered-events.png` | Wazuh Dashboard filtered events showing 6 hits for `m2test0507` |
-| `../../screenshots/scenario-02/02-scenario-02-event-detail-core-fields.png` | Event details showing agent, source user, decoder, location, and full log |
-| `../../screenshots/scenario-02/03-scenario-02-event-detail-rule-mitre-fields.png` | Event details showing rule ID, severity, groups, and MITRE ATT&CK mapping |
+| `screenshots/01-scenario-02-dashboard-filtered-events.png` | Wazuh Dashboard filtered events showing 6 hits for `m2test0507` |
+| `screenshots/02-scenario-02-event-detail-core-fields.png` | Event details showing agent, source user, decoder, location, and full log |
+| `screenshots/03-scenario-02-event-detail-rule-mitre-fields.png` | Event details showing rule ID, severity, groups, and MITRE ATT&CK mapping |
 
 ---
 

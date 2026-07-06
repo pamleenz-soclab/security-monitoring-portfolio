@@ -2,7 +2,7 @@
 
 This repository documents a hands-on security monitoring lab designed to simulate core SOC (Security Operations Center) and Security Engineering workflows.
 
-The current focus is Linux SSH (Secure Shell) authentication monitoring, Wazuh SIEM / XDR (Security Information and Event Management / Extended Detection and Response) alert validation, raw log validation, network evidence validation, MITRE ATT&CK mapping, SOC-style triage notes, and detection engineering observations.
+The current focus includes Linux SSH authentication monitoring, Wazuh SIEM / XDR alert validation, raw log validation, network evidence validation, PCAP-based malware traffic analysis, Zeek and Suricata analysis, MITRE ATT&CK mapping, SOC-style triage notes, and detection engineering observations.
 
 Public version note: real public IP addresses, credentials, private dashboard URLs, and sensitive screenshots must be sanitized before publishing.
 
@@ -51,6 +51,7 @@ The lab currently validates the pipeline from controlled security activity to:
 | Scenario 02 | Repeated SSH Invalid-User Authentication Attempts | True Positive — Authorized Lab Simulation | Identified repeated invalid-user behavior and duplicate alert ingestion from `/var/log/auth.log` and `journald` |
 | Scenario 03 | Benign Authentication Failure Case | Benign Positive | Demonstrated that a valid alert can be benign when the activity is isolated, controlled, and explainable |
 | Scenario 04 | Port Scanning Investigation and Detection Gap Analysis | Detection Gap | Confirmed TCP port probing with tcpdump and identified that the current Wazuh host-log configuration did not clearly alert on port scanning |
+| Scenario 05 | Malware Traffic Analysis and NetSupport Remote-Access Investigation | True Positive — Suspicious Remote Access Activity | Used Zeek and Suricata to validate repeated NetSupport Manager check-in traffic from a PCAP |
 
 ## Month 1 Deliverables
 
@@ -59,35 +60,49 @@ The lab currently validates the pipeline from controlled security activity to:
 | `docs/lab-architecture.md` | Documents the cloud SOC lab architecture, including Wazuh Server, Ubuntu Target, MacBook admin client, and network communication paths |
 | `docs/data-source-inventory.md` | Lists available log sources, key Wazuh fields, and monitoring coverage for SSH authentication investigation |
 | `templates/alert-triage-template.md` | Reusable SOC alert triage template for future investigations |
-| `scenarios/01-ssh-invalid-user/README.md` | Scenario 01 overview, objective, environment, detection result, and investigation summary |
-| `scenarios/01-ssh-invalid-user/triage-note.md` | Completed SOC-style alert triage note |
-| `scenarios/01-ssh-invalid-user/investigation-report.md` | Full investigation report for SSH invalid-user authentication attempts |
-| `scenarios/01-ssh-invalid-user/recommended-actions.md` | Remediation and detection improvement actions |
-| `evidence/sanitized-samples/scenario-01/` | Sanitized evidence files for Scenario 01 |
-| `screenshots/scenario-01/` | Sanitized Wazuh Dashboard screenshots for Scenario 01 |
+| `01-siem-foundations/scenario-01-ssh-invalid-user/README.md` | Scenario 01 overview, objective, environment, detection result, and investigation summary |
+| `01-siem-foundations/scenario-01-ssh-invalid-user/triage-note.md` | Completed SOC-style alert triage note |
+| `01-siem-foundations/scenario-01-ssh-invalid-user/investigation-report.md` | Full investigation report for SSH invalid-user authentication attempts |
+| `01-siem-foundations/scenario-01-ssh-invalid-user/recommended-actions.md` | Remediation and detection improvement actions |
+| `01-siem-foundations/scenario-01-ssh-invalid-user/evidence/` | Sanitized evidence files for Scenario 01 |
+| `01-siem-foundations/scenario-01-ssh-invalid-user/screenshots/` | Sanitized Wazuh Dashboard screenshots for Scenario 01 |
 
 ## Month 2 Deliverables
 
 | File | Purpose |
 |---|---|
-| `scenarios/02-ssh-repeated-failure/README.md` | Scenario 02 overview for repeated SSH invalid-user authentication attempts |
-| `scenarios/02-ssh-repeated-failure/triage-note.md` | SOC-style triage note for repeated invalid-user SSH activity |
-| `scenarios/02-ssh-repeated-failure/investigation-report.md` | Investigation report comparing raw endpoint event count and Wazuh alert count |
-| `scenarios/02-ssh-repeated-failure/recommended-actions.md` | Recommended actions for repeated invalid-user SSH activity |
-| `scenarios/03-benign-authentication-failure/README.md` | Scenario 03 overview for a benign SSH authentication failure |
-| `scenarios/03-benign-authentication-failure/triage-note.md` | SOC-style triage note classifying the alert as benign positive |
-| `scenarios/03-benign-authentication-failure/investigation-report.md` | Investigation report with timeline, evidence, MITRE ATT&CK mapping, and comparison with Scenario 02 |
-| `scenarios/03-benign-authentication-failure/recommended-actions.md` | Recommended actions, detection engineering notes, and production response guidance |
-| `scenarios/04-port-scanning-investigation/README.md` | Scenario 04 overview for controlled TCP port probing and detection gap analysis |
-| `scenarios/04-port-scanning-investigation/triage-note.md` | SOC-style triage note for port scanning visibility analysis |
-| `scenarios/04-port-scanning-investigation/investigation-report.md` | Investigation report correlating scanner-side output, tcpdump evidence, auth.log, and Wazuh alert review |
-| `scenarios/04-port-scanning-investigation/recommended-actions.md` | Recommended actions for improving port-scan detection coverage |
+| `02-soc-alert-triage/scenario-02-ssh-repeated-failure/README.md` | Scenario 02 overview for repeated SSH invalid-user authentication attempts |
+| `02-soc-alert-triage/scenario-02-ssh-repeated-failure/triage-note.md` | SOC-style triage note for repeated invalid-user SSH activity |
+| `02-soc-alert-triage/scenario-02-ssh-repeated-failure/investigation-report.md` | Investigation report comparing raw endpoint event count and Wazuh alert count |
+| `02-soc-alert-triage/scenario-02-ssh-repeated-failure/recommended-actions.md` | Recommended actions for repeated invalid-user SSH activity |
+| `02-soc-alert-triage/scenario-03-benign-authentication-failure/README.md` | Scenario 03 overview for a benign SSH authentication failure |
+| `02-soc-alert-triage/scenario-03-benign-authentication-failure/triage-note.md` | SOC-style triage note classifying the alert as benign positive |
+| `02-soc-alert-triage/scenario-03-benign-authentication-failure/investigation-report.md` | Investigation report with timeline, evidence, MITRE ATT&CK mapping, and comparison with Scenario 02 |
+| `02-soc-alert-triage/scenario-03-benign-authentication-failure/recommended-actions.md` | Recommended actions, detection engineering notes, and production response guidance |
+| `02-soc-alert-triage/scenario-04-port-scanning-investigation/README.md` | Scenario 04 overview for controlled TCP port probing and detection gap analysis |
+| `02-soc-alert-triage/scenario-04-port-scanning-investigation/triage-note.md` | SOC-style triage note for port scanning visibility analysis |
+| `02-soc-alert-triage/scenario-04-port-scanning-investigation/investigation-report.md` | Investigation report correlating scanner-side output, tcpdump evidence, auth.log, and Wazuh alert review |
+| `02-soc-alert-triage/scenario-04-port-scanning-investigation/recommended-actions.md` | Recommended actions for improving port-scan detection coverage |
 | `docs/month-02-summary.md` | Month 2 summary covering authentication investigation, benign positive analysis, and port scanning detection gap |
-| `evidence/sanitized-samples/scenario-02/` | Sanitized evidence files for Scenario 02 |
-| `evidence/sanitized-samples/scenario-03/` | Sanitized evidence files for Scenario 03 |
-| `evidence/sanitized-samples/scenario-04/` | Sanitized evidence files for Scenario 04 |
-| `screenshots/scenario-02/` | Sanitized Wazuh Dashboard screenshots for Scenario 02 |
-| `screenshots/scenario-03/` | Sanitized Wazuh Dashboard screenshots for Scenario 03 |
+| `02-soc-alert-triage/scenario-02-ssh-repeated-failure/evidence/` | Sanitized evidence files for Scenario 02 |
+| `02-soc-alert-triage/scenario-03-benign-authentication-failure/evidence/` | Sanitized evidence files for Scenario 03 |
+| `02-soc-alert-triage/scenario-04-port-scanning-investigation/evidence/` | Sanitized evidence files for Scenario 04 |
+| `02-soc-alert-triage/scenario-02-ssh-repeated-failure/screenshots/` | Sanitized Wazuh Dashboard screenshots for Scenario 02 |
+| `02-soc-alert-triage/scenario-03-benign-authentication-failure/screenshots/` | Sanitized Wazuh Dashboard screenshots for Scenario 03 |
+
+
+## Month 3 Deliverables
+
+| File | Purpose |
+|---|---|
+| `03-malware-traffic-analysis/scenario-05-malware-traffic-analysis-network-security-monitoring/README.md` | Scenario 05 overview and key finding |
+| `03-malware-traffic-analysis/scenario-05-malware-traffic-analysis-network-security-monitoring/triage-note.md` | SOC-style triage note for NetSupport Manager remote-access activity |
+| `03-malware-traffic-analysis/scenario-05-malware-traffic-analysis-network-security-monitoring/investigation-report.md` | Full malware traffic investigation report |
+| `03-malware-traffic-analysis/scenario-05-malware-traffic-analysis-network-security-monitoring/iocs.md` | IOC list including victim host, suspicious domain, IP, URI, User-Agent, and IDS signatures |
+| `03-malware-traffic-analysis/scenario-05-malware-traffic-analysis-network-security-monitoring/network-timeline.md` | Timeline of DNS, HTTP, Zeek, and Suricata evidence |
+| `03-malware-traffic-analysis/scenario-05-malware-traffic-analysis-network-security-monitoring/detection-opportunities.md` | Detection logic ideas and improvement notes |
+| `03-malware-traffic-analysis/scenario-05-malware-traffic-analysis-network-security-monitoring/recommended-actions.md` | Containment, investigation, eradication, recovery, and detection recommendations |
+| `03-malware-traffic-analysis/scenario-05-malware-traffic-analysis-network-security-monitoring/evidence/` | Sanitized evidence summaries and derived tool outputs |
 
 ## Scenario 01
 
