@@ -60,8 +60,8 @@ This indicates a monitoring coverage gap. Detecting port scanning reliably would
 | `tcpdump-portscan-syn-summary-sanitized.txt` | SYN-only target-side tcpdump summary |
 | `tcpdump-dst-port-count-sanitized.txt` | Destination port count observed by tcpdump |
 | `authlog-portscan-sourceip-sanitized.txt` | SSH-related authentication log evidence for the scan source IP |
-| `wazuh-alerts-scan-window-sourceip-sanitized.json` | Wazuh scan-window alert check; intentionally empty because no alert was observed |
-| `wazuh-portscan-keyword-check-sanitized.txt` | Wazuh keyword check for port-scan terms; intentionally empty because no matching alert was observed |
+| `wazuh-alerts-scan-window-sourceip-sanitized.json` | Wazuh scan-window alert check; contains an empty JSON array because no alert object was observed |
+| `wazuh-portscan-keyword-check-sanitized.txt` | Wazuh keyword check for port-scan terms; documents that no matching alert keyword was observed |
 | `wazuh-portscan-keyword-check-count.txt` | Count of Wazuh port-scan keyword matches |
 | `wazuh-detection-gap-note-sanitized.txt` | Detection gap summary note |
 

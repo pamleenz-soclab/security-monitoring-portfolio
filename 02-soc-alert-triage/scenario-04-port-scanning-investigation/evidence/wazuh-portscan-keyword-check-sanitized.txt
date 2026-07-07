@@ -1,0 +1,13 @@
+Wazuh Port Scan Keyword Check
+
+Purpose:
+This file records the result of checking Wazuh alert evidence for port-scan-related keywords during Scenario 04.
+
+Result:
+No port-scan-specific Wazuh alert keywords were found in the collected Wazuh alert evidence for the scan window.
+
+Interpretation:
+This does not mean the port scan did not occur. The scan activity was validated using network-level evidence, including tcpdump summaries and destination-port counts. The absence of matching Wazuh port-scan keywords indicates a detection gap in the current host-based Wazuh configuration.
+
+Evidence implication:
+This file should be treated as a negative-result evidence note, not as proof of no activity.
