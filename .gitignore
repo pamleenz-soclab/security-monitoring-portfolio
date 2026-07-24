@@ -1,2 +1,5 @@
 .DS_Store
 **/.DS_Store
+
+# Scenario 06 raw phishing-email evidence (local only)
+04-email-and-identity-investigations/scenario-06-phishing-email-investigation/evidence/raw/
