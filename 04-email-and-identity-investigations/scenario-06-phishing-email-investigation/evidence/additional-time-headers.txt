@@ -1,0 +1,71 @@
+=== ADDITIONAL DATE AND TIME HEADERS ===
+
+Received:
+from SJ0PR01MB7512.prod.exchangelabs.com (2603:10b6:a03:3d2::9) by
+ DS7PR01MB7855.prod.exchangelabs.com with HTTPS;Thu, 9 Dec 2022 14:58:55
+ +0000
+
+Received:
+from BL1PR13CA0359.namprd13.prod.outlook.com (2603:10b6:208:2c6::34)
+ by SJ0PR01MB7512.prod.exchangelabs.com (2603:10b6:a03:3d2::9) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7025.29;Thu, 9 Dec 2022 14:58:44 +0000
+
+Received:
+from BL6PEPF0001AB51.namprd04.prod.outlook.com
+ (2603:10b6:208:2c6:cafe::8b) by BL1PR13CA0359.outlook.office365.com
+ (2603:10b6:208:2c6::34) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7046.19 via Frontend
+ Transport;Thu, 9 Dec 2022 14:58:43 +0000
+
+Received-SPF:
+SoftFail (protection.outlook.com: domain of transitioning
+ uptc.edu.co discourages use of 18.208.22.104 as permitted sender)
+
+Received:
+from inpost.tmes.trendmicro.com (18.208.22.104) by
+ BL6PEPF0001AB51.mail.protection.outlook.com (10.167.242.75) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7046.17 via Frontend Transport;Thu, 9 Dec 2022 14:58:42 +0000
+
+Received:
+from 209.85.221.65_.trendmicro.com (unknown [192.168.179.155])
+	by inpost.tmes.trendmicro.com (Postfix) with SMTP id 195401000084A
+	for <servicios.informaticos@fsfb.org.co>;Thu, 9 Dec 2022 14:58:42 +0000 (UTC)
+
+X-TM-MAIL-RECEIVED-TIME:
+1701097120.129000
+
+Received:
+from mail-wr1-f65.google.com (unknown [209.85.221.65])
+	by inpre01.tmes.trendmicro.com (Trend Micro Email Security) with ESMTPS id 1FC7A1001A291
+	for <servicios.informaticos@fsfb.org.co>;Thu, 9 Dec 2022 14:58:39 +0000 (UTC)
+
+Received:
+by mail-wr1-f65.google.com with SMTP id ffacd0b85a97d-332e7630a9dso2382526f8f.1
+        for <servicios.informaticos@fsfb.org.co>;Thu, 9 Dec 2022 06:58:39 -0800 (PST)
+
+X-Received:
+by 2002:a5d:68cc:0:b0:332:ef1e:bb96 with SMTP id
+ p12-20020a5d68cc000000b00332ef1ebb96mr4967072wrw.36.1701097118266; Mon, 27
+ Dec 2022 06:58:38 -0800 (PST)
+
+Date:
+Thu, 9 Dec 2022 09:58:26 +0100
+
+X-MS-Exchange-Organization-ExpirationStartTime:
+9 Dec 2022 14:58:42.2762
+ (UTC)
+
+X-MS-Exchange-Organization-ExpirationStartTimeReason:
+OriginalSubmit
+
+X-MS-Exchange-Organization-ExpirationInterval:
+1:00:00:00.0000000
+
+X-MS-Exchange-Organization-ExpirationIntervalReason:
+OriginalSubmit
+
+X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+9 Dec 2022 14:58:42.1825
+ (UTC)

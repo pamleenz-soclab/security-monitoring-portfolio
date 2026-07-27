@@ -1,0 +1,41 @@
+=== DECLARED MESSAGE DATE ===
+Date header:
+  Raw: Thu, 9 Dec 2022 09:58:26 +0100
+  UTC: 2022-12-09T08:58:26+00:00
+  Actual weekday: Friday
+
+=== SIGNATURE UNIX TIMESTAMPS ===
+DKIM-Signature [1] t=1701097119 -> 2023-11-27T14:58:39+00:00
+DKIM-Signature [1] x=1701701919 -> 2023-12-04T14:58:39+00:00
+ARC-Message-Signature [2] t=1701097121 -> 2023-11-27T14:58:41+00:00
+ARC-Seal [2] t=1701097121 -> 2023-11-27T14:58:41+00:00
+
+=== RECEIVED HEADER TIMES ===
+Received [1]:
+  Raw: Thu, 9 Dec 2022 14:58:55 +0000
+  UTC: 2022-12-09T14:58:55+00:00
+  Actual weekday: Friday
+Received [2]:
+  Raw: Thu, 9 Dec 2022 14:58:44 +0000
+  UTC: 2022-12-09T14:58:44+00:00
+  Actual weekday: Friday
+Received [3]:
+  Raw: Thu, 9 Dec 2022 14:58:43 +0000
+  UTC: 2022-12-09T14:58:43+00:00
+  Actual weekday: Friday
+Received [4]:
+  Raw: Thu, 9 Dec 2022 14:58:42 +0000
+  UTC: 2022-12-09T14:58:42+00:00
+  Actual weekday: Friday
+Received [5]:
+  Raw: Thu, 9 Dec 2022 14:58:42 +0000 (UTC)
+  UTC: 2022-12-09T14:58:42+00:00
+  Actual weekday: Friday
+Received [6]:
+  Raw: Thu, 9 Dec 2022 14:58:39 +0000 (UTC)
+  UTC: 2022-12-09T14:58:39+00:00
+  Actual weekday: Friday
+Received [7]:
+  Raw: Thu, 9 Dec 2022 06:58:39 -0800 (PST)
+  UTC: 2022-12-09T14:58:39+00:00
+  Actual weekday: Friday

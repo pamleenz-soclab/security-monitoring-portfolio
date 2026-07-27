@@ -1,0 +1,47 @@
+=== EMAIL INVESTIGATION FIELDS ===
+Subject: COMMERCIAL PURCHASE RECEIPT ONLINE 27 NOV
+From: ERIKA JOHANA LOPEZ VALIENTE <redacted-sender[@]uptc[.]edu[.]co>
+Reply-To: <not present>
+Return-Path: redacted-sender[@]uptc[.]edu[.]co
+Sender: <not present>
+Message-ID: <CABWu4iua5_uex6=G8pi_OJz1tBLJiNakMK-1=7128orpzxbKxw@mail.gmail.com>
+
+=== MESSAGE-SPECIFIC HUNTING VALUES ===
+Purchase reference: 00034959
+Access code: 8657
+
+=== OBSERVED URLS ===
+
+URL [1]
+  Found in: text/html, text/plain
+  Defanged URL: hxxp://107[.]175[.]247[.]199/loader/install.exe
+  Host: 107[.]175[.]247[.]199
+  Path: /loader/install.exe
+  Classification: Malicious payload-delivery indicator
+
+URL [2]
+  Found in: text/html
+  Defanged URL: hxxps://upload[.]wikimedia[.]org/wikipedia/commons/thumb/a/a0/Logo_de_la_UPTC.svg/512px-Logo_de_la_UPTC.svg.png
+  Host: upload[.]wikimedia[.]org
+  Path: /wikipedia/commons/thumb/a/a0/Logo_de_la_UPTC.svg/512px-Logo_de_la_UPTC.svg.png
+  Classification: Context-only branding resource
+
+=== IOC CLASSIFICATION ===
+Primary malicious indicators:
+  URL: hxxp://107[.]175[.]247[.]199/loader/install[.]exe
+  IP address: 107[.]175[.]247[.]199
+  Referenced filename: install[.]exe
+
+Context-only indicators:
+  Domain: upload[.]wikimedia[.]org
+  Role: External UPTC logo hosting; not established as malicious
+
+Impact status:
+  Payload retrieved during analysis: No
+  Payload hash available: No
+  User click or download confirmed: No
+  Payload execution confirmed: No
+  Endpoint compromise confirmed: No
+
+=== ANALYTICAL LIMITATION ===
+The .exe path strongly indicates an attempted Windows executable delivery, but the actual file type, contents, and hashes cannot be confirmed because the payload was not retrieved.

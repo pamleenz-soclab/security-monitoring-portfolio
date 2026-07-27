@@ -1,0 +1,33 @@
+=== ATTACHMENT CHECK ===
+No MIME attachments found.
+
+=== BODY-PART URL COMPARISON ===
+
+Part 2: text/plain
+Content-Transfer-Encoding: quoted-printable
+Character set: utf-8
+URLs:
+  hxxp://107[.]175[.]247[.]199/loader/install.exe
+Marker presence:
+  107[.]175[.]247[.]199: FOUND
+  install.exe: FOUND
+  VIEW INVOICE: FOUND
+  8657: FOUND
+
+Part 3: text/html
+Content-Transfer-Encoding: quoted-printable
+Character set: utf-8
+URLs:
+  hxxp://107[.]175[.]247[.]199/loader/install.exe
+  https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Logo_de_la_UPTC.svg/512px-Logo_de_la_UPTC.svg.png
+Marker presence:
+  107[.]175[.]247[.]199: FOUND
+  install.exe: FOUND
+  VIEW INVOICE: not found
+  8657: FOUND
+HTML link-related tokens:
+  <a: FOUND
+  href=: FOUND
+  onclick=: not found
+  107[.]175[.]247[.]199: FOUND
+  install.exe: FOUND

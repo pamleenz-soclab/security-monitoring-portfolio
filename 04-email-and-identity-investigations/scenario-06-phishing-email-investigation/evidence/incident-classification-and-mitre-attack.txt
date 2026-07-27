@@ -1,0 +1,186 @@
+INCIDENT CLASSIFICATION AND MITRE ATT&CK MAPPING
+================================================
+
+Case:
+Scenario 06 - Phishing Email Investigation
+
+1. INCIDENT CLASSIFICATION
+--------------------------
+
+Case category:
+Email security incident
+
+Primary classification:
+Phishing
+
+Subtype:
+Malicious link / malware-delivery attempt
+
+Verdict:
+True Positive - Malicious
+
+Incident statement:
+The email is a confirmed malicious phishing message containing a link
+to a historically malicious Windows-executable delivery location.
+
+The available evidence confirms the malicious delivery mechanism but
+does not confirm delivery to a specific organisational mailbox, user
+interaction, payload execution, or compromise.
+
+
+2. CONFIDENCE ASSESSMENT
+------------------------
+
+Confidence in malicious-email verdict:
+High
+
+Basis:
+- Financial and purchase-related social-engineering pretext.
+- Direct link to an externally hosted Windows executable.
+- Complete URL has established historical malicious reputation.
+- Hosting IP has supporting historical malicious reputation.
+- URLhaus and VirusTotal findings corroborate the malicious classification.
+
+Confidence in impact assessment:
+Insufficient evidence to determine impact
+
+Reason:
+No email-gateway, mailbox, DNS, proxy, firewall, endpoint, or identity
+telemetry was available to establish post-delivery activity.
+
+
+3. SEVERITY ASSESSMENT
+----------------------
+
+Provisional severity:
+Medium
+
+Severity status:
+Provisional pending recipient and endpoint telemetry
+
+Rationale:
+- The message and malicious delivery link are confirmed.
+- The linked resource was intended to deliver a Windows executable.
+- Successful delivery to a specific user is not established.
+- User interaction, payload download, and execution remain unknown.
+- No endpoint, account, or organisational compromise is confirmed.
+
+The severity rating reflects the evidence available in this portfolio
+case. Organisational severity may differ depending on the affected user,
+asset criticality, delivery status, security controls, and evidence of
+execution or lateral activity.
+
+Escalation criteria:
+- Escalate if the message was delivered to an active mailbox.
+- Increase priority if URL access or payload download is identified.
+- Escalate to a potential endpoint compromise investigation if execution
+  or related endpoint activity is identified.
+- Consider High severity if execution, persistence, command-and-control,
+  credential access, or access to a sensitive system is confirmed.
+- Consider Critical severity only where confirmed compromise creates
+  severe or widespread organisational impact.
+
+
+4. MITRE ATT&CK MAPPING
+-----------------------
+
+Technique:
+T1566.002 - Phishing: Spearphishing Link
+
+Tactic:
+Initial Access
+
+Evidence status:
+Observed in the email
+
+Evidence:
+The phishing message contained a link to:
+hxxp://107[.]175[.]247[.]199/loader/install[.]exe
+
+Interpretation:
+The message attempted to use a malicious link to deliver an executable.
+This supports T1566.002 as the primary ATT&CK mapping.
+
+Analytical note:
+"Spearphishing Link" is the official ATT&CK technique name. Its use here
+describes the malicious-email link mechanism; it does not independently
+establish that the message was individually targeted.
+
+
+Technique:
+T1204.001 - User Execution: Malicious Link
+
+Tactic:
+Execution
+
+Evidence status:
+Intended or attempted; user action not observed
+
+Evidence:
+The social-engineering content instructed the recipient to use the
+embedded access mechanism, which would require interaction with the
+malicious link.
+
+Interpretation:
+The attack depended on a recipient clicking the malicious link. However,
+no browser, proxy, endpoint, or mailbox telemetry was available to show
+that a user actually clicked it.
+
+This technique must therefore not be reported as confirmed user execution.
+
+
+5. TECHNIQUES NOT MAPPED AS OBSERVED
+------------------------------------
+
+T1204.002 - User Execution: Malicious File:
+Not mapped as observed. The email did not contain an executable
+attachment, and execution of the remotely referenced file is unknown.
+
+T1105 - Ingress Tool Transfer:
+Not mapped as observed. The URL referenced a downloadable executable,
+but no evidence establishes that the file was transferred to an endpoint.
+
+Persistence, privilege escalation, defence evasion, credential access,
+discovery, lateral movement, collection, command-and-control, exfiltration,
+and impact techniques:
+Not mapped because no supporting post-delivery telemetry was available.
+
+
+6. FINAL CASE DISPOSITION
+-------------------------
+
+Email verdict:
+Confirmed malicious
+
+Incident classification:
+Phishing-based malware-delivery attempt
+
+Provisional severity:
+Medium
+
+Compromise status:
+Not confirmed
+
+Impact:
+Unknown / not established
+
+Recommended investigation status:
+Requires environment-specific log review to determine delivery, user
+interaction, and endpoint impact.
+
+This case must not be closed as a false positive. It may be documented
+as a confirmed malicious email with unconfirmed organisational impact
+when no additional telemetry is available.
+
+
+7. REFERENCES
+-------------
+
+MITRE ATT&CK T1566.002 - Phishing: Spearphishing Link:
+https://attack.mitre.org/techniques/T1566/002/
+
+MITRE ATT&CK T1204.001 - User Execution: Malicious Link:
+https://attack.mitre.org/techniques/T1204/001/
+
+MITRE ATT&CK T1105 - Ingress Tool Transfer:
+https://attack.mitre.org/techniques/T1105/

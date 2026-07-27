@@ -1,0 +1,36 @@
+=== MIME OVERVIEW ===
+Part 2: type=text/plain | disposition=None | filename=<none>
+Part 3: type=text/html | disposition=None | filename=<none>
+
+=== PLAIN-TEXT BODY ===
+COMMERCIAL PURCHASE RECEIPT
+
+Your purchase Ref. 00034959 for the amount of $625.000 pesos has been successfully completed. The invoice document is attached for your full confirmation.
+
+VIEW INVOICE DOCUMENT HERE
+<hxxp://107[.]175[.]247[.]199/loader/install.exe>
+ACCESS CODE: 8657
+
+Erika Johana López Valiente
+Magister in Education, Research Mode.
+LEB Teacher - FESAD.
+
+CONFIDENTIALITY NOTICE: This message and its attachments are intended exclusively for its addressee. It may contain privileged or confidential information and is for the exclusive use of the individual or entity to whom it is addressed. If you are not the intended recipient, you are hereby notified that reading, using, disseminating, or copying this communication without authorization is strictly prohibited by law. If you have received this message in error, please notify us immediately by the same means and delete it.
+
+=== HTML ANALYSIS ===
+
+--- HTML PART 1 VISIBLE TEXT ---
+Commercial Purchase Receipt body { font-family: Arial, sans-serif; } .center { text-align: center; } .signature { margin-top: 20px; } .signature img { width: 420px; height: 81px; } .confidentiality { color: gray; font-size: 12px; } Commercial Purchase Receipt Your purchase Ref. 00034959 for the amount of $625.000 pesos has been successfully completed. The invoice document is attached for your full confirmation. ACCESS CODE: 8657 Erika Johana López Valiente Magister in Education, Research Mode LEB Teacher - FESAD CONFIDENTIALITY NOTICE: This message and its attachments are intended exclusively for its addressee. It may contain privileged or confidential information and is for the exclusive use of the individual or entity to whom it is addressed. If you are not the intended recipient, you are hereby notified that reading, using, disseminating, or copying this communication without authorization is strictly prohibited by law. If you have received this message in error, please notify us immediately by the same means and delete it. CONFIDENTIALITY NOTICE: The information contained in this transmission is privileged and confidential information intended only for the use of the individual or entity named above. If the reader of this message is not the intended recipient, you are hereby notified that any dissemination, distribution, or copying of this communication is strictly prohibited. If you have received this transmission in error, do not read it. Please immediately reply to the sender that you have received this communication in error and then delete it.
+
+--- HTML PART 1 LINKS ---
+<none>
+
+--- HTML PART 1 IMAGES ---
+[1] Source: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Logo_de_la_UPTC.svg/512px-Logo_de_la_UPTC.svg.png
+    Alt text: Signature Image
+
+--- HTML PART 1 FORMS ---
+<none>
+
+--- HTML PART 1 ACTIVE ELEMENTS ---
+<none>

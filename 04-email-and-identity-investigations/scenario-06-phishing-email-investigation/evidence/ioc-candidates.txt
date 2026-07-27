@@ -1,0 +1,23 @@
+=== MESSAGE IDENTIFIERS ===
+From: ERIKA JOHANA LOPEZ VALIENTE <redacted-sender[@]uptc[.]edu[.]co>
+Reply-To: <not present>
+Return-Path: redacted-sender[@]uptc[.]edu[.]co
+Sender: <not present>
+To: undisclosed-recipients:;
+Subject: COMMERCIAL PURCHASE RECEIPT ONLINE 27 NOV
+Date: Thu, 9 Dec 2022 09:58:26 +0100
+Message-ID: <CABWu4iua5_uex6=G8pi_OJz1tBLJiNakMK-1=7128orpzxbKxw@mail.gmail.com>
+
+=== SENDER-RELATED EMAIL ADDRESSES ===
+[1] redacted-sender[@]uptc[.]edu[.]co
+
+=== BODY URLS ===
+[1] hxxp://107[.]175[.]247[.]199/loader/install.exe
+[2] https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Logo_de_la_UPTC.svg/512px-Logo_de_la_UPTC.svg.png
+
+=== URL HOSTS ===
+[1] 107[.]175[.]247[.]199 | IP address (4)
+[2] upload.wikimedia.org | domain
+
+=== MIME ATTACHMENTS ===
+<none>

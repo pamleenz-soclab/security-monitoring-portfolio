@@ -1,0 +1,135 @@
+IMPACT ASSESSMENT
+=================
+
+Case:
+Scenario 06 - Phishing Email Investigation
+
+Assessment scope:
+This assessment is based on the original EML sample, email-header and
+body analysis, extracted indicators, and passive threat intelligence.
+
+No email-gateway, DNS, proxy, firewall, endpoint, identity, or mailbox
+audit logs were available.
+
+1. CONFIRMED FINDINGS
+---------------------
+
+- The email used financial and purchase-related social-engineering content.
+- The message contained a link directly referencing a Windows executable:
+  hxxp://107[.]175[.]247[.]199/loader/install[.]exe
+- The complete URL has established historical malicious reputation.
+- The hosting IP has supporting historical malicious reputation.
+- The message represents a malicious phishing-based malware-delivery attempt.
+
+2. IMPACT STATUS
+----------------
+
+Phishing message observed:
+Confirmed
+
+Malicious link present:
+Confirmed
+
+Malware-delivery intent:
+Confirmed with high confidence
+
+Delivery to a specific recipient mailbox:
+Not established
+
+Delivery to additional recipients:
+Unknown
+
+User clicked the malicious link:
+Unknown
+
+Connection to the payload-hosting IP:
+Unknown
+
+Payload downloaded:
+Unknown
+
+Payload executed:
+Unknown
+
+Payload hash:
+Not available
+
+Exact malware family:
+Not established
+
+Malicious process or persistence:
+Not established
+
+Command-and-control activity:
+Not established
+
+Endpoint compromise:
+Not established
+
+Account compromise:
+Not established
+
+Affected-user and affected-host scope:
+Unknown
+
+3. ASSESSMENT
+-------------
+
+The available evidence establishes a malicious phishing-based
+malware-delivery attempt. It does not establish successful delivery to a
+specific mailbox, user interaction, payload execution, or compromise.
+
+The email verdict is high-confidence malicious, but maliciousness and
+impact must not be treated as the same conclusion. Actual organisational
+impact remains unknown because the telemetry required to confirm or
+exclude post-delivery activity was not available.
+
+This case must therefore be classified as a confirmed malicious email
+with unconfirmed impact, rather than as a confirmed endpoint or account
+compromise.
+
+4. DATA REQUIRED TO DETERMINE IMPACT
+------------------------------------
+
+Email gateway and mailbox records:
+- Search the Message-ID, sender, subject, malicious URL, purchase reference,
+  and access code.
+- Identify intended recipients, delivery status, quarantine actions, and
+  other matching messages.
+
+DNS, proxy, and firewall logs:
+- Search for requests or connections involving 107[.]175[.]247[.]199.
+- Review both candidate time periods identified in timestamp-consistency.txt.
+
+Endpoint telemetry:
+- Search for creation or execution of install.exe.
+- Review browser downloads, browser child processes, file hashes,
+  persistence mechanisms, and subsequent outbound connections.
+
+Identity and mailbox audit logs:
+- Review abnormal sign-ins, session activity, mailbox rules, and forwarding
+  changes if additional evidence suggests account involvement.
+
+5. ESCALATION CONDITION
+-----------------------
+
+If URL access, payload download, or execution is identified, escalate the
+case to a potential endpoint compromise investigation and isolate the
+affected host where appropriate.
+
+If no matching activity is found in sufficiently complete historical logs,
+record the result as no evidence of successful compromise, not proof that
+no compromise occurred.
+
+6. FINAL IMPACT STATEMENT
+-------------------------
+
+Impact:
+Unknown / not established
+
+Compromise status:
+Not confirmed
+
+Reason:
+The malicious delivery mechanism is confirmed, but no telemetry was
+available to establish recipient interaction or post-delivery activity.

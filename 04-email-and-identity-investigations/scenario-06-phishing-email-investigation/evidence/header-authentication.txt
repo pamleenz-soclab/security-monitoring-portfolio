@@ -1,0 +1,62 @@
+=== AUTHENTICATION AND SENDER HEADERS ===
+
+Authentication-Results [1]:
+spf=softfail (sender IP is 18.208.22.104) smtp.mailfrom=uptc.edu.co; dkim=fail (no key for signature) header.d=uptc.edu.co;dmarc=none action=none header.from=uptc.edu.co;compauth=softpass reason=201
+
+Received-SPF [1]:
+SoftFail (protection.outlook.com: domain of transitioning uptc.edu.co discourages use of 18.208.22.104 as permitted sender)
+
+DKIM-Signature [1]:
+v=1; a=rsa-sha256; c=relaxed/relaxed;        d=uptc.edu.co; s=google; t=1701097119; x=1701701919; darn=fsfb.org.co;        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject         :date:message-id:reply-to;        bh=AXBCwGkRxYZo4VpdXt4XQsGpZAHIDSpANJ7sP0OmP3M=;        b=NwF8huivlnLffwG7YMSmTV92HNtJXhmfSDBgMi99gm08NZRrXuvF9kXylETqqxxpyK         ASKLWUDfKtbR7Hud1mrbY5vB4XkwKmCuHJcu8xG5Qm15EVQJqDSSuv6Y/ygHd8Tcq8On         TDu0mnBWojoRRJ+yxp8ukkWJ2L+CLYr3DN1E0xDT+U4mgIu5rjikAOwGcyxdQW7n4X/7         nDUUh0VNN/XDKJOhMSmXfhsHpMBYUNcWCc0bF3pETnxjN3Rg1E+UjkpC+5tjnDueE2J5         /JIfUoKnQLgF2hgfA+fRFwPdnl3J238w/CdvFyiCCJk+9+5cEFKatZ61BCtVkAF77W/d         ItBg==
+
+ARC-Authentication-Results [1]:
+i=2; mx.microsoft.com 1; spf=softfail (sender ip is 18.208.22.104) smtp.rcpttodomain=fsfb.org.co smtp.mailfrom=uptc.edu.co; dmarc=none action=none header.from=uptc.edu.co; dkim=fail (no key for signature) header.d=uptc.edu.co; arc=fail (35)
+
+ARC-Authentication-Results [2]:
+i=1; tmes.trendmicro.com; spf=pass (sender IP address: 209.85.221.65) smtp.mailfrom=uptc.edu.co; dkim=none (no processed signatures) header.d=uptc.edu.co; dmarc=pass action=no records header.from=uptc.edu.co; arc=none
+
+ARC-Message-Signature [1]:
+i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; s=arcselector9901; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1; bh=AXBCwGkRxYZo4VpdXt4XQsGpZAHIDSpANJ7sP0OmP3M=; b=YV4rXtkEs8amVnLpcgziiiy3nO93s3HgMRy5SCHjk2Hw+yNPHRtJ2XWmWhSPI6W5aaIFstGBWpjyhE0u9A3vzC9r7ooUojm+hWE3Np2Kr2RyqtHrGzRQkzlGQ51vzG1U7jFokrXN0bUclFoXMlhZMvIoATxCZfj+TpT/zyoVxok1bxb1fyul8TWqqvPVFWO3lB38fuZ7QXcLCoc0GwVELhF8RfiHlEqiyS8u5emyOlJOSZBO1RniGFcZ+eDvGfM9bSui8daMiifi7VvoaMX0+ed6ajqa1zsBzWOD4BfGyVSgD5udi6wtnzcTKcqDJo9JyTfocwmCR8FIhINRFo0CcQ==
+
+ARC-Message-Signature [2]:
+i=1; a=rsa-sha256; d=tmes.trendmicro.com;	s=tm-arc-20210909; t=1701097121; c=relaxed/relaxed;	bh=AXBCwGkRxYZo4VpdXt4XQsGpZAHIDSpANJ7sP0OmP3M=; h=From; b=DWbGdzZDbHDWC4dTaUens7tgxkLjC7esdzXEOixEmOMtolAQuuZXge+056e1LU1EMxahXgFQm6CaCpEo7okxRwumjyK2pS0eE5V8UD3lCfu1cUBDI+lGaywMOm5Xd7jatj7N0BWeZWxEF8N/WujwCmaN9RNkuR+lNBppNtJBFpNrt9glk9JoQ+C+e2bU8mjaAELLyHeOv077i2urFWLHqQSVaUBjWWm0u0i/NG7iasJ8pifEgrSZqYjXu1sfe6HOuj/CWX+lwfDa7BshiFOZK9wzuNbOwPt1oqhV7hOwK/g9wtFY72S5dGTOaQzlIOEKFaWVthiqi4B0UsG+xGCnDg==
+
+ARC-Seal [1]:
+i=2; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=fail; b=duSdPQF6MkHA6NDKezdwwXo0cytNw6pKTyXfmDvi22cwiu15XbtSLWvmqSHiYcaOHDQNUg5f7tY+9JY/CEBHmaBO7E3lusTGIpLFNrNF7v4HyOwH2/XWf+JxNDSUM3TE24w0u8DhCnVy2lAoiH/iINzpcewzwrIQWVvKXkhk8UGbOf4SIgEJfiv9JrrQVPUql0wysWGU3gqoduOgIbFvpjyyGiS/Exd9ddgnfa0sS+83SRQg3jVmLEfSVcmg+9wvZfR6wFcX9Sga7efMqt6a9hT0q3ajrVBYuH+sY2El9UVvViZREf/FBYYkzJ8xO5oLFQanthp6EoFyN/DqNgO2Tw==
+
+ARC-Seal [2]:
+i=1; a=rsa-sha256; d=tmes.trendmicro.com; s=tm-arc-20210909;	t=1701097121; cv=none; b=UdHxl1yJJs2VtK8s9vN04N0pUlxOtE3PETGR6QMhDnmZeDLCQTUShy3WuRfHuVJxIGTilr3bme+2tlD47aS5gLVs3dPYqcxEaAQEB0ZF/F7sY61jRk9jZP39hzGoMbPMTX52999xl5dArGnxs1p5xhRz9juF+HXhzyj0bVYnZgL8KDuyF0ZV+P2mCAHqXgyAN7J+2/Kk7WVsPMwWfu85ijKPgBdjUVh03nCNYNbjQLvf0rDtU8bUBGMBAei5fibK/q9DES2hlO4ecNjs8RbjWjQ0xPgozU0ZNz1G0q86jVMwbAubtE9HJW9Ilkfruj4/2sHRenZadpd9nffHLl5MfA==
+
+Return-Path [1]:
+redacted-sender[@]uptc[.]edu[.]co
+
+Reply-To: <not present>
+
+Sender: <not present>
+
+X-Originating-IP: <not present>
+
+X-Sender-IP: <not present>
+
+=== RECEIVED CHAIN ===
+
+Received [1]:
+from SJ0PR01MB7512.prod.exchangelabs.com (2603:10b6:a03:3d2::9) by DS7PR01MB7855.prod.exchangelabs.com with HTTPS;Thu, 9 Dec 2022 14:58:55 +0000
+
+Received [2]:
+from BL1PR13CA0359.namprd13.prod.outlook.com (2603:10b6:208:2c6::34) by SJ0PR01MB7512.prod.exchangelabs.com (2603:10b6:a03:3d2::9) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7025.29;Thu, 9 Dec 2022 14:58:44 +0000
+
+Received [3]:
+from BL6PEPF0001AB51.namprd04.prod.outlook.com (2603:10b6:208:2c6:cafe::8b) by BL1PR13CA0359.outlook.office365.com (2603:10b6:208:2c6::34) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7046.19 via Frontend Transport;Thu, 9 Dec 2022 14:58:43 +0000
+
+Received [4]:
+from inpost.tmes.trendmicro.com (18.208.22.104) by BL6PEPF0001AB51.mail.protection.outlook.com (10.167.242.75) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7046.17 via Frontend Transport;Thu, 9 Dec 2022 14:58:42 +0000
+
+Received [5]:
+from 209.85.221.65_.trendmicro.com (unknown [192.168.179.155])	by inpost.tmes.trendmicro.com (Postfix) with SMTP id 195401000084A	for <servicios.informaticos@fsfb.org.co>;Thu, 9 Dec 2022 14:58:42 +0000 (UTC)
+
+Received [6]:
+from mail-wr1-f65.google.com (unknown [209.85.221.65])	by inpre01.tmes.trendmicro.com (Trend Micro Email Security) with ESMTPS id 1FC7A1001A291	for <servicios.informaticos@fsfb.org.co>;Thu, 9 Dec 2022 14:58:39 +0000 (UTC)
+
+Received [7]:
+by mail-wr1-f65.google.com with SMTP id ffacd0b85a97d-332e7630a9dso2382526f8f.1        for <servicios.informaticos@fsfb.org.co>;Thu, 9 Dec 2022 06:58:39 -0800 (PST)

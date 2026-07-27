@@ -1,0 +1,192 @@
+THREAT INTELLIGENCE RESULTS
+===========================
+
+Case:
+Scenario 06 - Phishing Email Investigation
+
+Research date:
+2026-07-27 (NZST)
+
+Scope and safety:
+Passive threat-intelligence review only. The payload was not downloaded,
+executed, or otherwise retrieved during the investigation.
+
+PRIMARY INDICATORS
+------------------
+
+Malicious URL:
+hxxp://107[.]175[.]247[.]199/loader/install[.]exe
+
+Hosting IP:
+107[.]175[.]247[.]199
+
+Referenced filename:
+install[.]exe
+
+
+1. URLHAUS HISTORICAL RECORD
+----------------------------
+
+URLhaus record ID:
+2381718
+
+Date added:
+2022-10-22 12:39:04 UTC
+
+Historical status:
+Offline
+
+Last reported online:
+2022-12-12
+
+Threat type:
+Malware download
+
+Historical associations:
+AsyncRAT, BitRAT, and CoinMiner-related payload records were associated
+with this URL at different times.
+
+Related historical MalwareBazaar sample:
+SHA-256: 5ca468704e7ccb8e1b37c0f7595c54df4e2f4035345b6e442e8bd4e11c58f791
+File type: Windows executable
+Historical signature: AsyncRAT
+
+Interpretation:
+The complete URL had previously been recorded as a malware-download
+location. Multiple payload associations indicate that the content hosted
+at the URL may have changed over time.
+
+The related sample hash and malware-family labels are historical
+associations only. They do not establish which payload, if any, was
+available when this email was delivered.
+
+
+2. VIRUSTOTAL URL RESULTS
+-------------------------
+
+Detection result:
+13 of 92 security vendors classified the complete URL as malicious.
+
+Additional result:
+One vendor classified the URL as suspicious.
+
+Community score:
+-6
+
+First submission:
+2022-10-22 13:21:13 UTC
+
+Last submission:
+2026-07-26 08:47:36 UTC
+
+Last analysis:
+2026-07-26 08:47:36 UTC
+
+Observed categories:
+- Malicious
+- Spyware and malware
+- Malware sites
+
+Current HTTP status:
+Not provided
+
+Current content type:
+Not provided
+
+Redirect or final URL:
+Not provided
+
+Interpretation:
+VirusTotal confirms that the complete payload-delivery URL has an
+established historical malicious reputation. The absence of current HTTP
+response information does not make the URL safe and does not independently
+establish the exact date on which it became unavailable.
+
+
+3. VIRUSTOTAL IP RESULTS
+------------------------
+
+IP address:
+107[.]175[.]247[.]199
+
+Detection result:
+9 of 91 security vendors classified the IP address as malicious.
+
+Additional results:
+ESET and Gridinsoft classified the IP address as suspicious.
+
+Community score:
+-61
+
+ASN:
+AS36352
+
+Network operator:
+HostPapa
+
+Network prefix:
+107.175.240.0/21
+
+Regional Internet Registry:
+ARIN
+
+Registered or geolocated country:
+United States
+
+Interpretation:
+The hosting IP has a poor historical reputation that supports the
+complete-URL finding. However, hosting addresses may serve multiple
+unrelated resources, so the complete URL is more specific to this case
+than the IP address alone.
+
+The ASN, operator, and country identify hosting infrastructure only.
+They do not establish the attacker's identity or physical location.
+The wider network prefix must not be treated as entirely malicious.
+
+
+4. OVERALL THREAT-INTELLIGENCE ASSESSMENT
+-----------------------------------------
+
+Confirmed:
+- The complete URL has established historical malicious reputation.
+- The hosting IP has supporting historical malicious reputation.
+- The URL has historically been associated with malicious Windows
+  executable delivery.
+
+Not confirmed:
+- The exact payload returned when this email was delivered.
+- The payload SHA-256 for this email.
+- Whether this email delivered AsyncRAT, BitRAT, CoinMiner, or another family.
+- Whether the recipient clicked the link.
+- Whether a payload was downloaded or executed.
+- Whether an endpoint or account was compromised.
+
+Assessment:
+The passive intelligence results strongly corroborate the classification
+of the email as a malicious phishing-based malware-delivery attempt.
+They do not establish user interaction or successful compromise.
+
+
+5. SOURCE REFERENCES
+--------------------
+
+URLhaus record:
+https://urlhaus.abuse.ch/url/2381718/
+
+Related MalwareBazaar sample:
+https://bazaar.abuse.ch/sample/5ca468704e7ccb8e1b37c0f7595c54df4e2f4035345b6e442e8bd4e11c58f791/
+
+VirusTotal:
+URL and IP reputation records were reviewed through the VirusTotal
+web interface. Screenshots were retained separately as investigation
+evidence.
+
+
+ANALYTICAL LIMITATIONS
+----------------------
+
+Only the original email sample and passive public intelligence were
+available. No email-gateway, DNS, proxy, endpoint, identity, or mailbox
+audit logs were available. The payload was not retrieved. Therefore,
+delivery success, user interaction, payload identity, and compromise
+cannot be established.
