@@ -3,3 +3,6 @@
 
 # Scenario 06 raw phishing-email evidence (local only)
 04-email-and-identity-investigations/scenario-06-phishing-email-investigation/evidence/raw/
+
+# Scenario 07 raw identity-log evidence (local only)
+04-email-and-identity-investigations/scenario-07-suspicious-login-and-possible-account-compromise/evidence/raw/
