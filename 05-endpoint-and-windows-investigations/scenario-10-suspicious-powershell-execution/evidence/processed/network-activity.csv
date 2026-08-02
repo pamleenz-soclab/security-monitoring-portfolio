@@ -1,0 +1,2 @@
+time_utc,host,user,process_id,process_guid,image,protocol,direction,source_ip,source_port,destination_ip,destination_ip_defanged,destination_port,sysmon_record,security_record,evidence_status,limitation
+2020-09-04T20:09:59.621Z,WORKSTATION5.theshire.local,THESHIRE\\pgustavo,2316,{860ba2e3-9f13-5f52-2703-000000000400},C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe,TCP,Outbound,172.18.39.5,50699,10.10.10.5,10[.]10[.]10[.]5,80,251809,67323,Confirmed,No packet or HTTP body is available and later HTTP activity may reuse this TCP connection

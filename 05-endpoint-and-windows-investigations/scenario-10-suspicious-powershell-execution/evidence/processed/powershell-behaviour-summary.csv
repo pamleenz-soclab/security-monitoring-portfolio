@@ -1,0 +1,13 @@
+behaviour,evidence_source,record_number,correlation_fields,observed_detail,status
+Encoded hidden PowerShell,Sysmon 1 and Security 4688,251258;66981,Host PID parent PID ProcessGuid LogonId,powershell.exe -noP -sta -w 1 -enc followed by 5056 Base64 characters,Confirmed
+Initial stager content,PowerShell 4104,1948,Host ExecutionProcessID ScriptBlockId,ScriptBlockId 6e4c1b59-2eb8-4934-9e78-32cd88822dbb and UTF-8 SHA256 cca88ef46c983e164828873bdb2494227ba50fc16d8496553ea83c5129dfd974,Confirmed
+Logging suppression,PowerShell 4104,1948,Host ExecutionProcessID ScriptBlockId,Code constructed ScriptBlockLogging policy names and assigned zero values,Confirmed attempt
+AMSI impairment,PowerShell 4104,1948,Host ExecutionProcessID ScriptBlockId,Reflection code targeted AmsiUtils and set the constructed amsiInitFailed field true,Confirmed attempt; success unable to confirm
+Server decode,PowerShell 4104,1948,Host ExecutionProcessID ScriptBlockId,Nested UTF-16LE Base64 decoded offline to http://10.10.10.5,Confirmed content
+Download decrypt and memory execution,PowerShell 4104 plus Sysmon 3 plus Event 800,1948;251809;1364,PID ProcessGuid HostId RunspaceId,DownloadData from /news.php then RC4-like decode and IEX followed by second-stage agent code in the same PowerShell session,Confirmed
+Agent negotiation and encrypted channel logic,Windows PowerShell 800,1364,HostId RunspaceId PipelineId,UploadData POST to /login/process.php and /news.php with RSA AES-CBC HMAC and RC4 routines,Confirmed code execution; HTTP bytes not available
+Network configuration discovery,PowerShell 4103,1962,ExecutionProcessID HostId RunspaceId,Get-WmiObject Win32_NetworkAdapterConfiguration,Confirmed
+Operating system discovery,PowerShell 4103,1963,ExecutionProcessID HostId RunspaceId,Get-WmiObject Win32_OperatingSystem,Confirmed
+Remote task command,Windows PowerShell 800 plus Sysmon 1,1417;251944,HostId RunspaceId parent ProcessGuid,Invoke-Expression parameter value whoami caused whoami.exe child process,Confirmed
+Command result,PowerShell 4103,1999,ExecutionProcessID HostId RunspaceId,Output theshire\\pgustavo followed by Command execution completed,Confirmed
+Task polling,Windows PowerShell 800,1463,HostId RunspaceId PipelineId,Task URI selection remained active at capture end,Confirmed within capture

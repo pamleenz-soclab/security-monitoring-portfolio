@@ -1,0 +1,21 @@
+category,item,value,evidence_status,notes
+scope,affected_hosts,1,Confirmed,Only WORKSTATION5 matched launcher.vbs the encoded command the C2 address the PowerShell runspace and whoami task
+scope,affected_users,1,Confirmed,THESHIRE\\pgustavo SID S-1-5-21-2079883792-3656946353-945924832-1104
+scope,other_telemetry_hosts,2,Confirmed,WORKSTATION6 and MORDORDC appear in the dataset but do not match the malicious chain
+telemetry,PowerShell_4103,87,Confirmed,All relevant 4103 events use ExecutionProcessID 2316
+telemetry,PowerShell_4104,1,Confirmed,Only the initial stager script block is present
+telemetry,Windows_PowerShell_800,126,Confirmed,Classic provider pipeline details; correlation uses HostId and RunspaceId
+telemetry,PowerShell_Sysmon_network_connections,1,Confirmed,One TCP connection may carry multiple HTTP requests through keep-alive
+telemetry,PowerShell_Sysmon_file_creates,4,Confirmed,Two policy-test files one runtime directory and ModuleAnalysisCache
+telemetry,PowerShell_Sysmon_file_deletes,2,Confirmed,Both are policy-test files
+telemetry,PowerShell_Sysmon_registry_CreateKey,328,Confirmed,Predominantly certificate policy Internet Settings and network-query side effects; no recognised persistence path matched
+telemetry,PowerShell_Sysmon_registry_SetValue,0,Confirmed,No Sysmon Event 13 tied to the PowerShell ProcessGuid
+telemetry,PowerShell_Sysmon_process_termination,0,Not observed,No Sysmon Event 5 for the PowerShell before capture end
+impact,persistence,0,Not observed,No scheduled task service autorun value or startup-folder persistence matched
+impact,privilege_escalation,0,Not observed,Process ran with Medium integrity and a limited token
+impact,credential_access,0,Not observed,No credential-dumping command or supporting event was found
+impact,lateral_movement,0,Not observed,WMI queries targeted the local workstation and no remote execution was found
+gap,launcher_vbs_bytes,not available,Not available,File content and hash are absent
+gap,http_payloads,not available,Not available,No PCAP proxy log or server log
+gap,post_capture_activity,not available,Not available,Capture ends approximately 69 seconds after its first event
+gap,AMSI_bypass_result,unable to confirm,Unable to confirm,Attempted reflection-based change is logged but Defender or AMSI outcome telemetry is absent

@@ -1,0 +1,10 @@
+# Raw evidence is retained locally and must never be committed.
+evidence/raw/**
+!evidence/raw/.gitkeep
+
+# Temporary parsing and analyst-working files.
+evidence/working/**
+work/**
+
+# macOS metadata.
+.DS_Store

@@ -1,0 +1,23 @@
+category,key,count_or_value
+dataset,dataset_id,SDWIN-190518182022
+dataset,title,Empire VBS Execution
+integrity,jsonl_records,2067
+integrity,jsonl_parse_failures,0
+time,min_at_timestamp,2020-09-04T20:09:40.845Z
+time,max_at_timestamp,2020-09-04T20:10:49.124Z
+host,WORKSTATION5.theshire.local,1633
+host,WORKSTATION6.theshire.local,372
+host,MORDORDC.theshire.local,62
+channel,Microsoft-Windows-Sysmon/Operational,1190
+channel,Security,652
+channel,Windows PowerShell,133
+channel,Microsoft-Windows-PowerShell/Operational,91
+channel,Microsoft-Windows-WMI-Activity/Operational,1
+event,Security:4688,5
+event,PowerShellOperational:4103,87
+event,PowerShellOperational:4104,1
+event,Sysmon:1,5
+event,Sysmon:3,10
+event,Sysmon:11,22
+event,Sysmon:22,2
+event,Sysmon:23,2
