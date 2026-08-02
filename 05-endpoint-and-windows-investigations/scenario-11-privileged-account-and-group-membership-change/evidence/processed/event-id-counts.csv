@@ -1,0 +1,54 @@
+source,event_id,count
+Windows Security,1100,5
+Windows Security,4608,6
+Windows Security,4616,4
+Windows Security,4624,896
+Windows Security,4625,2
+Windows Security,4634,718
+Windows Security,4648,659
+Windows Security,4672,882
+Windows Security,4688,61
+Windows Security,4713,1
+Windows Security,4717,7
+Windows Security,4718,4
+Windows Security,4720,4
+Windows Security,4722,3
+Windows Security,4724,5
+Windows Security,4726,3
+Windows Security,4727,11
+Windows Security,4728,2
+Windows Security,4731,16
+Windows Security,4732,12
+Windows Security,4735,79
+Windows Security,4737,14
+Windows Security,4738,16
+Windows Security,4739,1
+Windows Security,4741,1
+Windows Security,4742,8
+Windows Security,4754,4
+Windows Security,4755,6
+Windows Security,4756,2
+Windows Security,4768,507
+Windows Security,4769,522
+Windows Security,4776,152
+Windows Security,4781,25
+Windows Security,4798,24
+Windows Security,4799,74
+Windows Security,4826,6
+Windows Security,4902,6
+Windows Security,4907,695
+Windows Security,5024,6
+Windows Security,5033,6
+Windows Security,5058,19
+Windows Security,5059,1
+Windows Security,5061,19
+Sysmon,1,350
+Sysmon,3,25
+Sysmon,4,2
+Sysmon,6,8
+Sysmon,10,5653
+Sysmon,11,221
+Sysmon,12,8
+Sysmon,13,37
+Sysmon,16,1
+Sysmon,22,81

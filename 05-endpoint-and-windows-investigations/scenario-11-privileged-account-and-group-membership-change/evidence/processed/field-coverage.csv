@@ -1,0 +1,13 @@
+category,status,value,basis
+Actor identity,Available,ATTACKRANGE\Administrator,4624/4672 and change events; Logon ID 0x79779
+Target identity,Available with limitation,ATTACKRANGE\T1136.001_Admin,Name/domain resolved in 4720/4722/4724/4738/4732/4726; immutable numeric SID not present
+Privileged group,Available,BUILTIN\Administrators,4732 plus Sysmon net localgroup command
+Actor source IP,Not observed,-,4624 field is present but empty/dash
+Target successful or failed logon,Not observed,0,"Target appears only in Security event types 4720,4722,4724,4726,4732,4738; no 4624/4625"
+Target special privilege logon,Not observed,0,No 4672 containing the target; observed 4672 events belong to Administrator sessions
+Target explicit credential use,Not observed,0,No 4648 containing the target
+Target process execution,Not observed,0,No Sysmon Event 1 with User equal to target
+Explicit group-member removal,Not observed,No 4733,Account deletion is confirmed separately by 4726
+Ticket/approval/change window,Not available,,Evidence category is absent from the public dataset
+Directory Object ID/DN and immutable numeric SID,Not available,,Rendered Security text resolves identities to names
+Cross-host EDR/network follow-on,Not available,,Selected Sysmon coverage is limited to the primary host

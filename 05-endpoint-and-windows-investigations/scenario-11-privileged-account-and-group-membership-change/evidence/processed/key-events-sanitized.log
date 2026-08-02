@@ -1,0 +1,71 @@
+# Sanitised key evidence — Scenario 11
+# Source timestamps from Windows Security are timezone-unlabelled; UTC is inferred by exact alignment with Sysmon UTC.
+
+[Actor session]
+TimeCreated: 2020-10-09T10:41:23Z (UTC inferred)
+EventCode: 4624
+EventRecordID/RecordNumber: 228808
+Computer: win-dc-7216619.attackrange.local
+NewLogon.SecurityID: ATTACKRANGE\Administrator
+NewLogon.LogonID: 0x79779 (decimal 497529)
+LogonType: 3
+SourceNetworkAddress: -
+
+[Actor special privileges]
+TimeCreated: 2020-10-09T10:41:23Z (UTC inferred)
+EventCode: 4672
+EventRecordID/RecordNumber: 228809
+Subject: ATTACKRANGE\Administrator
+SubjectLogonID: 0x79779
+Interpretation: privileges belong to the actor session, not to the newly created target account.
+
+[Atomic test process]
+TimeCreated: 2020-10-09 10:41:26.060Z
+SysmonEventID: 1
+EventRecordID: 4277
+User: ATTACKRANGE\Administrator
+LogonID: 0x79779
+Image: C:\Windows\System32\cmd.exe
+ProcessGUID: {733EE690-3E56-5F80-DE00-000000007F01}
+CommandLine: "C:\Windows\system32\cmd.exe" /c "net user /add "T1136.001_Admin" "[REDACTED-LAB-PASSWORD]" & net localgroup administrators "T1136.001_Admin" /add"
+DecodedParentCommand: [Console]::InputEncoding = New-Object Text.UTF8Encoding $false; Import-Module "C:\AtomicRedTeam\invoke-atomicredteam\Invoke-AtomicRedTeam.psd1" -Force
+Invoke-AtomicTest "T1136.001" -Confirm:$false -TimeoutSeconds 300 -ExecutionLogPath C:\AtomicRedTeam\atc_execution.csv
+
+[Account lifecycle]
+Event 4720 / Record 228839: ATTACKRANGE\Administrator created ATTACKRANGE\T1136.001_Admin; SubjectLogonID=0x79779
+Event 4722 / Record 228840: target enabled; SubjectLogonID=0x79779
+Event 4724 / Record 228841: password reset recorded with Audit Success; SubjectLogonID=0x79779
+Event 4738 / Record 228842: Password Last Set updated; UAC 0x15 -> 0x10; SubjectLogonID=0x79779
+
+[Privileged membership]
+EventCode: 4732
+EventRecordID/RecordNumber: 228843
+Computer: win-dc-7216619.attackrange.local
+Subject: ATTACKRANGE\Administrator
+SubjectLogonID: 0x79779
+Member.SecurityID: ATTACKRANGE\T1136.001_Admin
+Group.SecurityID: BUILTIN\Administrators
+Group.Name: Administrators
+Group.Domain: Builtin
+CorroboratingCommand: net localgroup administrators "T1136.001_Admin" /add
+
+[Cleanup]
+TimeCreated: 2020-10-09 10:41:29.003Z
+SysmonEventID: 1
+EventRecordID: 4600
+User: ATTACKRANGE\Administrator
+LogonID: 0x7fe66 (decimal 523878)
+ProcessGUID: {733EE690-3E59-5F80-F400-000000007F01}
+CommandLine: "C:\Windows\system32\cmd.exe" /c "net user /del "T1136.001_Admin" >nul 2>&1"
+DecodedParentCommand: [Console]::InputEncoding = New-Object Text.UTF8Encoding $false; Import-Module "C:\AtomicRedTeam\invoke-atomicredteam\Invoke-AtomicRedTeam.psd1" -Force
+Invoke-AtomicTest "T1136.001" -Cleanup
+Event 4726 / Record 228888: ATTACKRANGE\T1136.001_Admin deleted by ATTACKRANGE\Administrator; SubjectLogonID=0x7FE66
+
+[Negative findings within selected telemetry]
+Target 4624/4625: Not observed
+Target 4648: Not observed
+Target 4672: Not observed
+Sysmon process with User=ATTACKRANGE\T1136.001_Admin: Not observed
+Event 4733 explicit membership removal: Not observed
+Ticket/approval/change-window data: Not available
+Immutable numeric SID/Object ID/DN: Not available

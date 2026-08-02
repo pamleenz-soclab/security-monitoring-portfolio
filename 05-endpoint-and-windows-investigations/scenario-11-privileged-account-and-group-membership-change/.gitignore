@@ -1,0 +1,16 @@
+# Raw source evidence stays local.
+evidence/raw/*
+!evidence/raw/.gitkeep
+
+# Common large or sensitive evidence formats.
+*.evtx
+*.etl
+*.pcap
+*.pcapng
+*.zip
+*.7z
+
+# Local analysis caches.
+__pycache__/
+*.pyc
+.DS_Store

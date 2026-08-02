@@ -1,0 +1,4 @@
+analytic_id,analytic_name,expected_matches,observed_matches,result,evidence_sequences,notes
+S11-D1,Privileged membership addition,1,1,PASS,11,Windows Security 4728/4732/4756 plus privileged-group inventory
+S11-D2,New account followed by privileged addition within 15 minutes,1,1,PASS,5->11,Same host and normalised target name; production should prefer SID/Object ID
+S11-D3,Post-change activity executed as target,0,0,PASS,,Checks target-attributed Security 4624/4625/4648/4672 and Sysmon Event 1
