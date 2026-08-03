@@ -1,0 +1,3 @@
+evidence/raw/**
+!evidence/raw/.gitkeep
+evidence/working/**
