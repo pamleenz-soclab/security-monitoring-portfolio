@@ -1,0 +1,43 @@
+title: Suspicious SYSTEM Logon Scheduled Task With PowerShell Action
+id: c0fd2e47-5f23-4c9c-8d71-4a31a7428a52
+status: test
+description: Detects schtasks.exe creating a logon-triggered SYSTEM task whose action uses PowerShell with hiding or decoding indicators.
+references:
+  - https://attack.mitre.org/techniques/T1053/005/
+  - https://securitydatasets.com/notebooks/atomic/windows/persistence/SDWIN-200921175806.html
+author: Pam Lee
+date: 2026-08-03
+tags:
+  - attack.persistence
+  - attack.execution
+  - attack.t1053.005
+  - attack.t1059.001
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection_image:
+    Image|endswith: '\schtasks.exe'
+  selection_create:
+    CommandLine|contains|all:
+      - '/Create'
+      - '/RU system'
+      - '/SC ONLOGON'
+      - '/TR'
+  selection_action:
+    CommandLine|contains:
+      - 'powershell.exe'
+      - 'pwsh.exe'
+  selection_suspicious_content:
+    CommandLine|contains:
+      - '-W hidden'
+      - '-WindowStyle Hidden'
+      - 'FromBase64String'
+      - 'Invoke-Expression'
+      - 'IEX'
+  condition: selection_image and selection_create and selection_action and selection_suspicious_content
+falsepositives:
+  - Approved endpoint-management or software-deployment tasks using the same high-risk combination
+  - Authorised red-team or adversary-simulation activity
+level: high
+

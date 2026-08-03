@@ -1,0 +1,23 @@
+time,stage,host,user,source,event_id,record_id,object,detail,status
+2020-09-21 17:58:17,Payload storage,LAB-WKS-05,LAB\\user-a,Sysmon,13,3114429,HKLM\\SOFTWARE\\Microsoft\\Network\\debug,PowerShell set registry value; data omitted,Confirmed
+2020-09-21 17:58:17,Task creation process,LAB-WKS-05,LAB\\user-a,Sysmon,1,3114432,schtasks.exe,SYSTEM ONLOGON hidden PowerShell task action; loader redacted,Confirmed
+2020-09-21 17:58:17,Task creation process,LAB-WKS-05,LAB\\user-a,Security,4688,755555,schtasks.exe,Cross-source record of the same creation process,Confirmed
+2020-09-21 17:58:17,Task registration,LAB-WKS-05,LAB\\user-a,TaskScheduler,106,7153,\\MordorElevated,Task registered,Confirmed
+2020-09-21 17:58:17,Task creation,LAB-WKS-05,LAB\\user-a,Security,4698,755562,\\MordorElevated,Creator Logon ID 0xa1d79,Confirmed
+2020-09-21 17:58:17,TaskCache write,LAB-WKS-05,SYSTEM,Sysmon,12/13,3114460-3114463,TaskCache\\Tree\\MordorElevated,Task cache key and values created,Confirmed
+2020-09-21 17:59:04,Reboot request,LAB-WKS-05,LAB\\user-a,Sysmon/Security,1/4688,3120221/759551,shutdown.exe /r,Same creator Logon ID 0xa1d79,Confirmed
+2020-09-21 17:59:36,Shutdown sequence,LAB-WKS-05,SYSTEM,System,6006,1279,Event Log service,Service stopped,Confirmed
+2020-09-21 17:59:41,Shutdown sequence,LAB-WKS-05,SYSTEM,System,109,1291,Kernel power manager,Shutdown transition initiated,Confirmed
+2020-09-21 17:59:44,Shutdown sequence,LAB-WKS-05,SYSTEM,System,13,1292,Operating system,System shutting down,Confirmed
+2020-09-21 17:59:46,Startup sequence,LAB-WKS-05,SYSTEM,System,12,1293,Operating system,System started,Confirmed
+2020-09-21 18:00:10,Startup sequence,LAB-WKS-05,SYSTEM,Security,4608,760413,Security auditing,Auditing subsystem started,Confirmed
+2020-09-21 18:01:12,Remote logon,LAB-WKS-05,LAB\\user-a,Security,4624,771728/771730,Logon Type 10,Elevated and non-elevated token events; source redacted,Confirmed
+2020-09-21 18:01:12,Privilege assignment,LAB-WKS-05,LAB\\user-a,Security,4672,771732,Logon ID 0x10a7df,Special privileges assigned,Confirmed
+2020-09-21 18:01:15,Task launch,LAB-WKS-05,SYSTEM,TaskScheduler,129,7293,\\MordorElevated,PowerShell PID 620,Confirmed
+2020-09-21 18:01:15,Related task launch,LAB-WKS-05,SYSTEM,TaskScheduler,129,7290,\\MordorElevatedTask,PowerShell PID 636; creation not observed,Confirmed
+2020-09-21 18:01:15,System PowerShell,LAB-WKS-05,SYSTEM,Security,4688,772054,powershell.exe,PID 0x26c equals 620; system integrity,Confirmed
+2020-09-21 18:01:15,System PowerShell,LAB-WKS-05,SYSTEM,Security,4688,772055,powershell.exe,PID 0x27c equals 636; system integrity,Confirmed
+2020-09-21 18:01:39,Dynamic compilation,LAB-WKS-05,SYSTEM,Security,4688,773273,csc.exe,PID 6780 child of PowerShell PID 620,Confirmed
+2020-09-21 18:01:39,Dynamic compilation,LAB-WKS-05,SYSTEM,Security,4688,773272,csc.exe,PID 5360 child of PowerShell PID 636,Confirmed
+2020-09-21 18:01:41,Network communication,LAB-WKS-05,SYSTEM,Security,5156,773421,powershell.exe,PID 620 to 10[.]10[.]10[.]5:80/TCP,Confirmed
+2020-09-21 18:01:41,Network communication,LAB-WKS-05,SYSTEM,Security,5156,773419,powershell.exe,PID 636 to 10[.]10[.]10[.]5:80/TCP,Confirmed

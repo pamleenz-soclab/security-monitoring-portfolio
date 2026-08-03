@@ -1,0 +1,17 @@
+time,host,source,event_id,record_id,account,logon_id,pid_decimal,pid_hex,parent_pid_hex,artifact,evidence,status
+2020-09-21 17:58:17,LAB-WKS-05,Sysmon,13,3114429,LAB\\user-a,not_available,not_available,not_available,not_available,HKLM\\SOFTWARE\\Microsoft\\Network\\debug,Registry value set by PowerShell,Confirmed
+2020-09-21 17:58:17,LAB-WKS-05,Sysmon,1,3114432,LAB\\user-a,0xa1d79,not_available,not_available,not_available,schtasks.exe,Task create command captured; PID retained in Security corroboration,Confirmed
+2020-09-21 17:58:17,LAB-WKS-05,Security,4688,755555,LAB\\user-a,0xa1d79,7384,0x1cd8,0xffc,schtasks.exe,Cross-source process corroboration,Confirmed
+2020-09-21 17:58:17,LAB-WKS-05,TaskScheduler,106,7153,SYSTEM,not_available,not_available,not_available,not_available,\\MordorElevated,Task registered,Confirmed
+2020-09-21 17:58:17,LAB-WKS-05,Security,4698,755562,LAB\\user-a,0xa1d79,not_available,not_available,not_available,\\MordorElevated,Task created,Confirmed
+2020-09-21 17:59:04,LAB-WKS-05,Security,4688,759551,LAB\\user-a,0xa1d79,7672,0x1df8,0xffc,shutdown.exe,Reboot requested,Confirmed
+2020-09-21 18:01:12,LAB-WKS-05,Security,4624,771728,LAB\\user-a,0x10a7df,not_available,not_available,not_available,Logon Type 10,Elevated remote interactive logon,Confirmed
+2020-09-21 18:01:12,LAB-WKS-05,Security,4672,771732,LAB\\user-a,0x10a7df,not_available,not_available,not_available,Special privileges,Privilege assignment tied to logon,Confirmed
+2020-09-21 18:01:15,LAB-WKS-05,TaskScheduler,129,7293,SYSTEM,not_available,620,not_available,not_available,\\MordorElevated,Task launch PID,Confirmed
+2020-09-21 18:01:15,LAB-WKS-05,Security,4688,772054,SYSTEM,0x3e7,620,0x26c,0x478,powershell.exe,System-integrity task action,Confirmed
+2020-09-21 18:01:15,LAB-WKS-05,TaskScheduler,129,7290,SYSTEM,not_available,636,not_available,not_available,\\MordorElevatedTask,Task launch; creation not observed,Confirmed
+2020-09-21 18:01:15,LAB-WKS-05,Security,4688,772055,SYSTEM,0x3e7,636,0x27c,0x478,powershell.exe,System-integrity task action,Confirmed
+2020-09-21 18:01:39,LAB-WKS-05,Security,4688,773273,SYSTEM,0x3e7,6780,0x1a7c,0x26c,csc.exe,Child of PowerShell PID 620,Confirmed
+2020-09-21 18:01:39,LAB-WKS-05,Security,4688,773272,SYSTEM,0x3e7,5360,0x14f0,0x27c,csc.exe,Child of PowerShell PID 636,Confirmed
+2020-09-21 18:01:41,LAB-WKS-05,Security,5156,773421,SYSTEM,not_available,620,0x26c,not_available,10[.]10[.]10[.]5:80/TCP,Allowed connection from PowerShell,Confirmed
+2020-09-21 18:01:41,LAB-WKS-05,Security,5156,773419,SYSTEM,not_available,636,0x27c,not_available,10[.]10[.]10[.]5:80/TCP,Allowed connection from PowerShell,Confirmed

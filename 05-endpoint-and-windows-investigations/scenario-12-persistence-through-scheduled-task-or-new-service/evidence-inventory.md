@@ -1,62 +1,78 @@
 # Evidence Inventory
 
-## Raw Evidence
+## Collection summary
 
-| Evidence | Location | Size | Handling |
-|---|---|---:|---|
-| Original ZIP archive | evidence/raw/otrf-empire-elevated-scheduled-task/empire_schtasks_creation_execution_elevated_user.zip | 4,241,110 bytes | Local only, Git ignored, read-only |
-| Extracted JSON Lines log | evidence/raw/otrf-empire-elevated-scheduled-task/empire_schtasks_creation_execution_elevated_user_2020-09-21175806.json | 95,587,556 bytes; 59,399 records | Local only, Git ignored, read-only |
-| Raw directory placeholder | evidence/raw/.gitkeep | Not applicable | Intended for Git |
-
-## Archive Integrity
-
-- ZIP SHA-256: 74662dc5c52f4ac2fc9dcb336bae7fb4e101217169c65adf5784b03015501d3b
-- ZIP integrity test: passed
-- JSON parsing validation: passed
-- Archive executable content: not observed
-
-## Channel Inventory
-
-| Channel | Records |
+| Metric | Value |
 |---|---:|
-| Microsoft-Windows-Sysmon/Operational | 35,889 |
-| security | 19,431 |
-| Security | 2,852 |
-| Windows PowerShell | 545 |
-| Microsoft-Windows-PowerShell/Operational | 466 |
-| System | 90 |
-| Microsoft-Windows-WMI-Activity/Operational | 64 |
-| Microsoft-Windows-TaskScheduler/Operational | 33 |
+| Evidence start | `2020-09-21 17:58:04` |
+| Evidence end | `2020-09-21 18:02:25` |
+| Duration | 4 minutes 21 seconds |
+| Parsed events | 59,399 |
+| Hosts | 3 |
+| Events from primary host | 52,708 (88.74%) |
+| Events from secondary workstation | 3,388 (5.70%) |
+| Events from domain controller | 3,303 (5.56%) |
 
-Channel names are preserved exactly as recorded. The values `security` and `Security` will not be merged silently during evidence extraction.
+Public labels replace lab host, domain, user, and source-address values. The task names, registry path, event identifiers, record identifiers, and process identifiers are retained because they are necessary for correlation.
 
-## Initial Key Event Inventory
+## Raw evidence — local only
 
-| Channel | Event ID | Count | Candidate relevance |
-|---|---:|---:|---|
-| security | 4698 | 3 | Scheduled task created |
-| security | 4702 | 10 | Scheduled task updated |
-| Task Scheduler Operational | 106 | 3 | Task registration |
-| Task Scheduler Operational | 129 | 28 | Task process launch |
-| Task Scheduler Operational | 141 | 2 | Task deletion |
-| security | 4688 | 335 | Process creation |
-| Security | 4688 | 4 | Process creation |
-| Sysmon Operational | 1 | 216 | Process creation |
-| Sysmon Operational | 3 | 38 | Network connection |
-| security/Security | 5156 and 5158 | 2,403 | Network connection and bind telemetry |
+| File | Purpose | Integrity | Git status |
+|---|---|---|---|
+| `evidence/raw/.../empire_schtasks_creation_execution_elevated_user.zip` | Original upstream archive | SHA-256 recorded | Ignored |
+| `evidence/raw/.../empire_schtasks_creation_execution_elevated_user_2020-09-21175806.json` | Extracted line-delimited Windows telemetry | SHA-256 recorded | Ignored |
 
-These counts are inventory observations only. They do not establish that every listed event belongs to the suspected scheduled task.
+The public hash list is stored in `evidence/source/raw-sha256.txt`. Local absolute paths are intentionally removed.
 
-## Planned Derived Evidence
+## Working evidence — local only
 
-The investigation will derive:
+| Working file | Purpose | Result summary |
+|---|---|---|
+| `all-event-index.tsv` | Event-level time, host, channel, ID, and record index | 59,399 rows |
+| `key-event-schemas.tsv` | Available fields for key event types | 34 rows |
+| `task-lifecycle.tsv` | Task create, update, delete, register, and launch candidates | 48 rows |
+| `task-xml-events.jsonl` | Task-related records retained for XML review | 13 rows |
+| `task-definitions.tsv` | Normalised task configuration fields | 13 rows; relevant fields unresolved |
+| `process-candidates.tsv` | `schtasks`, PowerShell, reboot, and child-process candidates | 19 rows |
+| `powershell-candidates.tsv` | PowerShell-channel candidates | 308 rows |
+| `network-candidates.tsv` | PowerShell network-filtering events | 4 rows |
+| `logon-context.tsv` | Security 4624 and 4672 context | 202 rows |
+| `mordor-task-events.tsv` | Focused lifecycle for the two related tasks | 4 rows |
+| `registry-network-debug.tsv` | Registry payload and TaskCache records | 5 rows |
+| `relevant-logon-context.tsv` | Focused account and Logon ID context | 18 rows |
+| `reboot-logon-evidence.tsv` | Shutdown, startup, and subsequent logon sequence | 127 rows |
 
-- scheduled-task lifecycle timeline;
-- task-definition summary;
-- task-creation process evidence;
-- execution-process and PID correlation;
-- login and privilege context;
-- relevant network activity;
-- sanitised final evidence timeline.
+Working exports may contain full command lines and environment-specific identifiers, so they remain under `evidence/working/` and are ignored by Git.
 
-Temporary unsanitised query results will remain under evidence/working and will not be committed.
+## Published processed evidence
+
+| File | Contents | Sanitisation |
+|---|---|---|
+| `evidence/processed/persistence-timeline.csv` | Chronological persistence and follow-on events | Host/user labels replaced; controller deactivated; payload omitted |
+| `evidence/processed/key-events.csv` | Minimum fields required to reproduce the main correlations | No full messages, XML, or encoded content |
+| `evidence/processed/task-execution-correlation.csv` | Task-to-PID-to-child-to-network mapping | Host/user labels replaced |
+| `evidence/processed/evidence-status.csv` | Confirmed, inferred, unavailable, and gap decisions | No raw data |
+| `evidence/processed/detection-validation.csv` | Rule match counts and validation limits | No raw messages |
+
+## Evidence used in the final conclusion
+
+| Source | Event IDs | Investigative use |
+|---|---|---|
+| Sysmon Operational | 1, 12, 13 | Creator process, reboot request, registry value, and TaskCache changes |
+| Windows Security | 4624, 4672, 4688, 4698, 5156, 5158 | Account/session context, process creation, task creation, and network correlation |
+| Task Scheduler Operational | 106, 129 | Task registration and task-to-process-ID mapping |
+| System | 12, 13, 109, 6006 | Shutdown and restart confirmation |
+
+## Evidence unavailable or insufficient
+
+| Question | Status | Reason |
+|---|---|---|
+| Who created `\MordorElevatedTask`? | Not observed | No creation event for this task appears in the collection window |
+| What login originated creator session `0xa1d79`? | Not observed | No matching 4624/4672 session event appears in the available window |
+| Did parsed task XML independently confirm every task setting? | Detection gap | The normalisation query did not extract the task XML fields |
+| What payload file hash or signer was involved? | Not available | No usable file metadata was supplied for the in-memory/registry-backed content |
+| Was the destination communication HTTP? | Unable to confirm | TCP destination port `80` is confirmed; application-layer content is absent |
+| Was there an authorised change or deployment? | Not available | No ticketing, software-deployment, or change-management source was included |
+| Did the task execute repeatedly after the window? | Unable to confirm | The short dataset ends approximately one minute after the observed execution |
+| Is System Event ID `7045` part of this chain? | Unable to confirm | The extracted event lacks service configuration and cannot be correlated safely |
+

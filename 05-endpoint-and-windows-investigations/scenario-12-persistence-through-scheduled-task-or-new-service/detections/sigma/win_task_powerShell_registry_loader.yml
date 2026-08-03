@@ -1,0 +1,45 @@
+title: Task-Launched PowerShell Registry Backed Decoder
+id: 36b5b9b1-d116-4f4a-8a6e-8a68d984903f
+status: test
+description: Detects hidden PowerShell launched from a service-host context that reads HKLM registry content, decodes Base64, and executes the result.
+references:
+  - https://attack.mitre.org/techniques/T1059/001/
+  - https://attack.mitre.org/techniques/T1112/
+author: Pam Lee
+date: 2026-08-03
+tags:
+  - attack.execution
+  - attack.persistence
+  - attack.defense-evasion
+  - attack.t1059.001
+  - attack.t1112
+  - attack.t1027
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection_image:
+    Image|endswith:
+      - '\powershell.exe'
+      - '\pwsh.exe'
+  selection_parent:
+    ParentImage|endswith: '\svchost.exe'
+  selection_loader:
+    CommandLine|contains|all:
+      - 'HKLM:'
+      - 'FromBase64String'
+  selection_execution:
+    CommandLine|contains:
+      - 'Invoke-Expression'
+      - 'IEX'
+  selection_hidden:
+    CommandLine|contains:
+      - '-W hidden'
+      - '-WindowStyle Hidden'
+      - '-NonI'
+  condition: selection_image and selection_parent and selection_loader and selection_execution and selection_hidden
+falsepositives:
+  - Approved system remediation tasks that store and decode managed content in the registry
+  - Authorised red-team or adversary-simulation activity
+level: high
+

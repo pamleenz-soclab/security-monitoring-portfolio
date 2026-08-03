@@ -1,70 +1,83 @@
 # Dataset Decision Record
 
-## Scenario
-
-Scenario 12 — Persistence Through Scheduled Task or New Service
-
 ## Decision
 
-The primary investigation route is Windows Scheduled Task persistence, initially mapped to MITRE ATT&CK T1053.005.
+Use the OTRF Security Datasets **Empire Elevated Scheduled Tasks** host dataset as the primary evidence source for Scenario 12. Follow the Scheduled Task investigation route rather than forcing a combined Scheduled Task and Windows Service scenario.
 
-The selected dataset is OTRF Security-Datasets:
+## Selected dataset
 
-- Dataset: Empire Elevated Scheduled Tasks
-- Archive: empire_schtasks_creation_execution_elevated_user.zip
-- Source: https://github.com/OTRF/Security-Datasets
-- Dataset page: https://securitydatasets.com/notebooks/atomic/windows/persistence/SDWIN-200921175806.html
-- Data type: simulated adversary-emulation lab telemetry
-- Analysis mode: offline log analysis only
+| Field | Value |
+|---|---|
+| Project | OTRF Security Datasets |
+| Dataset | Empire Elevated Scheduled Tasks |
+| Dataset type | Controlled adversary simulation / lab telemetry |
+| Created | 2020-09-21 |
+| Contributor | Roberto Rodriguez (`@Cyb3rWard0g`) |
+| Primary tactic | Persistence (`TA0003`) |
+| Primary technique | Scheduled Task (`T1053.005`) |
+| Simulation tool | Empire, `schtasks` module |
+| Format analysed | Line-delimited JSON in ZIP archive |
+| Licence | MIT |
+| Analysis mode | Offline, static log analysis only |
 
-## Selection Rationale
+Source references:
 
-The selected dataset provides stronger evidence correlation than the alternatives reviewed. It includes:
+- Dataset documentation: <https://securitydatasets.com/notebooks/atomic/windows/persistence/SDWIN-200921175806.html>
+- Repository: <https://github.com/OTRF/Security-Datasets>
+- Licence: <https://github.com/OTRF/Security-Datasets/blob/master/LICENSE>
+- Upstream archive: <https://raw.githubusercontent.com/OTRF/Security-Datasets/master/datasets/atomic/windows/persistence/host/empire_schtasks_creation_execution_elevated_user.zip>
 
-- Security Event ID 4698 scheduled-task creation events;
-- complete TaskContent XML;
-- Task Scheduler Operational events;
-- Windows 4688 and Sysmon Event ID 1 process telemetry;
-- PowerShell telemetry;
-- Sysmon and Windows Filtering Platform network telemetry;
-- both suspicious activity and normal scheduled-task background activity.
+## Selection rationale
 
-This permits investigation of task creation, configuration, execution, process lineage, privilege context, and potential network activity.
+The scheduled-task route was selected because this dataset provides the strongest correlation across the required investigation questions:
 
-## Alternatives Considered
+- `schtasks.exe` process creation and command-line parameters;
+- Security Event ID `4698` for task creation;
+- Task Scheduler Event ID `106` for registration;
+- Task Scheduler Event ID `129` for execution and process ID;
+- Security Event ID `4688` for execution context and parent-child process relationships;
+- Sysmon registry events for the registry-backed payload location;
+- reboot and logon evidence supporting the `ONLOGON` trigger;
+- Windows Filtering Platform events linking the resulting PowerShell PIDs to network activity.
 
-| Candidate | Strength | Primary limitation | Decision |
+The same collection contains a System Event ID `7045`, but the extracted record does not expose usable service name, image path, account, or start-type details. Treating it as a second persistence chain would create an unsupported conclusion. The service route was therefore excluded from the primary analysis.
+
+## Alternatives considered
+
+| Route | Strengths | Limitations | Decision |
 |---|---|---|---|
-| OTRF Empire Elevated Scheduled Tasks | Multi-channel creation and execution evidence | Simulated data and incomplete file-reputation context | Selected |
-| OTRF Empire Userland Scheduled Tasks | Task creation and XML evidence | Trigger falls outside the collection window | Not selected |
-| OTRF Covenant SharpSC Create | 4697, 7045 and service configuration evidence | Service execution not observed; remote-service lateral-movement context | Deferred |
-| Splunk taskschedule | Sysmon process and registry telemetry | No 4698, task XML or Task Scheduler Operational evidence | Not selected |
-| Splunk single-event samples | Useful for rule validation | Insufficient for full incident reconstruction | Not selected |
+| Scheduled Task | Creation, registration, execution, process, reboot, logon, registry, and network telemetry correlate within one short window | Task XML fields did not parse cleanly in the normalised export; file hash and signer fields are absent | Selected |
+| Windows Service | Event ID `7045` is present | The available record lacks the configuration needed to attribute or assess the service | Not selected |
+| Synthetic self-generated logs | Full control over schema and labels | Would provide weaker independent evidence and less realistic background noise | Not selected |
 
-## Integrity Baseline
+## Evidence quality and limitations
 
-- ZIP size: 4,241,110 bytes
-- ZIP SHA-256: 74662dc5c52f4ac2fc9dcb336bae7fb4e101217169c65adf5784b03015501d3b
-- Extracted JSON size: 95,587,556 bytes
-- JSON records: 59,399
-- JSON validation: passed
-- Executable content in archive: not observed
+The dataset includes background Windows activity from three lab hosts. This provides realistic benign noise and prevents conclusions based only on a suspicious task name. The relevant behaviour is supported by multiple independent Windows channels.
 
-## Licensing and Publication Boundary
+Important limitations:
 
-The repository LICENSE file states MIT, while repository documentation contains a GPL-3.0 reference. Because of this inconsistency, the portfolio will use a conservative publication boundary:
+- The collection window is only 4 minutes and 21 seconds.
+- The task XML parser used during analysis did not extract `UserId`, `LogonType`, `RunLevel`, trigger, command, or arguments into dedicated fields.
+- Configuration claims therefore rely on the observed `schtasks.exe` command line and the task's later behaviour, not on successfully parsed task XML.
+- The creation of `\MordorElevatedTask` is not present in the collection window.
+- The original login event for creator Logon ID `0xa1d79` is not present.
+- File creation, binary hash, and signer evidence for any payload are not available.
+- Network evidence confirms TCP communication to destination port `80`; it does not independently confirm HTTP content.
+- Change tickets, deployment records, and production authorisation context are not part of the dataset.
 
-- raw ZIP and JSON files will not be committed;
-- only minimal, attributed and sanitised derived evidence will be published;
-- full encoded commands and inactive external indicators will not be reproduced unnecessarily;
-- the original dataset source will be cited.
+## Safety decision
 
-## Known Evidence Limitations
+The archive is treated as potentially sensitive security evidence even though it contains logs rather than an executable sample.
 
-The dataset does not provide real organisational change tickets, asset ownership, deployment records, user interviews, EDR reputation results or independent authorisation records.
+- Do not run or decode embedded PowerShell content as part of this scenario.
+- Do not connect to addresses present in the logs.
+- Keep the original ZIP, JSON, full messages, and working exports local.
+- Publish only sanitised summaries, deactivated indicators, source metadata, hashes, and reproducible read-only queries.
 
-Whether the actions were authorised in a real enterprise is therefore unable to be confirmed.
+## Integrity records
 
-## Current Conclusion Boundary
+| Local raw object | SHA-256 |
+|---|---|
+| `empire_schtasks_creation_execution_elevated_user.zip` | `74662dc5c52f4ac2fc9dcb336bae7fb4e101217169c65adf5784b03015501d3b` |
+| `empire_schtasks_creation_execution_elevated_user_2020-09-21175806.json` | `1e595a94305c7a2283fb9109ae79f52906aefc0c19e2064a27fad9da2d0e27e9` |
 
-Dataset suitability is confirmed. No final maliciousness conclusion has been made at this stage.

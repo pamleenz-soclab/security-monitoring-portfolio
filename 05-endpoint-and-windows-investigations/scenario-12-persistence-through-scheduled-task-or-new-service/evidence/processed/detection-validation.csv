@@ -1,0 +1,4 @@
+rule,file,data_source,raw_matches,unique_activities,expected_records,result,limitations
+Suspicious schtasks SYSTEM ONLOGON PowerShell action,win_suspicious_schtasks_system_logon_powershell.yml,Sysmon 1 and Security 4688,2,1,3114432 and 755555,Pass; expected cross-source duplicate matched,Known-window functional validation only
+Task-launched PowerShell registry loader,win_task_powerShell_registry_loader.yml,Security 4688,2,2,772054 and 772055,Pass; both task action processes matched,No representative enterprise benign baseline tested
+Task XML field normalisation,not_applicable,Security 4698/4702,0,0,755562,Gap; dedicated fields unresolved,Raw task content requires namespace-aware parsing

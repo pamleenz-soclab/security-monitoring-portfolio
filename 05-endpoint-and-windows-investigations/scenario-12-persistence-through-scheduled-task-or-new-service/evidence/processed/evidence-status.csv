@@ -1,0 +1,18 @@
+finding,status,basis,limitation
+Registry-backed content was written,Confirmed,Sysmon 13 record 3114429,Content omitted from public evidence
+MordorElevated was created and registered,Confirmed,Security 4698 record 755562 and Task Scheduler 106 record 7153,None material
+Creator session was high integrity,Confirmed,Process integrity telemetry,Original login for 0xa1d79 not observed
+SYSTEM and ONLOGON task configuration,Confirmed,schtasks.exe command line and later execution behaviour,Task XML fields did not parse independently
+Host reboot completed,Confirmed,System 6006/109/13/12 and Security 4608,None material
+Remote interactive logon occurred,Confirmed,Security 4624 records 771728 and 771730,Source address removed from public evidence
+MordorElevated executed as SYSTEM,Confirmed,Task Scheduler 129 to Security 4688 PID correlation,None material
+MordorElevatedTask executed as SYSTEM,Confirmed,Task Scheduler 129 to Security 4688 PID correlation,Creation event not observed
+Dynamic compilation occurred,Confirmed,csc.exe child process records,Compiled source not available
+TCP connection to deactivated destination occurred,Confirmed,Security 5156 tied to PowerShell PIDs,Application protocol not available
+Destination traffic was HTTP,Unable to confirm,Destination port was 80,No packet proxy or application-layer telemetry
+MordorElevatedTask creator and creation time,Not observed,Task lifecycle search completed,Collection window may begin after creation
+Creator login source for 0xa1d79,Not observed,Focused 4624/4672 correlation completed,Original session may predate collection
+Payload file hash and signer,Not available,No usable file evidence,Registry or memory-backed execution may not expose a file
+Production change authorisation,Not available,No change or deployment data,Dataset is a simulation
+Complete task XML field extraction,Detection gap,Normalised task definition fields unresolved,Raw event content must be reparsed
+Windows service persistence,Unable to confirm,One 7045 record lacks usable service details,Excluded from confirmed chain

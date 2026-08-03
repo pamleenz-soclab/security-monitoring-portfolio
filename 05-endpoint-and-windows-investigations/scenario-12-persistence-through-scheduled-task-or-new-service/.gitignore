@@ -1,3 +1,6 @@
 evidence/raw/**
 !evidence/raw/.gitkeep
 evidence/working/**
+!evidence/working/.gitkeep
+.DS_Store
+
