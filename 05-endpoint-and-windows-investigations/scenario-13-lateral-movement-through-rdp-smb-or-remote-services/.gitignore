@@ -1,0 +1,13 @@
+.DS_Store
+
+# Original downloaded evidence must never be committed.
+evidence/raw/*
+!evidence/raw/.gitkeep
+
+# Extracted and temporary investigation material must not be committed.
+evidence/working/*
+!evidence/working/.gitkeep
+
+# Python generated files
+__pycache__/
+*.py[cod]

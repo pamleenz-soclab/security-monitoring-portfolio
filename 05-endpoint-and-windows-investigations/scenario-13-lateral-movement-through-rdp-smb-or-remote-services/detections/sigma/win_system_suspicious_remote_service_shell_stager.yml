@@ -1,0 +1,43 @@
+title: Suspicious Remote Service Shell Stager Installation
+id: 780d5fe8-b4c2-4c11-a2d3-1c9f26e67b82
+status: test
+description: Detects a new Windows service whose ImagePath combines a command shell, PowerShell and encoded-command execution.
+references:
+  - https://attack.mitre.org/techniques/T1569/002/
+  - https://securitydatasets.com/notebooks/atomic/windows/lateral_movement/SDWIN-190518210125.html
+author: Pam Lee
+date: 2026-08-03
+tags:
+  - attack.execution
+  - attack.t1569.002
+  - attack.t1059.001
+  - attack.t1059.003
+logsource:
+  product: windows
+  service: system
+detection:
+  selection_event:
+    EventID: 7045
+  selection_shell:
+    ImagePath|contains:
+      - '%COMSPEC%'
+      - '\cmd.exe'
+  selection_powershell:
+    ImagePath|contains:
+      - '\powershell'
+      - '\pwsh'
+  selection_encoded:
+    ImagePath|contains:
+      - ' -enc '
+      - ' -encodedcommand '
+  condition: selection_event and selection_shell and selection_powershell and selection_encoded
+fields:
+  - Computer
+  - ServiceName
+  - ImagePath
+  - ServiceStartType
+  - ServiceAccount
+falsepositives:
+  - Rare authorised deployment or red-team tooling that intentionally installs an encoded PowerShell service
+level: high
+

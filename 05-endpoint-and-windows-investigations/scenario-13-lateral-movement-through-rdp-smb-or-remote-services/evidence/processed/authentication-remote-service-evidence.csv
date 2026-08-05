@@ -1,0 +1,8 @@
+event_id,timestamp_utc,host,account,logon_id,source_address,source_workstation,target_resource,key_detail
+4624,2020-09-20T06:57:46.000Z,WORKSTATION6.theshire.local,pgustavo,0x2074186,172.18.39.5,WORKSTATION5,,LogonType=3; AuthenticationPackage=NTLM; LmPackage=NTLM V2
+4776,2020-09-20T06:57:46.000Z,MORDORDC.theshire.local,pgustavo,,,WORKSTATION5,,Credential validation status=0x0
+4672,2020-09-20T06:57:46.000Z,WORKSTATION6.theshire.local,pgustavo,0x2074186,,,,Special privileges assigned
+5140,2020-09-20T06:57:47.000Z,WORKSTATION6.theshire.local,pgustavo,0x2074186,172.18.39.5,,\\*\IPC$,IPC$ share accessed
+5145,2020-09-20T06:57:47.000Z,WORKSTATION6.theshire.local,pgustavo,0x2074186,172.18.39.5,,\\*\IPC$,svcctl named pipe accessed
+4697,2020-09-20T06:57:47.000Z,WORKSTATION6.theshire.local,pgustavo,0x2074186,,,PGUJLOAKFQFVOMHGFQPX,Service installed: PGUJLOAKFQFVOMHGFQPX
+7045,2020-09-20T06:57:47.000Z,WORKSTATION6.theshire.local,,,,,PGUJLOAKFQFVOMHGFQPX,Service Control Manager recorded: PGUJLOAKFQFVOMHGFQPX

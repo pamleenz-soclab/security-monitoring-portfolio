@@ -1,0 +1,49 @@
+let CorrelationWindow = 2m;
+let RemoteLogons =
+    WindowsEvent
+    | where EventID == 4624
+    | extend TargetUser = tolower(tostring(EventData.TargetUserName)),
+             TargetDomain = tostring(EventData.TargetDomainName),
+             TargetLogonId = tostring(EventData.TargetLogonId),
+             LogonType = tostring(EventData.LogonType),
+             SourceIp = tostring(EventData.IpAddress),
+             SourceWorkstation = tostring(EventData.WorkstationName),
+             AuthenticationPackage = tostring(EventData.AuthenticationPackageName)
+    | where LogonType == "3"
+    | project LogonTime=TimeGenerated, Computer, TargetUser, TargetDomain,
+              TargetLogonId, SourceIp, SourceWorkstation, AuthenticationPackage;
+let SvcctlAccess =
+    WindowsEvent
+    | where EventID == 5145
+    | extend SubjectUser = tolower(tostring(EventData.SubjectUserName)),
+             SubjectLogonId = tostring(EventData.SubjectLogonId),
+             ShareName = tostring(EventData.ShareName),
+             RelativeTargetName = tostring(EventData.RelativeTargetName),
+             PipeSourceIp = tostring(EventData.IpAddress)
+    | where ShareName endswith @"\IPC$" and RelativeTargetName =~ "svcctl"
+    | project PipeTime=TimeGenerated, Computer, SubjectUser, SubjectLogonId,
+              PipeSourceIp, ShareName, RelativeTargetName;
+let ServiceInstall =
+    WindowsEvent
+    | where EventID == 4697
+    | extend SubjectUser = tolower(tostring(EventData.SubjectUserName)),
+             SubjectLogonId = tostring(EventData.SubjectLogonId),
+             ServiceName = tostring(EventData.ServiceName),
+             ServiceFileName = tostring(EventData.ServiceFileName)
+    | project ServiceTime=TimeGenerated, Computer, SubjectUser, SubjectLogonId,
+              ServiceName, ServiceFileName;
+RemoteLogons
+| join kind=inner SvcctlAccess on Computer
+| where SubjectUser == TargetUser
+    and SubjectLogonId == TargetLogonId
+    and PipeTime between (LogonTime .. LogonTime + CorrelationWindow)
+| join kind=inner ServiceInstall on Computer, SubjectUser, SubjectLogonId
+| where ServiceTime between (LogonTime .. LogonTime + CorrelationWindow)
+| extend EncodedPowerShell = tolower(ServiceFileName) matches regex @"(powershell|pwsh).*\s-(enc|encodedcommand)\s"
+| extend Severity = iff(EncodedPowerShell, "High", "Medium")
+| project LogonTime, PipeTime, ServiceTime, Severity, Computer, TargetDomain,
+          TargetUser, TargetLogonId, SourceIp, SourceWorkstation,
+          AuthenticationPackage, ShareName, RelativeTargetName,
+          ServiceName, ServiceFileName
+| order by LogonTime desc
+

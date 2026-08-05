@@ -1,0 +1,56 @@
+{
+  "scenario": 13,
+  "verdict": "True Positive",
+  "severity": "High",
+  "technique": "SMB remote service execution",
+  "source": {
+    "host": "WORKSTATION5.theshire.local",
+    "ip": "172.18.39.5",
+    "user": "THESHIRE\\pgustavo"
+  },
+  "target": {
+    "host": "WORKSTATION6.theshire.local",
+    "ip": "172.18.39.6",
+    "execution_user": "NT AUTHORITY\\SYSTEM"
+  },
+  "service": "PGUJLOAKFQFVOMHGFQPX",
+  "correlation_keys": {
+    "logon_id": "0x2074186",
+    "source_process_guid": "{b34bc01c-f6f9-5f66-b410-000000000400}",
+    "target_powershell_guid": "{d273d0f0-fd6c-5f66-7605-000000000800}"
+  },
+  "observed_facts": [
+    "Successful NTLMv2 network logon from WORKSTATION5 to WORKSTATION6",
+    "IPC$ and svcctl access under the same logon session",
+    "Random temporary service creation with encoded PowerShell; target process telemetry confirms SYSTEM execution",
+    "services.exe-to-PowerShell SYSTEM process chain",
+    "Target PowerShell connection to private lab address 10.10.10.5:80",
+    "Two endpoint PCAPs independently contain NTLMSSP, svcctl and the service name"
+  ],
+  "ground_truth_only": [
+    "The simulator supplied an NTLM hash to Invoke-SMBExec; target/network telemetry alone cannot distinguish hash use from another successful NTLM credential source",
+    "Attribution of 10.10.10.5 as an Empire listener"
+  ],
+  "scope_limitations": [
+    "No evidence of movement beyond WORKSTATION6 in this capture",
+    "No evidence that MORDORDC was compromised",
+    "Source PowerShell process creation predates the capture window",
+    "Cross-host timestamps differ by up to about two seconds; packet order is preferred for SMB sequencing"
+  ],
+  "authorization_status": "Not available - no change, deployment or administrator-approval records are included",
+  "not_observed": [
+    "RDP",
+    "WinRM",
+    "Durable service persistence",
+    "Movement from WORKSTATION6 to a third internal target",
+    "Compromise of MORDORDC"
+  ],
+  "unable_to_confirm_from_target_network_telemetry": [
+    "Whether plaintext or NTLM hash material was supplied",
+    "WMI remote execution"
+  ],
+  "detection_gaps": [
+    "Missing Detailed File Share auditing would remove the 5145 svcctl correlation",
+    "Missing service-install, process command-line, PowerShell or east-west network telemetry would materially reduce confidence"
+  ]
+}

@@ -1,0 +1,4 @@
+source_host,source_ip,target_host,target_ip,account_or_process,protocol_or_service,role_in_incident,compromise_status
+WORKSTATION5.theshire.local,172.18.39.5,WORKSTATION6.theshire.local,172.18.39.6,THESHIRE\pgustavo / powershell.exe,TCP/445 SMB; IPC$; svcctl RPC,Confirmed lateral-movement source to target,Source-side attack process observed; initial compromise path not captured. Target SYSTEM execution confirmed
+WORKSTATION6.theshire.local,172.18.39.6,MORDORDC.theshire.local,172.18.38.5,THESHIRE\pgustavo / lsass.exe,NTLM credential validation; RPC,Authentication dependency,No evidence that the domain controller was compromised
+WORKSTATION6.theshire.local,172.18.39.6,Private lab Empire listener,10.10.10.5,NT AUTHORITY\SYSTEM / powershell.exe,TCP/80 HTTP,Post-exploitation HTTP activity (listener attribution from simulation ground truth),Observed bidirectional connection from the target PowerShell process

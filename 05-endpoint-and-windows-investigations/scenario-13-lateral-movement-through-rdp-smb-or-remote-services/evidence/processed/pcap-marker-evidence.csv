@@ -1,0 +1,13 @@
+capture_file,frame,timestamp_utc,source,destination,marker,interpretation
+empire_smbexec_dcerpc_smb_svcctl_WORKSTATION5_2020-09-20025716.cap,334,2020-09-20T06:57:46.614Z,172.18.39.5:50504,172.18.39.6:445,NTLMSSP,NTLM authentication exchange over SMB
+empire_smbexec_dcerpc_smb_svcctl_WORKSTATION5_2020-09-20025716.cap,335,2020-09-20T06:57:46.615Z,172.18.39.6:445,172.18.39.5:50504,NTLMSSP,NTLM authentication exchange over SMB
+empire_smbexec_dcerpc_smb_svcctl_WORKSTATION5_2020-09-20025716.cap,336,2020-09-20T06:57:46.639Z,172.18.39.5:50504,172.18.39.6:445,NTLMSSP,NTLM authentication exchange over SMB
+empire_smbexec_dcerpc_smb_svcctl_WORKSTATION5_2020-09-20025716.cap,341,2020-09-20T06:57:47.230Z,172.18.39.5:50504,172.18.39.6:445,svcctl_named_pipe,RPC access to the Service Control Manager named pipe
+empire_smbexec_dcerpc_smb_svcctl_WORKSTATION5_2020-09-20025716.cap,348,2020-09-20T06:57:47.422Z,172.18.39.5:50504,172.18.39.6:445,random_service_name,Service-name bytes observed in the SMB/RPC stream
+empire_smbexec_dcerpc_smb_svcctl_WORKSTATION5_2020-09-20025716.cap,353,2020-09-20T06:57:47.606Z,172.18.39.5:50504,172.18.39.6:445,random_service_name,Service-name bytes observed in the SMB/RPC stream
+empire_smbexec_dcerpc_smb_svcctl_WORKSTATION6_2020-09-20025716.cap,8,2020-09-20T06:57:46.612Z,172.18.39.5:50504,172.18.39.6:445,NTLMSSP,NTLM authentication exchange over SMB
+empire_smbexec_dcerpc_smb_svcctl_WORKSTATION6_2020-09-20025716.cap,9,2020-09-20T06:57:46.612Z,172.18.39.6:445,172.18.39.5:50504,NTLMSSP,NTLM authentication exchange over SMB
+empire_smbexec_dcerpc_smb_svcctl_WORKSTATION6_2020-09-20025716.cap,10,2020-09-20T06:57:46.638Z,172.18.39.5:50504,172.18.39.6:445,NTLMSSP,NTLM authentication exchange over SMB
+empire_smbexec_dcerpc_smb_svcctl_WORKSTATION6_2020-09-20025716.cap,33,2020-09-20T06:57:47.228Z,172.18.39.5:50504,172.18.39.6:445,svcctl_named_pipe,RPC access to the Service Control Manager named pipe
+empire_smbexec_dcerpc_smb_svcctl_WORKSTATION6_2020-09-20025716.cap,40,2020-09-20T06:57:47.420Z,172.18.39.5:50504,172.18.39.6:445,random_service_name,Service-name bytes observed in the SMB/RPC stream
+empire_smbexec_dcerpc_smb_svcctl_WORKSTATION6_2020-09-20025716.cap,45,2020-09-20T06:57:47.604Z,172.18.39.5:50504,172.18.39.6:445,random_service_name,Service-name bytes observed in the SMB/RPC stream

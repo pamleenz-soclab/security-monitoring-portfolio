@@ -1,0 +1,27 @@
+index=windows (EventID=4624 OR EventID=4672 OR EventID=4697 OR EventID=5140 OR EventID=5145)
+| eval CorrelationLogonId=coalesce(TargetLogonId, SubjectLogonId)
+| eval CorrelationUser=lower(coalesce(TargetUserName, SubjectUserName))
+| where isnotnull(CorrelationLogonId)
+| stats min(_time) as firstTime max(_time) as lastTime
+    values(EventID) as EventIDs
+    values(IpAddress) as SourceIPs
+    values(WorkstationName) as SourceWorkstations
+    values(ShareName) as Shares
+    values(RelativeTargetName) as NamedPipes
+    values(ServiceName) as Services
+    values(ServiceFileName) as ServiceCommands
+    by host CorrelationLogonId CorrelationUser
+| where mvfind(EventIDs, "4624")>=0
+    AND mvfind(EventIDs, "5145")>=0
+    AND mvfind(EventIDs, "4697")>=0
+    AND mvfind(NamedPipes, "(?i)^svcctl$")>=0
+| eval duration_seconds=lastTime-firstTime
+| where duration_seconds<=120
+| eval severity=if(
+    mvfind(ServiceCommands, "(?i)(powershell|pwsh).*(-enc|-encodedcommand)")>=0,
+    "high",
+    "medium"
+  )
+| convert ctime(firstTime) ctime(lastTime)
+| table firstTime lastTime duration_seconds severity host CorrelationUser CorrelationLogonId SourceIPs SourceWorkstations Shares NamedPipes Services ServiceCommands EventIDs
+

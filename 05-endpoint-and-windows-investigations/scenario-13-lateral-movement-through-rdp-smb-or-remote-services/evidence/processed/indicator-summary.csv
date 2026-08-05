@@ -1,0 +1,11 @@
+type,value,role,confidence
+host,WORKSTATION5,lateral-movement source,High
+host,WORKSTATION6,lateral-movement target,High
+account,THESHIRE\pgustavo,credential used for remote authentication/service creation,High
+ipv4,172.18.39.5,source endpoint,High
+ipv4,172.18.39.6,target endpoint,High
+ipv4,10.10.10.5,Private lab Empire listener (simulation ground truth),High
+service,PGUJLOAKFQFVOMHGFQPX,transient randomly named remote service,High
+named_pipe,svcctl,remote Service Control Manager RPC channel,High
+url,http://10.10.10.5/login/process.php,Observed stage-one retrieval URL at a private lab endpoint,High
+logon_id,0x2074186,target authentication-to-service correlation key,High

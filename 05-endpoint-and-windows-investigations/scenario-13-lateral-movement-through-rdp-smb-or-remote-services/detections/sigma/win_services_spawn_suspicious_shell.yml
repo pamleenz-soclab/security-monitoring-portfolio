@@ -1,0 +1,45 @@
+title: Windows Service Control Manager Spawns Suspicious Shell
+id: 32954b14-975a-4efa-b0e4-4b453a4e94b8
+status: test
+description: Detects services.exe spawning a command or PowerShell interpreter with encoded, hidden or nested shell behaviour.
+references:
+  - https://attack.mitre.org/techniques/T1569/002/
+  - https://attack.mitre.org/techniques/T1059/001/
+author: Pam Lee
+date: 2026-08-03
+tags:
+  - attack.execution
+  - attack.t1569.002
+  - attack.t1059.001
+  - attack.t1059.003
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection_parent:
+    ParentImage|endswith: '\services.exe'
+  selection_child:
+    Image|endswith:
+      - '\cmd.exe'
+      - '\powershell.exe'
+      - '\pwsh.exe'
+  selection_suspicious:
+    CommandLine|contains:
+      - '%COMSPEC%'
+      - ' /C '
+      - ' -enc '
+      - ' -encodedcommand '
+      - ' -w 1 '
+  condition: selection_parent and selection_child and selection_suspicious
+fields:
+  - Computer
+  - User
+  - ParentImage
+  - ParentProcessGuid
+  - Image
+  - ProcessGuid
+  - CommandLine
+falsepositives:
+  - Administrative services that intentionally launch a shell; tune by signed service, source, account and stable command line
+level: high
+

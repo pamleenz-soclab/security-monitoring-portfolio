@@ -1,0 +1,36 @@
+title: Remote Service Control Manager Named Pipe Access Over SMB
+id: 9e0f1ad4-78b7-4c5e-9e0e-07b152b81032
+status: test
+description: Detects detailed file-share access to the svcctl named pipe through IPC$, a common precursor to remote service execution.
+references:
+  - https://attack.mitre.org/techniques/T1021/002/
+  - https://securitydatasets.com/notebooks/atomic/windows/lateral_movement/SDWIN-190518210125.html
+author: Pam Lee
+date: 2026-08-03
+tags:
+  - attack.lateral-movement
+  - attack.t1021.002
+  - attack.t1569.002
+logsource:
+  product: windows
+  service: security
+  definition: Requires successful Detailed File Share auditing on the target.
+detection:
+  selection:
+    EventID: 5145
+    ShareName|endswith: '\IPC$'
+    RelativeTargetName: 'svcctl'
+  condition: selection
+fields:
+  - Computer
+  - SubjectDomainName
+  - SubjectUserName
+  - SubjectLogonId
+  - IpAddress
+  - IpPort
+  - ShareName
+  - RelativeTargetName
+falsepositives:
+  - Approved remote administration, software deployment, vulnerability scanning and EDR response actions
+level: medium
+
