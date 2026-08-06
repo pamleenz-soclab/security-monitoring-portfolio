@@ -1,0 +1,14 @@
+metric	value	evidence_label
+Dataset transactions parsed	151845	Confirmed
+SQLi-related transactions	4342	Confirmed
+High-signal SQLi attempts	3910	Heuristic triage
+Likely false positives	46	Heuristic triage
+Manual-review candidates	386	Heuristic triage
+Dominant source total related requests	3465	Confirmed
+Dominant source SQLi-related requests	3396	Confirmed
+Dominant source high-signal SQLi requests	3303	Heuristic triage
+Dominant source first seen UTC	2025-07-28T02:20:59+00:00	Confirmed
+Dominant source last seen UTC	2025-07-28T07:48:58+00:00	Confirmed
+Final scenario result	Attempted	Final assessment
+WAF final enforcement	Unable to confirm	Final assessment
+Successful SQL execution	Unable to confirm	Final assessment

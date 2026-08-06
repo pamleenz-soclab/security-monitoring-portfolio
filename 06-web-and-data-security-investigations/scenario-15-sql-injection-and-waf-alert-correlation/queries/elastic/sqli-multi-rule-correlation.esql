@@ -1,0 +1,5 @@
+FROM waf-*
+| WHERE TO_STRING(waf.rule.id) LIKE "942%"
+| STATS first_seen=MIN(@timestamp), last_seen=MAX(@timestamp), rule_count=COUNT_DISTINCT(waf.rule.id), rule_ids=VALUES(waf.rule.id), actions=VALUES(waf.action), statuses=VALUES(http.response.status_code) BY waf.transaction_id, source.ip, url.domain, http.request.method, url.path, user_agent.original
+| WHERE rule_count >= 2 OR MV_CONTAINS(rule_ids, "942160") OR MV_CONTAINS(rule_ids, "942190") OR MV_CONTAINS(rule_ids, "942360")
+| SORT first_seen DESC

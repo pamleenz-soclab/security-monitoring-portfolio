@@ -1,0 +1,28 @@
+title: WAF Rule 942100-Only Context Review
+id: 7c1bb9d4-19cd-4196-bc30-24eca018faaa
+status: experimental
+description: Identifies broad libinjection-only SQLi matches that should be enriched before high-severity escalation.
+author: Security Monitoring Portfolio
+date: 2026-08-06
+logsource:
+  category: webserver
+  service: waf
+detection:
+  selection:
+    waf.rule.id: '942100'
+  context:
+    waf.matched_variable|startswith:
+      - 'ARGS:pwd'
+      - 'REQUEST_COOKIES:'
+  condition: selection and context
+fields:
+  - waf.transaction_id
+  - source.ip
+  - http.host
+  - url.path
+  - waf.matched_variable
+  - waf.rule.id
+falsepositives:
+  - Password punctuation
+  - Session-cookie delimiters and timestamps
+level: low

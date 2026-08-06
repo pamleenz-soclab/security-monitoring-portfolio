@@ -1,0 +1,28 @@
+title: WAF Time-Based SQL Injection Pattern
+id: 98a6c568-2ecb-4e70-8f8b-17c2185a6f98
+status: experimental
+description: Detects OWASP CRS time-based SQLi rule 942160. A rule match is an attempt indicator, not proof of database execution.
+references:
+  - https://doi.org/10.5281/zenodo.17178461
+author: Security Monitoring Portfolio
+date: 2026-08-06
+logsource:
+  category: webserver
+  service: waf
+detection:
+  selection:
+    waf.rule.id: '942160'
+  condition: selection
+fields:
+  - timestamp
+  - waf.transaction_id
+  - source.ip
+  - http.host
+  - url.original
+  - waf.matched_variable
+  - event.duration
+  - waf.action
+  - http.response.status_code
+falsepositives:
+  - Legitimate application values containing sleep or benchmark function names
+level: high

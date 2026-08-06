@@ -1,0 +1,35 @@
+title: WAF High-Confidence SQL Injection Request
+id: 506c1799-52b8-44d3-956e-4f1dbfb78ed9
+status: experimental
+description: Detects specialist OWASP CRS SQLi rules or multiple SQLi rules in one WAF transaction. Field mapping is required.
+references:
+  - https://doi.org/10.5281/zenodo.17178461
+author: Security Monitoring Portfolio
+date: 2026-08-06
+logsource:
+  category: webserver
+  service: waf
+detection:
+  specialist_rule:
+    waf.rule.id:
+      - '942160'
+      - '942190'
+      - '942360'
+  sqli_tag:
+    waf.rule.tags|contains: 'attack-sqli'
+  condition: specialist_rule and sqli_tag
+fields:
+  - timestamp
+  - waf.transaction_id
+  - source.ip
+  - http.host
+  - http.request.method
+  - url.original
+  - waf.rule.id
+  - waf.matched_variable
+  - waf.action
+  - http.response.status_code
+falsepositives:
+  - Security testing authorised by the organisation
+  - Application values that contain SQL-like syntax
+level: high

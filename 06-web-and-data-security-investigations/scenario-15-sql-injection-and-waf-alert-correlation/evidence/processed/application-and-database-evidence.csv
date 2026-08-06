@@ -1,0 +1,5 @@
+telemetry,availability,observation,impact_on_conclusion
+Application request/exception log,Not available,"No route, controller, session, exception, stack trace or response classification","Cannot confirm application handling, authentication bypass or SQL exception"
+Database/backend audit,Not available,"No query text, database error, affected-row count or table access record","Cannot confirm SQL execution, data access, modification or extraction"
+Response content,Partially available,ModSecurity response-body section is absent or minimal for many transactions,HTTP status and response size cannot independently establish exploit success
+Independent web access log,Not available,No separate Nginx/Apache access record with upstream fields,"Cannot independently attribute 403/404/503 to WAF, proxy or application"

@@ -1,0 +1,9 @@
+telemetry_or_boundary,evidence_label,investigative_effect
+Independent reverse-proxy/web access log,Not available,Cannot independently prove that the same request was recorded by Nginx/Apache access logging
+Application request/exception log,Not available,"Cannot confirm route handling, SQL exception, authentication bypass, or response classification"
+Database/backend audit,Not available,"Cannot confirm SQL execution, affected rows, table access, or data extraction"
+Endpoint/file/process telemetry,Not available,"Cannot confirm Web shell creation, child processes, command execution, or persistence"
+Response body,Partially available,ModSecurity section E may be absent or truncated; HTTP status alone is not exploit outcome
+Trusted proxy chain,Not established,X-Forwarded-For cannot be treated as the real source without configuration evidence
+Allowed/non-alerted request baseline,Detection gap,Audit-only malicious subset cannot measure false negatives or normal-request prevalence
+Application latency baseline,Not available,A single slow transaction cannot establish time-based SQL injection

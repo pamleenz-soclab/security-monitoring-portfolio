@@ -1,0 +1,6 @@
+FROM waf-*
+| WHERE TO_STRING(waf.rule.id) LIKE "942%"
+| STATS rule_ids=VALUES(waf.rule.id), actions=VALUES(waf.action), statuses=VALUES(http.response.status_code) BY waf.transaction_id, source.ip, url.domain, url.path
+| WHERE MV_CONTAINS(statuses, 403)
+| WHERE actions IS NULL OR NOT (MV_CONTAINS(actions, "deny") OR MV_CONTAINS(actions, "blocked") OR MV_CONTAINS(actions, "intercepted") OR MV_CONTAINS(actions, "drop"))
+| EVAL disposition="403 observed without final WAF enforcement evidence"

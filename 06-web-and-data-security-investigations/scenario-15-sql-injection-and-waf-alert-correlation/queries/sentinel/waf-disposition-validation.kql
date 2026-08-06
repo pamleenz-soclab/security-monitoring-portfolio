@@ -1,0 +1,13 @@
+WAFLogs
+| where RuleId_s startswith "942"
+| summarize
+    RuleIds=make_set(RuleId_s, 32),
+    Actions=make_set(Action_s, 16),
+    Statuses=make_set(HttpStatus_d, 16),
+    Messages=make_set(RuleMessage_s, 32)
+  by TransactionId_s, ClientIP_s, Host_s, RequestPath_s
+| where Statuses has 403
+| extend FinalInterceptionObserved=Actions has_any ("deny", "blocked", "intercepted", "drop")
+| where FinalInterceptionObserved == false
+| project TransactionId_s, ClientIP_s, Host_s, RequestPath_s, RuleIds, Statuses, Actions,
+          Disposition="403 observed without final WAF enforcement evidence"

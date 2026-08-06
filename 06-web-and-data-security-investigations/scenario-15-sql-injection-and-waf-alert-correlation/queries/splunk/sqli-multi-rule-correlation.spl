@@ -1,0 +1,6 @@
+index=waf rule_id=942*
+| stats earliest(_time) as first_seen latest(_time) as last_seen values(rule_id) as rule_ids values(rule_message) as rule_messages values(matched_variable) as matched_variables values(action) as actions values(status) as statuses by transaction_id src_ip host http_method uri_path user_agent
+| eval distinct_rules=mvcount(rule_ids)
+| where distinct_rules>=2 OR mvfind(rule_ids,"^(942160|942190|942360)$")>=0
+| eval enforcement_evidence=if(match(mvjoin(actions," "),"(?i)deny|block|intercept|drop"),"Observed","Not observed")
+| sort - first_seen

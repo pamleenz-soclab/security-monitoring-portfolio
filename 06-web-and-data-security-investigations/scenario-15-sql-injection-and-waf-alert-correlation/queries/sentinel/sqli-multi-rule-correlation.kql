@@ -1,0 +1,16 @@
+// Replace WAFLogs and *_s fields with the deployed schema.
+WAFLogs
+| where RuleId_s startswith "942"
+| summarize
+    FirstSeen=min(TimeGenerated),
+    LastSeen=max(TimeGenerated),
+    RuleIds=make_set(RuleId_s, 32),
+    RuleMessages=make_set(RuleMessage_s, 32),
+    MatchedVariables=make_set(MatchedVariable_s, 32),
+    Responses=make_set(HttpStatus_d, 16),
+    Actions=make_set(Action_s, 16)
+  by TransactionId_s, ClientIP_s, Host_s, HttpMethod_s, RequestPath_s, UserAgent_s
+| extend DistinctRules=array_length(RuleIds)
+| where DistinctRules >= 2 or RuleIds has_any ("942160", "942190", "942360")
+| extend EnforcementEvidence=iff(Actions has_any ("deny", "blocked", "intercepted", "drop"), "Observed", "Not observed")
+| order by FirstSeen desc

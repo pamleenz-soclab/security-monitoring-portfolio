@@ -1,0 +1,14 @@
+let Window = 5m;
+let Threshold = 20;
+WAFLogs
+| where RuleId_s startswith "942"
+| summarize
+    RequestCount=dcount(TransactionId_s),
+    RuleIds=make_set(RuleId_s, 32),
+    Paths=make_set(RequestPath_s, 128),
+    FirstSeen=min(TimeGenerated),
+    LastSeen=max(TimeGenerated)
+  by bin(TimeGenerated, Window), ClientIP_s, Host_s, UserAgent_s
+| where RequestCount >= Threshold
+| extend DistinctRules=array_length(RuleIds), DistinctPaths=array_length(Paths)
+| order by RequestCount desc

@@ -1,0 +1,5 @@
+txid,location,name,raw_value_fragment,decoded_once_fragment,decoded_twice_fragment,encoding_observed,normalisation_rule
+aIbgBD4IPTLxBnOxY7J7rQAAABQ,query_string,wc-ajax,(select(0)...sleep(15)...%2B...,(select(0)...sleep(15)...+...,same as decoded once,URL percent encoding,Preserve raw value; decode no more than twice; record each representation separately
+aIWEDLDwIxHfcGraKWWSsAAAAAo,request_body,order_id,1 UNION ALL SELECT … CONCAT(…) … -- -,same as raw,same as raw,No URL encoding observed in the SQLi value,Do not invent or recursively transform an already decoded value
+aIVVouq5vQMKq02KFfSFpAAAAAI,request_body,pwd,admin123%21%40%23,admin123!@#,admin123!@#,URL-encoded punctuation,Context shows an ordinary password value; Rule 942100 alone is insufficient for SQLi attribution
+representative-dominant-sequence,query_string,paged,-1%20OR%205*5=25%20--%20,-1 OR 5*5=25 -- ,-1 OR 5*5=25 -- ,URL-encoded spaces,Retain both raw request target and decoded analytical value

@@ -1,0 +1,6 @@
+index=waf rule_id=942*
+| stats values(rule_id) as rule_ids values(action) as actions values(status) as statuses by transaction_id src_ip host uri_path
+| where mvfind(statuses,"^403$")>=0
+| eval final_interception_observed=if(match(mvjoin(actions," "),"(?i)deny|block|intercept|drop"),"true","false")
+| where final_interception_observed="false"
+| eval disposition="403 observed without final WAF enforcement evidence"

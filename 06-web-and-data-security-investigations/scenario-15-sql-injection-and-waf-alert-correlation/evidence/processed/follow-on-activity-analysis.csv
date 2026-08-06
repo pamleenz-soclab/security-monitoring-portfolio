@@ -1,0 +1,6 @@
+activity,evidence_label,finding,claim_boundary
+Web shell creation,Not available,No file telemetry supplied,Do not infer absence or presence
+Command execution or suspicious child process,Not available,No endpoint/process telemetry supplied,RCE is not established
+Credential access or new account,Not available,No identity or endpoint telemetry supplied,Credential impact is not established
+Unusual database access or enumeration,Not available,No database audit supplied,Data access is not established
+Data extraction or exfiltration,Not available,"No response-content, database or network-exfiltration evidence supplied",Data breach is not established

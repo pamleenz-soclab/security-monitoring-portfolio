@@ -1,0 +1,12 @@
+# Original evidence is retained locally and never committed.
+evidence/raw/*
+!evidence/raw/.gitkeep
+
+# Extracted logs, SQLite databases, parser output and intermediate files are local only.
+evidence/working/*
+!evidence/working/.gitkeep
+
+# Local system and Python artefacts.
+.DS_Store
+__pycache__/
+*.pyc
