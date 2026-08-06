@@ -1,0 +1,14 @@
+(index=endpoint sourcetype=*process*)
+("base64" "dig" OR "gzip -c")
+| eval host_key=coalesce(dest, host, device_name)
+| rename _time as process_time
+| table host_key process_time user process_name process_id parent_process_name command_line
+| join type=inner host_key
+    [ search index=dns earliest=-7d
+      | eval query=lower(coalesce(query, query_name, dns_query))
+      | where match(query,"(^|\\.)3x[67]-\\.\\d+-\\.")
+      | eval host_key=coalesce(src_host, src, host)
+      | rename _time as dns_time
+      | table host_key dns_time query dest_ip dest_port ]
+| where dns_time>=process_time AND dns_time<=process_time+1800
+| sort 0 host_key process_time dns_time

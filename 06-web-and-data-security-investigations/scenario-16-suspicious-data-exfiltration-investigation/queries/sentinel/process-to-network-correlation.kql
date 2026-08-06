@@ -1,0 +1,21 @@
+let Lookback = 30m;
+let SuspiciousProcesses = DeviceProcessEvents
+| where Timestamp > ago(7d)
+| where ProcessCommandLine has_all ("base64", "dig")
+   or ProcessCommandLine matches regex @"gzip\s+-c.*\|.*base64.*\|.*dig"
+| project DeviceId, DeviceName, ProcessTime=Timestamp,
+          InitiatingProcessAccountName, FileName, ProcessCommandLine,
+          ProcessId, InitiatingProcessId;
+let SuspiciousDns = DeviceNetworkEvents
+| where Timestamp > ago(7d)
+| where RemotePort == 53 or Protocol =~ "Udp"
+| where RemoteUrl matches regex @"(^|\.)3x[67]-\.\d+-\."
+| project DeviceId, DeviceName, DnsTime=Timestamp, RemoteUrl,
+          RemoteIP, RemotePort, InitiatingProcessFileName,
+          InitiatingProcessId;
+SuspiciousProcesses
+| join kind=inner SuspiciousDns on DeviceId
+| where DnsTime between (ProcessTime .. ProcessTime + Lookback)
+| project DeviceName, ProcessTime, DnsTime, FileName,
+          ProcessCommandLine, RemoteUrl, RemoteIP, RemotePort,
+          ProcessId, InitiatingProcessId

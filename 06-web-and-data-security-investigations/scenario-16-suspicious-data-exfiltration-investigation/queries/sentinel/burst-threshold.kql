@@ -1,0 +1,8 @@
+DnsEvents
+| where TimeGenerated > ago(24h)
+| extend Query=tostring(QueryName), QueryLength=strlen(tostring(QueryName))
+| summarize Queries=count(), UniqueQueries=dcount(Query),
+            AvgLength=avg(QueryLength), MaxLength=max(QueryLength)
+  by SrcIpAddr, BaseDomain, bin(TimeGenerated, 5m)
+| extend UniqueRatio=todouble(UniqueQueries) / Queries
+| where Queries >= 200 and UniqueRatio >= 0.90 and AvgLength >= 80

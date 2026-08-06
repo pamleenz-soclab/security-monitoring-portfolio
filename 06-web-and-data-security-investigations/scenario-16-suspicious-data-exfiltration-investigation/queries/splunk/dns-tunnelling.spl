@@ -1,0 +1,14 @@
+index=dns earliest=-7d
+| eval query=lower(coalesce(query, query_name, dns_query))
+| eval query_length=len(query)
+| eval chunk_grammar=if(match(query,"(^|\\.)3x[67]-\\.\\d+-\\."),1,0)
+| eval file_suffix=if(match(query,"\\.(xlsx|docx|csv|pdf|zip|7z|tar|gz)\\."),1,0)
+| bin _time span=1h
+| stats count as queries dc(query) as unique_queries avg(query_length) as avg_query_length
+        max(query_length) as max_query_length sum(chunk_grammar) as grammar_hits
+        sum(file_suffix) as file_suffix_hits min(_time) as first_seen max(_time) as last_seen
+  by _time src base_domain
+| eval unique_ratio=unique_queries/queries
+| where queries>=100 AND unique_ratio>=0.90
+      AND (avg_query_length>=80 OR grammar_hits>0 OR file_suffix_hits>0)
+| sort - grammar_hits - unique_ratio - queries

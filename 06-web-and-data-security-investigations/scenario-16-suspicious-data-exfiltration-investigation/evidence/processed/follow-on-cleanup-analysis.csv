@@ -1,0 +1,7 @@
+activity,status,evidence,interpretation
+Stop exfiltration service,Confirmed,dnsteal_stop ground truth and Linux audit unit=put lifecycle event,Service termination; containment-like outcome in the simulation
+Delete source files,Not observed,No validated deletion telemetry,Do not infer destruction
+Delete receiver files,Not observed,31 receiver files remained available for hash verification,No receiver cleanup
+Delete temporary archive,Not applicable / Not observed,gzip streamed to stdout; no archive file required,No temporary archive artifact expected
+Clear logs or shell history,Not observed,No validated audit or shell-history deletion event,No anti-forensics claim
+Disable security tooling,Not observed,No validated service-stop event for security controls,No anti-forensics claim

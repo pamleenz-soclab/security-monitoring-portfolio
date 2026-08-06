@@ -1,0 +1,5 @@
+sequence by host.id with maxspan=30m
+  [process where host.os.type == "linux" and event.type == "start" and
+    process.command_line like~ "*base64*" and process.command_line like~ "*dig*"]
+  [network where destination.port == 53 and network.transport == "udp" and
+    dns.question.name regex~ ".*3x[67]-\\.\\d+-\\..*"]

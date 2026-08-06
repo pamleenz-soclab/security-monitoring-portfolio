@@ -1,0 +1,11 @@
+field,value,evidence_status,source,stability_or_boundary
+source_host,internal_share,Confirmed,DNS/PCAP path and host inventory,Stable dataset host name
+source_ip,10.143.0.103,Confirmed,"PCAP, DNS resolver logs, and Suricata",Stable within the simulated environment
+account,root,Ground truth,internal_share dnsteal variables,Configured service identity; not a Windows Logon ID
+service_name,put,Confirmed + Ground truth,Linux audit unit=put and deployment variables,Systemd unit name
+image_or_script,/usr/bin/put,Ground truth,deployment variables,No independent EXECVE event with full child chain was available
+parent_process,/lib/systemd/systemd,Confirmed for unit lifecycle,Linux audit SERVICE_START/SERVICE_STOP,PID 1 controls the unit; exact shell child hierarchy not directly observed
+pid,1 for systemd lifecycle record; script PID unavailable,Confirmed / Not available,Linux audit,PID reuse and missing child EXECVE telemetry prevent stable process-to-flow linking
+process_guid,Not available,Not available,Linux dataset,Windows Sysmon Process GUID does not exist in this telemetry
+logon_id,Not available,Not available,Linux dataset,No Windows Logon ID
+command_pipeline,gzip -c | base64 -w0 | sed fixed blocks | dig,Ground truth,exfil.sh.j2 and dnsteal receiver log,Configuration/script evidence; exact per-packet process ID not available

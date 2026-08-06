@@ -1,0 +1,31 @@
+# Local raw and intermediate evidence. Keep placeholders only.
+evidence/raw/*
+!evidence/raw/.gitkeep
+evidence/working/*
+!evidence/working/.gitkeep
+
+# Large or sensitive evidence formats anywhere in this scenario.
+*.pcap
+*.pcapng
+*.evtx
+*.sqlite
+*.sqlite3
+*.db
+*.dump
+*.dmp
+*.har
+*.part
+*.zip.part
+
+# Local runtime artefacts.
+__pycache__/
+*.py[cod]
+.DS_Store
+.venv/
+venv/
+
+# Do not ignore safe source code, detections, or queries.
+!scripts/**/*.py
+!scripts/**/*.sh
+!queries/**/*
+!detections/**/*

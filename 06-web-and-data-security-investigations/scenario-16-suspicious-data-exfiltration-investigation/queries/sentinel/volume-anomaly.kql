@@ -1,0 +1,17 @@
+let BaselineDays = 14d;
+let Bin = 1h;
+let Hourly = DnsEvents
+| where TimeGenerated > ago(BaselineDays)
+| extend RequestBytes=coalesce(tolong(RequestBytes), tolong(NetworkBytes), 0L)
+| summarize Requests=count(), Bytes=sum(RequestBytes), UniqueQueries=dcount(QueryName)
+  by SrcIpAddr, bin(TimeGenerated, Bin);
+let Baseline = Hourly
+| summarize AvgBytes=avg(Bytes), StdBytes=stdev(Bytes),
+            AvgRequests=avg(Requests), StdRequests=stdev(Requests)
+  by SrcIpAddr;
+Hourly
+| join kind=inner Baseline on SrcIpAddr
+| extend ByteZ=iff(StdBytes > 0, (Bytes-AvgBytes)/StdBytes, 0.0),
+         RequestZ=iff(StdRequests > 0, (Requests-AvgRequests)/StdRequests, 0.0)
+| where ByteZ >= 3 or RequestZ >= 3
+| order by ByteZ desc, RequestZ desc

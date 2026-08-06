@@ -1,0 +1,5 @@
+link,left_evidence,right_evidence,correlation_key,status,boundary
+systemd unit to source host,Linux audit unit=put on internal_share,DNS requests from 10.143.0.103,host + service context + time,Inferred,"No shared PID, socket ID, flow ID, or Process GUID"
+configured script to encoding pattern,exfil.sh.j2 creates 3x6/3x7 queries using gzip/base64/dig,PCAP contains matching 3x6/3x7 structure and filenames,protocol grammar + domain + filenames,Strongly inferred,Script is ground truth; packet generation is telemetry-confirmed
+source object to receiver object,Unique source path and SHA-256,"Receiver file with identical name, size, and SHA-256",file name + exact SHA-256,Confirmed,Direct receiver-side reconstruction evidence
+DNS sequence to receiver reconstruction,Continuous 3x6 indexes and 3x7 marker for 31 files,31 receiver files,file name + chunk sequence + completion marker,Confirmed,Hash equality is the decisive completion evidence

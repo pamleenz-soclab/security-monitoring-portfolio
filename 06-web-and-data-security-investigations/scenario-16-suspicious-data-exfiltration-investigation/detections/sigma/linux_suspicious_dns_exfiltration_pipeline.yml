@@ -1,0 +1,37 @@
+title: Linux Shell Pipeline Compressing and Encoding Data for DNS Transfer
+id: 71f147f3-4b4f-46bb-a89b-614db42b5cb5
+status: experimental
+description: Detects a Linux process command line combining compression or Base64 encoding with DNS query utilities in a pattern consistent with DNS data transfer.
+author: Pam Lee SOC Portfolio
+logsource:
+  category: process_creation
+  product: linux
+detection:
+  selection_shell:
+    Image|endswith:
+      - '/bash'
+      - '/sh'
+  selection_transform:
+    CommandLine|contains|all:
+      - 'base64'
+      - 'dig'
+  selection_compress:
+    CommandLine|contains:
+      - 'gzip -c'
+      - 'tar '
+      - 'openssl enc'
+  selection_marker:
+    CommandLine|contains:
+      - '3x6'
+      - '3x7'
+  condition: selection_shell and selection_transform and (selection_compress or selection_marker)
+falsepositives:
+  - Administrative diagnostics or approved data-transfer testing
+level: high
+tags:
+  - attack.collection
+  - attack.t1005
+  - attack.exfiltration
+  - attack.t1048.003
+  - attack.command-and-control
+  - attack.t1071.004

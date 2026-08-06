@@ -1,0 +1,9 @@
+evidence_id	source	original_reference	sanitised_excerpt	evidence_status	purpose
+E01	internal_share dnsteal variables	lines 3-8	service=put; user=root; group=root; script=/usr/bin/put; state=started	Ground truth	Service identity and execution context
+E02	internal_share dnsteal variables	lines 15-23	configured Samba share directories; sleep_min=12; sleep_max=23	Ground truth	Collection scope and low-and-slow cadence
+E03	attacker dnsteal variables	lines 13-20	domain=email-19.kennedy-mendoza.info; compressed=yes; payload_labels=4; block_size=34; endtime=2022-01-24T13:50	Ground truth	Protocol parameters
+E04	exfil.sh.j2	lines 21-58	gzip stream -> Base64 -> fixed blocks -> 3x6 DNS requests; 3x7 completion request	Ground truth	Transfer method
+E05	targeted PCAP summary	deduplicated aggregate	19954 data requests; 31 completion requests; 5266713 outbound request wire bytes	Confirmed	Network scope without payload disclosure
+E06	source/receiver hash verification	31 rows	31 source/receiver pairs; all sizes and SHA-256 values match; total=2042802 bytes	Confirmed	Transfer completion and impact
+E07	PCAP file transfer summary	Vaughn-mcdaniel.docx	chunks 0-127 observed; no completion marker; no receiver object	Confirmed	Attempted-versus-confirmed boundary
+E08	Linux audit	audit serials 807/808	systemd unit=put lifecycle event; uid=0; exe=/lib/systemd/systemd; result=success	Confirmed	Service lifecycle evidence

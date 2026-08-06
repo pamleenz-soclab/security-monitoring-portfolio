@@ -1,0 +1,15 @@
+metric,value,unit,scope,evidence_status,interpretation
+pcap_rows_before_deduplication,75756,rows,Two targeted PCAP captures,Confirmed,Overlapping capture perspectives must not be summed
+pcap_rows_after_exact_deduplication,39970,rows,Exact timestamp/tuple/DNS-key deduplication,Confirmed,"19,985 requests plus 19,985 responses"
+duplicate_instances_removed,35786,rows,Cross-capture overlap,Confirmed,Prevents double counting
+dns_data_requests,19954,packets,3x6 requests,Confirmed,Chunk-carrying DNS queries
+dns_completion_requests,31,packets,3x7 requests,Confirmed,One marker for each of 31 completed objects
+outbound_request_wire_bytes,5266713,bytes,All targeted DNS requests including attempted object,Confirmed,"Includes link/network/transport/DNS overhead, filenames, indices, and Base64 expansion"
+inbound_response_wire_bytes,5646428,bytes,All targeted DNS responses,Confirmed,Must not be counted as exfiltrated application data
+bidirectional_wire_bytes,10913141,bytes,Requests plus responses,Confirmed,"Network footprint, not data-loss volume"
+confirmed_source_object_bytes,2042802,bytes,31 hash-matched source objects,Confirmed,Best supported confirmed data-loss volume
+first_observed,2022-01-20T12:48:27.530508+00:00,UTC,Targeted PCAP,Confirmed,Start of observed file-transfer activity
+last_observed,2022-01-24T13:50:03.248663+00:00,UTC,Targeted PCAP,Confirmed,Last chunk of interrupted final object
+duration,349295.718,seconds,Targeted PCAP,Confirmed,Approximately 4.04 days
+mean_request_interval,17.479,seconds,All targeted requests,Derived,Consistent with configured 12–23 second random delay at file-transfer level
+mean_outbound_wire_rate,15.078,bytes/second,Entire observation period,Derived,Low-and-slow; a large-volume threshold alone would miss it

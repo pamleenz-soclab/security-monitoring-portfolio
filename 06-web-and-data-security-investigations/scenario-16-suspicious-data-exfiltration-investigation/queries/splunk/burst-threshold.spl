@@ -1,0 +1,7 @@
+index=dns earliest=-24h
+| eval query=coalesce(query, query_name, dns_query), query_length=len(query)
+| bin _time span=5m
+| stats count as queries dc(query) as unique_queries avg(query_length) as avg_length
+        max(query_length) as max_length by _time src base_domain
+| eval unique_ratio=unique_queries/queries
+| where queries>=200 AND unique_ratio>=0.90 AND avg_length>=80

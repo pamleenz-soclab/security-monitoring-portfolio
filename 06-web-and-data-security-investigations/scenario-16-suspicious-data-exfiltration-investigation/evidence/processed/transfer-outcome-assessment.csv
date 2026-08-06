@@ -1,0 +1,33 @@
+file_name,source_bytes,data_requests,chunk_index_range,missing_chunk_indexes,completion_requests,receiver_object_present,source_receiver_sha256_match,request_wire_bytes,first_observed_utc,last_observed_utc,result_label,evidence_status
+2010_invoices.xlsx,13900,131,0-130,,1,yes,yes,34493,2022-01-20T12:48:27.530508+00:00,2022-01-20T13:26:57.946806+00:00,Confirmed exfiltration,Confirmed
+2011_invoices.xlsx,16411,155,0-154,,1,yes,yes,40912,2022-01-20T13:26:57.999986+00:00,2022-01-20T14:12:32.606735+00:00,Confirmed exfiltration,Confirmed
+2016_invoices.xlsx,16268,154,0-153,,1,yes,yes,40576,2022-01-20T14:12:32.649409+00:00,2022-01-20T14:57:36.179565+00:00,Confirmed exfiltration,Confirmed
+2014_invoices.xlsx,18962,180,0-179,,1,yes,yes,47462,2022-01-20T14:57:36.229179+00:00,2022-01-20T15:49:19.517062+00:00,Confirmed exfiltration,Confirmed
+2013_invoices.xlsx,18213,173,0-172,,1,yes,yes,45600,2022-01-20T15:49:19.563765+00:00,2022-01-20T16:38:47.527439+00:00,Confirmed exfiltration,Confirmed
+2012_invoices.xlsx,10259,96,0-95,,1,yes,yes,25246,2022-01-20T16:38:47.563508+00:00,2022-01-20T17:06:57.802908+00:00,Confirmed exfiltration,Confirmed
+2019_invoices.xlsx,21829,208,0-207,,1,yes,yes,54810,2022-01-20T17:06:57.857666+00:00,2022-01-20T18:06:59.094881+00:00,Confirmed exfiltration,Confirmed
+2018_invoices.xlsx,15818,149,0-148,,1,yes,yes,39328,2022-01-20T18:06:59.149491+00:00,2022-01-20T18:49:46.463362+00:00,Confirmed exfiltration,Confirmed
+2017_invoices.xlsx,9969,93,0-92,,1,yes,yes,24491,2022-01-20T18:49:46.506437+00:00,2022-01-20T19:16:41.808640+00:00,Confirmed exfiltration,Confirmed
+2015_invoices.xlsx,19786,188,0-187,,1,yes,yes,49582,2022-01-20T19:16:41.861035+00:00,2022-01-20T20:11:21.211022+00:00,Confirmed exfiltration,Confirmed
+2020_invoices.xlsx,19299,183,0-182,,1,yes,yes,48296,2022-01-20T20:11:21.261758+00:00,2022-01-20T21:06:17.839877+00:00,Confirmed exfiltration,Confirmed
+customers_2017.xlsx,106710,1040,0-1039,,1,yes,yes,275649,2022-01-20T21:06:18.014782+00:00,2022-01-21T02:08:33.482820+00:00,Confirmed exfiltration,Confirmed
+customers_2013.xlsx,103007,1005,0-1004,,1,yes,yes,266216,2022-01-21T02:08:33.660847+00:00,2022-01-21T07:01:40.149796+00:00,Confirmed exfiltration,Confirmed
+customers_2018.xlsx,95763,933,0-932,,1,yes,yes,247226,2022-01-21T07:01:40.314827+00:00,2022-01-21T11:34:03.036653+00:00,Confirmed exfiltration,Confirmed
+customers_2020.xlsx,107527,1048,0-1047,,1,yes,yes,277765,2022-01-21T11:34:03.222447+00:00,2022-01-21T16:39:51.675470+00:00,Confirmed exfiltration,Confirmed
+customers_2019.xlsx,106266,1036,0-1035,,1,yes,yes,274493,2022-01-21T16:39:51.873807+00:00,2022-01-21T21:39:38.105482+00:00,Confirmed exfiltration,Confirmed
+customers_2015.xlsx,108340,1056,0-1055,,1,yes,yes,279847,2022-01-21T21:39:38.290683+00:00,2022-01-22T02:44:39.896877+00:00,Confirmed exfiltration,Confirmed
+customers_2021.xlsx,108439,1058,0-1057,,1,yes,yes,280319,2022-01-22T02:44:40.095801+00:00,2022-01-22T07:50:39.734831+00:00,Confirmed exfiltration,Confirmed
+customers_2016.xlsx,103338,1007,0-1006,,1,yes,yes,266821,2022-01-22T07:50:39.956659+00:00,2022-01-22T12:41:19.953171+00:00,Confirmed exfiltration,Confirmed
+customers_2014.xlsx,86938,847,0-846,,1,yes,yes,224444,2022-01-22T12:41:20.114148+00:00,2022-01-22T16:51:27.528866+00:00,Confirmed exfiltration,Confirmed
+payroll_2016.xlsx,98705,964,0-963,,1,yes,yes,253473,2022-01-22T16:51:27.720149+00:00,2022-01-22T21:33:30.449094+00:00,Confirmed exfiltration,Confirmed
+payroll_2021.xlsx,99946,976,0-975,,1,yes,yes,256675,2022-01-22T21:33:30.626291+00:00,2022-01-23T02:17:24.194246+00:00,Confirmed exfiltration,Confirmed
+payroll_2014.xlsx,97805,955,0-954,,1,yes,yes,251152,2022-01-23T02:17:24.375412+00:00,2022-01-23T06:59:19.281236+00:00,Confirmed exfiltration,Confirmed
+payroll_2018.xlsx,96621,944,0-943,,1,yes,yes,248195,2022-01-23T06:59:19.450724+00:00,2022-01-23T11:36:01.655703+00:00,Confirmed exfiltration,Confirmed
+payroll_2015.xlsx,99166,969,0-968,,1,yes,yes,254782,2022-01-23T11:36:01.820677+00:00,2022-01-23T16:19:52.125981+00:00,Confirmed exfiltration,Confirmed
+payroll_2017.xlsx,98605,963,0-962,,1,yes,yes,253210,2022-01-23T16:19:52.325053+00:00,2022-01-23T21:00:04.538120+00:00,Confirmed exfiltration,Confirmed
+payroll_2020.xlsx,99587,973,0-972,,1,yes,yes,255772,2022-01-23T21:00:04.708534+00:00,2022-01-24T01:45:09.230871+00:00,Confirmed exfiltration,Confirmed
+payroll_2019.xlsx,97978,957,0-956,,1,yes,yes,251606,2022-01-24T01:45:09.405543+00:00,2022-01-24T06:25:03.036047+00:00,Confirmed exfiltration,Confirmed
+payroll_2013.xlsx,98688,964,0-963,,1,yes,yes,253477,2022-01-24T06:25:03.542858+00:00,2022-01-24T11:08:42.590697+00:00,Confirmed exfiltration,Confirmed
+HuangInc.docx,24285,210,0-209,,1,yes,yes,54347,2022-01-24T11:08:42.698210+00:00,2022-01-24T12:10:17.979400+00:00,Confirmed exfiltration,Confirmed
+VasquezWangAndFox.docx,24374,211,0-210,,1,yes,yes,56510,2022-01-24T12:10:18.065943+00:00,2022-01-24T13:11:53.459013+00:00,Confirmed exfiltration,Confirmed
+Vaughn-mcdaniel.docx,,128,0-127,,0,no,not available,33938,2022-01-24T13:11:53.525555+00:00,2022-01-24T13:50:03.248663+00:00,Attempted exfiltration,Confirmed

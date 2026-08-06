@@ -1,0 +1,10 @@
+index=dns earliest=-14d
+| eval request_bytes=coalesce(request_bytes, bytes_out, transport_bytes, 0)
+| bin _time span=1h
+| stats count as requests sum(request_bytes) as bytes dc(query) as unique_queries by _time src
+| eventstats avg(bytes) as avg_bytes stdev(bytes) as std_bytes
+             avg(requests) as avg_requests stdev(requests) as std_requests by src
+| eval byte_z=if(std_bytes>0,(bytes-avg_bytes)/std_bytes,0),
+       request_z=if(std_requests>0,(requests-avg_requests)/std_requests,0)
+| where byte_z>=3 OR request_z>=3
+| sort - byte_z - request_z

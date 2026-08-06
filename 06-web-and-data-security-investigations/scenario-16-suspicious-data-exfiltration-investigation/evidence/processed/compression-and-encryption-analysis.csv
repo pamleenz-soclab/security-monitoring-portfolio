@@ -1,0 +1,6 @@
+stage,tool_or_method,status,evidence,security_interpretation
+Compression,gzip -c,Ground truth,exfil.sh.j2 encode() function,"Compression, not encryption"
+Encoding,base64 -w0,Ground truth,exfil.sh.j2 encode() function,"Standard encoding, not confidentiality protection"
+Chunking,sed fixed-length split; four payload labels per request,Ground truth + Confirmed structure,script parameters and PCAP grammar,Application-layer fragmentation into DNS labels
+Filename handling,Filename retained in query suffix,Confirmed,PCAP file-transfer summary,File names are exposed in DNS metadata
+Encryption,None observed,Not observed,No AES/PGP/password-protected archive or encrypted custom payload documented,Base64 and gzip must not be described as encryption

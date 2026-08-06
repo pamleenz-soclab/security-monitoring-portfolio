@@ -1,0 +1,5 @@
+event.category:network and network.protocol:dns and
+(
+  dns.question.name:/.*3x[67]-\.\d+-.*/ or
+  dns.question.name:/.*\.(xlsx|docx|csv|pdf|zip|7z|tar|gz)\..*/
+) and dns.question.name.length >= 150

@@ -1,0 +1,9 @@
+gap,status,impact,mitigation
+No stable endpoint process-to-flow identifier,Detection gap,Exact /usr/bin/put PID to individual DNS packet remains inferred,Collect eBPF/EDR socket telemetry or auditd EXECVE plus connect/send events
+No Process GUID or Logon ID,Not available,Windows-style correlation cannot be performed,"Use host, audit serial, cgroup/systemd unit, PID namespace, and socket inode on Linux"
+No Zeek UID in the supplied investigation output,Not available,No Zeek-native session pivot,Generate Zeek conn/dns logs from retained PCAP for production validation
+Overlapping PCAP capture perspectives,Resolved for final metrics,Raw summation would almost double packet and byte counts,"Deduplicate with timestamp, tuple, DNS ID, response flag, query, and frame length"
+First-pass entropy measured control label,Parser limitation,Could mischaracterise payload entropy,Tokenise DNS grammar and calculate entropy only on encoded payload labels
+No DLP/CASB/proxy policy result,Not available,No control action or alert outcome can be assessed,"Integrate resolver, EDR, DLP, and egress control telemetry"
+No formal sensitivity label or owner,Not available,Business impact cannot be quantified using real governance metadata,"Enrich alerts with CMDB, data catalog, owner, and sensitivity labels"
+Dataset licence not explicitly recorded in reviewed v2.1 record metadata,Publication constraint,Raw logs/PCAP/labels are excluded from GitHub package,Retain source URL and DOI; seek explicit rights clarification before any redistribution

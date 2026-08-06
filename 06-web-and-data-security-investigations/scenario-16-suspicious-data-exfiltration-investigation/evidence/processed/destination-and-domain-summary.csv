@@ -1,0 +1,6 @@
+sequence,role,host_or_ip,port_protocol,domain,evidence_status,notes
+1,Source host,internal_share / 10.143.0.103,UDP/53,email-19.kennedy-mendoza.info,Confirmed,Originator of encoded file-transfer queries
+2,Internal resolver / firewall,10.143.0.1,UDP/53,email-19.kennedy-mendoza.info,Confirmed,Source-host perspective
+3,Firewall external address,192.168.230.4,UDP/53,email-19.kennedy-mendoza.info,Confirmed,Forwarding/NAT perspective; not a separate source host
+4,Upstream resolver,192.168.231.254,UDP/53,email-19.kennedy-mendoza.info,Confirmed,Forwards the delegated domain
+5,Attacker-controlled authoritative receiver,192.168.230.122,UDP/53,email-19.kennedy-mendoza.info,Ground truth + receiver telemetry,DNSteal receiver reconstructed files here

@@ -1,0 +1,6 @@
+channel,status,evidence,conclusion
+HTTP POST/PUT,Not observed for confirmed exfiltration chain,Validated chain is DNS-based,No claim of web upload
+Cloud object storage,Not observed,No cloud operation ID or receiver audit,No claim of cloud upload
+Approved cloud sync,Not applicable to validated chain,Targeted domain and receiver are part of the DNSteal simulation,Normal cloud sync does not explain this activity
+FTP/SFTP/SCP,Not observed,No validated transfer chain over these protocols,No claim
+DNS,Confirmed,"PCAP, resolver logs, receiver files, and hash equality",Confirmed exfiltration channel

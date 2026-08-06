@@ -1,0 +1,37 @@
+scope_type,object_or_category,file_count,confirmed_bytes,result,classification_status,owner,business_impact
+category,Billing invoices,11,180714,Confirmed exfiltration,Synthetic business-data category inferred from lab directory/name,Not available,Potential confidentiality impact in a real enterprise; no real persons or business records are involved
+category,Business reports,2,48659,Confirmed exfiltration,Synthetic business-data category inferred from lab directory/name,Not available,Potential confidentiality impact in a real enterprise; no real persons or business records are involved
+category,Customer records,9,926328,Confirmed exfiltration,Synthetic business-data category inferred from lab directory/name,Not available,Potential confidentiality impact in a real enterprise; no real persons or business records are involved
+category,Payroll / management,9,887101,Confirmed exfiltration,Synthetic business-data category inferred from lab directory/name,Not available,Potential confidentiality impact in a real enterprise; no real persons or business records are involved
+object,2010_invoices.xlsx,1,13900,Confirmed exfiltration,Billing invoices,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,2011_invoices.xlsx,1,16411,Confirmed exfiltration,Billing invoices,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,2012_invoices.xlsx,1,10259,Confirmed exfiltration,Billing invoices,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,2013_invoices.xlsx,1,18213,Confirmed exfiltration,Billing invoices,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,2014_invoices.xlsx,1,18962,Confirmed exfiltration,Billing invoices,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,2015_invoices.xlsx,1,19786,Confirmed exfiltration,Billing invoices,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,2016_invoices.xlsx,1,16268,Confirmed exfiltration,Billing invoices,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,2017_invoices.xlsx,1,9969,Confirmed exfiltration,Billing invoices,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,2018_invoices.xlsx,1,15818,Confirmed exfiltration,Billing invoices,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,2019_invoices.xlsx,1,21829,Confirmed exfiltration,Billing invoices,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,2020_invoices.xlsx,1,19299,Confirmed exfiltration,Billing invoices,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,HuangInc.docx,1,24285,Confirmed exfiltration,Business reports,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,VasquezWangAndFox.docx,1,24374,Confirmed exfiltration,Business reports,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,customers_2013.xlsx,1,103007,Confirmed exfiltration,Customer records,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,customers_2014.xlsx,1,86938,Confirmed exfiltration,Customer records,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,customers_2015.xlsx,1,108340,Confirmed exfiltration,Customer records,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,customers_2016.xlsx,1,103338,Confirmed exfiltration,Customer records,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,customers_2017.xlsx,1,106710,Confirmed exfiltration,Customer records,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,customers_2018.xlsx,1,95763,Confirmed exfiltration,Customer records,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,customers_2019.xlsx,1,106266,Confirmed exfiltration,Customer records,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,customers_2020.xlsx,1,107527,Confirmed exfiltration,Customer records,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,customers_2021.xlsx,1,108439,Confirmed exfiltration,Customer records,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,payroll_2013.xlsx,1,98688,Confirmed exfiltration,Payroll / management,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,payroll_2014.xlsx,1,97805,Confirmed exfiltration,Payroll / management,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,payroll_2015.xlsx,1,99166,Confirmed exfiltration,Payroll / management,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,payroll_2016.xlsx,1,98705,Confirmed exfiltration,Payroll / management,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,payroll_2017.xlsx,1,98605,Confirmed exfiltration,Payroll / management,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,payroll_2018.xlsx,1,96621,Confirmed exfiltration,Payroll / management,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,payroll_2019.xlsx,1,97978,Confirmed exfiltration,Payroll / management,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,payroll_2020.xlsx,1,99587,Confirmed exfiltration,Payroll / management,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,payroll_2021.xlsx,1,99946,Confirmed exfiltration,Payroll / management,Not available,Synthetic object; receiver SHA-256 equals source SHA-256
+object,Vaughn-mcdaniel.docx,1,,Attempted exfiltration,Synthetic report/document based on filename; exact source metadata not included in publishable verification set,Not available,No receiver object or hash evidence; do not include in confirmed loss volume

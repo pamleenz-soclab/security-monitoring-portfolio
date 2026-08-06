@@ -1,0 +1,6 @@
+activity,status,evidence,interpretation
+Directory enumeration,Ground truth,find . -maxdepth 1 within each configured Samba share directory,Direct per-directory enumeration before streaming
+File collection,Ground truth + receiver confirmation,31 source files named in DNS and hash-matched at receiver,Specific synthetic business objects were collected and transmitted
+Central staging directory,Not observed,No independent staging path in the script or validated telemetry,Do not describe this as a central staging operation
+Temporary archive file,Not observed,gzip -c streams to stdout,Compression occurred in a pipeline; no .gz artifact is required
+Archive splitting,Not observed,No ZIP/RAR/7z/tar volume creation,"The encoded stream was split into DNS labels, not archive volumes"

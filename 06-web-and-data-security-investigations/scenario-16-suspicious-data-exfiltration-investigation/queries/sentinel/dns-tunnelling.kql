@@ -1,0 +1,25 @@
+// Replace table/field names with the organisation's DNS schema.
+let Window = 1h;
+let MinQueries = 100;
+let MinUniqueRatio = 0.90;
+DnsEvents
+| where TimeGenerated > ago(7d)
+| extend Query = tolower(tostring(QueryName))
+| extend QueryLength = strlen(Query)
+| extend IsChunkGrammar = Query matches regex @"(^|\.)3x[67]-\.\d+-\."
+| extend HasFileSuffix = Query matches regex @"\.(xlsx|docx|csv|pdf|zip|7z|tar|gz)\."
+| summarize
+    Queries=count(),
+    UniqueQueries=dcount(Query),
+    AvgQueryLength=avg(QueryLength),
+    MaxQueryLength=max(QueryLength),
+    GrammarHits=countif(IsChunkGrammar),
+    FileSuffixHits=countif(HasFileSuffix),
+    FirstSeen=min(TimeGenerated),
+    LastSeen=max(TimeGenerated)
+  by bin(TimeGenerated, Window), SrcIpAddr, BaseDomain
+| extend UniqueRatio=todouble(UniqueQueries) / Queries
+| where Queries >= MinQueries
+| where UniqueRatio >= MinUniqueRatio
+| where AvgQueryLength >= 80 or GrammarHits > 0 or FileSuffixHits > 0
+| order by GrammarHits desc, UniqueRatio desc, Queries desc

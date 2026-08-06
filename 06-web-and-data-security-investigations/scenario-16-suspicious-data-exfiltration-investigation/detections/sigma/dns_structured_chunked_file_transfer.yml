@@ -1,0 +1,30 @@
+title: Structured Chunked File Transfer in DNS Query Name
+id: 2f3c33b1-4172-4a79-9b46-e4e4b831ce60
+status: experimental
+description: Detects DNS queries containing a transfer marker, numeric chunk index, encoded labels, and a filename-like component.
+author: Pam Lee SOC Portfolio
+logsource:
+  category: dns_query
+detection:
+  selection_marker:
+    query|contains:
+      - '3x6-.'
+      - '3x7-.'
+  selection_filetype:
+    query|contains:
+      - '.xlsx.'
+      - '.docx.'
+      - '.csv.'
+      - '.pdf.'
+      - '.zip.'
+  selection_long:
+    query_length|gte: 150
+  condition: selection_marker and selection_filetype and selection_long
+falsepositives:
+  - Approved security exercises using an identical protocol grammar
+level: critical
+tags:
+  - attack.exfiltration
+  - attack.t1048.003
+  - attack.command-and-control
+  - attack.t1071.004

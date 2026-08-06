@@ -1,0 +1,14 @@
+metric,value,evidence_status,interpretation
+source_host,internal_share (10.143.0.103),Confirmed,Only validated source for the targeted transfer
+target_domain,email-19.kennedy-mendoza.info,Confirmed,Dedicated DNSteal domain in the simulated environment
+protocol,UDP/53 DNS,Confirmed,Application-layer DNS transport
+data_query_marker,3x6,Confirmed,Chunk-bearing request
+completion_marker,3x7,Confirmed,Per-file protocol completion request
+files_seen_in_pcap,32,Confirmed,31 completed; 1 interrupted
+completed_files,31,Confirmed,All have completion markers and receiver hash matches
+attempted_files,1,Confirmed,Vaughn-mcdaniel.docx lacked completion marker and receiver object
+data_requests,19954,Confirmed,Exact-deduplicated chunk requests
+completion_requests,31,Confirmed,Exactly one for each completed object
+response_rcode,0 / NOERROR for targeted PCAP responses,Confirmed,Supports resolver interaction but does not independently prove reconstruction
+query_length_profile,approximately 201.54 average; 206 maximum in first-pass resolver telemetry,Confirmed with parser boundary,"Long, structured queries; leftmost-label entropy from first pass was not used because it measured the 3x6 control label"
+periodicity,17.479 seconds mean across the whole sequence,Derived,"Low-and-slow multi-day transfer, not a burst upload"
