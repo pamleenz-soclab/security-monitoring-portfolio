@@ -1,0 +1,16 @@
+{
+  "scenario": 14,
+  "title": "Ransomware Early Indicators and Containment",
+  "primary_host": "EC2AMAZ-I41BETP",
+  "primary_ip": "10.0.2.12",
+  "total_events": 73513,
+  "parse_errors": 0,
+  "ransom_note_name": "7duXYi3SC.README.txt",
+  "ransom_note_count": 183,
+  "distinct_note_directories": 183,
+  "payload_sha256": "8ADCB1AE01F295EBD4A50B6BB41F9FE05AE90FC7E655002A8C400F7F9D05A582",
+  "file_encryption": "unable_to_confirm",
+  "recovery_inhibition": "not_observed",
+  "smb_lateral_movement": "not_observed",
+  "data_exfiltration": "not_observed"
+}

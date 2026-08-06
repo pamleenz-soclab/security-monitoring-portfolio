@@ -1,0 +1,23 @@
+flowchart TD
+    A["10.0.2.13 ↔ 10.0.2.12<br/>TCP 61616 / 8080<br/>ActiveMQ-related activity"]
+    B["qSwUwejx.exe<br/>temporary directory"]
+    C["TCP 4444<br/>possible reverse/control channel"]
+    D["cmd.exe<br/>SYSTEM"]
+    E["builder.exe<br/>encryption-oriented build"]
+    F["C:\Intel\Build\LB3.exe created"]
+
+    R["10.0.1.10 → 10.0.2.12:3389"]
+    S["Administrator session<br/>Logon ID 0x11c15c"]
+    T["explorer.exe"]
+    U["LB3.exe<br/>ProcessGuid 0741354c-46aa..."]
+    V["183 × 7duXYi3SC.README.txt"]
+    W["Failed account attempts"]
+    X["Encryption of existing files<br/>Unable to confirm"]
+
+    A --> B --> C
+    B --> D --> E --> F
+    R --> S --> T --> U
+    F -. "generated payload" .-> U
+    U --> V
+    U --> W
+    V --> X

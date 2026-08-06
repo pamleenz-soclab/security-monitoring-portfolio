@@ -1,0 +1,8 @@
+asset,ip_or_address,account,logon_id,process_or_activity,file_or_resource_scope,assessment
+EC2AMAZ-I41BETP,10.0.2.12,EC2AMAZ-I41BETP\Administrator,0x11c15c,LB3.exe; Explorer; ransom-note creation,183 local directories,Confirmed affected
+EC2AMAZ-I41BETP,10.0.2.12,NT AUTHORITY\SYSTEM,0x3e7,qSwUwejx.exe→cmd.exe→builder.exe,Payload build path,Confirmed involved
+10.0.1.10,10.0.1.10,Administrator,0x72e286 / 0x734dc3,RDP transport and explicit credentials,No endpoint telemetry supplied,Requires investigation
+10.0.2.13,10.0.2.13,,,ActiveMQ-related traffic and TCP/4444 destination,No endpoint or application log supplied,Requires investigation
+EC2AMAZ-TLJH2O4,,,,No LB3 or ransom-note evidence,,Not confirmed affected
+WIN-GM4EB5GIVO0,,,,Security baseline events only,,Not confirmed affected
+WIN-QQ6SF2TB3S8,,,,Security baseline events only,,Not confirmed affected

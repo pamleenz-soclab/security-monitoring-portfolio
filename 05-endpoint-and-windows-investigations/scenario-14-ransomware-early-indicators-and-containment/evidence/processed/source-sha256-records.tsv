@@ -1,0 +1,4 @@
+file_name	size_bytes	sha256
+windows-sysmon.log	20699440	6fb7acc46cae31504b1d8fc7b731cfcbbfc61ef9819574a72d684c8ea47e9360
+windows-security.log	21544480	55555312391cf49c51fddbbd2c19aa09d7c1469205d0f3374bec68ad4df49a78
+windows-powershell.log	57064933	405c2a15b183abd9f23e22eb18ddb65b562d9b80cca7a4338ffeddc26cbb6c4c

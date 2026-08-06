@@ -1,0 +1,23 @@
+title: Failed Logons Initiated by a Non-System Executable
+id: d9a5357e-cb28-47dc-a806-fc340714fc49
+status: experimental
+description: Detects failed interactive logons when the initiating process is outside standard Windows system paths. Apply threshold correlation by ProcessId and LogonId.
+author: Pam Lee
+date: 2026-08-06
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4625
+    LogonType: 2
+  filter_system:
+    ProcessName|startswith:
+      - 'C:\Windows\System32\'
+      - 'C:\Windows\SysWOW64\'
+  condition: selection and not filter_system
+falsepositives:
+  - Custom credential-management or authentication-testing software
+level: high
+tags:
+  - attack.credential-access

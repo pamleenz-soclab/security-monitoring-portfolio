@@ -1,0 +1,12 @@
+flowchart TD
+    A["Confirmed payload execution<br/>and active ransom-note creation"] --> B{"Can host be network-isolated?"}
+    B -- Yes --> C["Isolate host; preserve power"]
+    B -- No --> D{"Can payload be terminated?"}
+    C --> E["Rapid volatile capture"]
+    E --> F["Terminate LB3.exe"]
+    F --> G["Terminate admin session<br/>reset credentials"]
+    G --> H["Block SMB/RDP/WinRM/WMI<br/>for affected host"]
+    H --> I["Forensic acquisition and rebuild"]
+    D -- Yes --> F
+    D -- No --> J["Power off as fallback"]
+    J --> I

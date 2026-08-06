@@ -1,0 +1,7 @@
+timestamp_utc,logical_host,image,process_guid,pid,parent_image,parent_process_guid,account,sanitised_command_or_role,assessment
+2026-04-24T09:20:03.3092296Z,EC2AMAZ-I41BETP,qSwUwejx.exe,{0741354c-35c1-69eb-4e05-000000006702},5820,,,Administrator,Temporary control executable; TCP/4444,Confirmed process and connection
+2026-04-24T10:29:06.9946114Z,EC2AMAZ-I41BETP,cmd.exe,{0741354c-45f2-69eb-5407-000000006702},2572,qSwUwejx.exe,{0741354c-35c1-69eb-4e05-000000006702},NT AUTHORITY\SYSTEM,Command shell spawned by temporary executable,Confirmed
+2026-04-24T10:30:08.9092119Z,EC2AMAZ-I41BETP,builder.exe,{0741354c-4630-69eb-5d07-000000006702},6832,cmd.exe,{0741354c-45f2-69eb-5407-000000006702},NT AUTHORITY\SYSTEM,Encryption-oriented builder with key/config/output arguments; full command withheld,Confirmed
+2026-04-24T07:29:58.4487578Z,EC2AMAZ-I41BETP,explorer.exe,{0741354c-1bf6-69eb-ee01-000000006702},5032,userinit.exe,{0741354c-1bf6-69eb-ed01-000000006702},EC2AMAZ-I41BETP\Administrator,High-integrity desktop process; Logon ID 0x11c15c,Confirmed
+2026-04-24T10:32:10.1648399Z,EC2AMAZ-I41BETP,LB3.exe,{0741354c-46aa-69eb-7f07-000000006702},1844,explorer.exe,{0741354c-1bf6-69eb-ee01-000000006702},EC2AMAZ-I41BETP\Administrator,Payload execution; SHA-256 8ADCB1...A582,Confirmed
+2026-04-24T10:32:33.5558516Z,EC2AMAZ-I41BETP,notepad.exe,{0741354c-46c1-69eb-8407-000000006702},1004,explorer.exe,{0741354c-1bf6-69eb-ee01-000000006702},EC2AMAZ-I41BETP\Administrator,Opened Desktop ransom note,Confirmed

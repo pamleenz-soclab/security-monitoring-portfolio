@@ -1,0 +1,23 @@
+```spl
+index=windows source="*security*" EventID IN (4624,4648)
+| eval src_ip=coalesce(IpAddress, Source_Network_Address),
+       account=coalesce(TargetUserName, Account_Name),
+       logon_type=coalesce(LogonType, Logon_Type)
+| where src_ip!="" AND src_ip!="-" AND src_ip!="::1"
+| where EventID=4648 OR logon_type IN (3,7,10)
+| rename _time as auth_time
+| join type=inner host
+    [ search index=windows source="*sysmon*" EventID=1
+      | eval image=coalesce(Image, process_path),
+             parent_image=coalesce(ParentImage, parent_process_path),
+             integrity=coalesce(IntegrityLevel, integrity_level),
+             logon_id=coalesce(LogonId, logon_id)
+      | where like(lower(parent_image), "%\\explorer.exe")
+          AND NOT like(lower(image), "c:\\windows\\%")
+          AND integrity IN ("High","System")
+      | rename _time as payload_time
+      | fields host payload_time image parent_image integrity logon_id ProcessGuid Hashes User ]
+| where payload_time>=auth_time AND payload_time<=auth_time+600
+| table auth_time payload_time host src_ip account logon_type image parent_image integrity logon_id ProcessGuid Hashes User
+| sort payload_time
+```

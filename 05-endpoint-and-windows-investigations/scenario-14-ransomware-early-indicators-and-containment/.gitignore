@@ -1,0 +1,45 @@
+# Original evidence must never be committed.
+evidence/raw/*
+!evidence/raw/.gitkeep
+
+# Temporary clones, SQLite indexes, extracted events, and intermediate files.
+evidence/working/*
+!evidence/working/.gitkeep
+
+# Screenshots require manual review before publication.
+screenshots/*
+!screenshots/.gitkeep
+
+# Forensic and large evidence.
+*.evtx
+*.etl
+*.pcap
+*.pcapng
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+*.gz
+
+# Executables and potentially unsafe payloads.
+*.exe
+*.dll
+*.sys
+*.msi
+*.scr
+*.com
+*.bat
+*.cmd
+*.ps1
+*.vbs
+*.js
+*.jse
+*.hta
+
+# Local tooling.
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.DS_Store

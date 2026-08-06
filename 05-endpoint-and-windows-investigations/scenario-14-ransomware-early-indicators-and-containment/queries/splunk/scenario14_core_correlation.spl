@@ -1,0 +1,33 @@
+```spl
+index=windows (source="*sysmon*" EventID=1)
+| eval process_guid=coalesce(ProcessGuid, process_guid),
+       parent_guid=coalesce(ParentProcessGuid, parent_process_guid),
+       image=coalesce(Image, process_path),
+       command_line=coalesce(CommandLine, process)
+| where like(lower(image), "%\\lb3.exe")
+    OR (like(lower(image), "%\\builder.exe")
+        AND like(lower(command_line), "%-type%")
+        AND like(lower(command_line), "%enc%")
+        AND like(lower(command_line), "%-pubkey%")
+        AND like(lower(command_line), "%-config%")
+        AND like(lower(command_line), "%-ofile%"))
+| table _time host user process_guid parent_guid image command_line ParentImage Hashes
+```
+
+Correlate file events:
+
+```spl
+index=windows source="*sysmon*" EventID=11
+| eval process_guid=coalesce(ProcessGuid, process_guid),
+       target=coalesce(TargetFilename, file_path),
+       image=coalesce(Image, process_path),
+       directory=replace(target, "\\\\[^\\\\]+$", "")
+| search target="*README*.txt" OR target="*RECOVER*" OR target="*DECRYPT*"
+| bin _time span=5m
+| stats min(_time) as first_seen max(_time) as last_seen
+        count as file_count dc(directory) as distinct_directories
+        values(target) as sample_paths
+  by host process_guid image _time
+| where file_count>=20 AND distinct_directories>=20
+| sort - file_count
+```

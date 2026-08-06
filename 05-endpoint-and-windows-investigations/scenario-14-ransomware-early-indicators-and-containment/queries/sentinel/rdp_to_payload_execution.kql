@@ -1,0 +1,31 @@
+// Correlate RDP/authentication activity with unusual high-integrity payload execution.
+let AuthWindow = 10m;
+let RdpAuth =
+    SecurityEvent
+    | where EventID in (4624, 4648)
+    | where IpAddress !in ("-", "::1", "127.0.0.1")
+    | where LogonType in (3, 7, 10) or EventID == 4648
+    | project AuthTime=TimeGenerated, Computer,
+              Account, SubjectLogonId, LogonType, IpAddress, ProcessName;
+let Payload =
+    WindowsEvent
+    | where EventID == 1 and Provider == "Microsoft-Windows-Sysmon"
+    | extend D=todynamic(EventData)
+    | extend Image=tostring(D.Image),
+             User=tostring(D.User),
+             LogonId=tostring(D.LogonId),
+             IntegrityLevel=tostring(D.IntegrityLevel),
+             ParentImage=tostring(D.ParentImage),
+             ProcessGuid=tostring(D.ProcessGuid),
+             Hashes=tostring(D.Hashes)
+    | where IntegrityLevel in ("High", "System")
+    | where ParentImage endswith_cs @"\explorer.exe"
+    | where Image !startswith_cs @"C:\Windows\"
+    | project PayloadTime=TimeGenerated, Computer, Image, User, LogonId,
+              IntegrityLevel, ParentImage, ProcessGuid, Hashes;
+RdpAuth
+| join kind=inner Payload on Computer
+| where PayloadTime between (AuthTime .. AuthTime + AuthWindow)
+| project AuthTime, PayloadTime, Computer, IpAddress, Account, LogonType,
+          Image, User, LogonId, IntegrityLevel, ParentImage, ProcessGuid, Hashes
+| order by PayloadTime asc

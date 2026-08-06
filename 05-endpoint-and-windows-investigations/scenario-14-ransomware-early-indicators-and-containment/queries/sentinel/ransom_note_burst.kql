@@ -1,0 +1,20 @@
+// Detect repeated creation of the same README-like file in many directories.
+let Window = 5m;
+WindowsEvent
+| where EventID == 11 and Provider == "Microsoft-Windows-Sysmon"
+| extend D = todynamic(EventData)
+| extend ProcessGuid=tostring(D.ProcessGuid),
+         Image=tostring(D.Image),
+         TargetFilename=tostring(D.TargetFilename),
+         FileName=extract(@"([^\\]+)$", 1, tostring(D.TargetFilename)),
+         Directory=extract(@"^(.*)\\[^\\]+$", 1, tostring(D.TargetFilename))
+| where FileName matches regex @"(?i)(readme|recover|restore|decrypt).*\.(txt|html|hta)$"
+| summarize
+    FirstSeen=min(TimeGenerated),
+    LastSeen=max(TimeGenerated),
+    FileCount=count(),
+    DistinctDirectories=dcount(Directory),
+    SamplePaths=make_set(TargetFilename, 20)
+  by bin(TimeGenerated, Window), Computer, ProcessGuid, Image, FileName
+| where FileCount >= 20 and DistinctDirectories >= 20
+| order by FileCount desc

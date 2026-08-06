@@ -1,0 +1,14 @@
+```spl
+index=windows source="*security*" EventID=4625
+| eval process_id=coalesce(ProcessId, Process_ID),
+       process_name=coalesce(ProcessName, Process_Name),
+       logon_id=coalesce(SubjectLogonId, Logon_ID),
+       account=coalesce(TargetUserName, Account_Name)
+| where NOT like(lower(process_name), "c:\\windows\\system32\\%")
+| bin _time span=1m
+| stats count values(account) as attempted_accounts
+        values(LogonType) as logon_types
+  by host process_id process_name logon_id _time
+| where count>=3
+| sort - count
+```

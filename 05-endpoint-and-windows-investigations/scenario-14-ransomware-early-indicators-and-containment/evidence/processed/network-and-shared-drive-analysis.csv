@@ -1,0 +1,8 @@
+timestamp_utc,source_ip,destination_ip,destination_port,image,interpretation,assessment
+2026-04-24T09:19:51Z–09:20:02Z,10.0.2.13,10.0.2.12,61616,java.exe,ActiveMQ-related service traffic,Confirmed transport; exploit content unavailable
+2026-04-24T09:20:02Z,10.0.2.12,10.0.2.13,8080,java.exe / unknown process,HTTP/service-side activity,Confirmed transport; purpose inferred
+2026-04-24T09:20:03.3092296Z,10.0.2.12,10.0.2.13,4444,qSwUwejx.exe,Possible reverse/control channel,Confirmed connection; session purpose inferred
+2026-04-24T10:30:53.7167867Z,10.0.1.10,10.0.2.12,3389,svchost.exe,RDP transport,Confirmed
+Not observed,,,445,,SMB network activity,Not observed
+Not observed,,,,,UNC path or shared-drive write,Not observed
+Not observed,,,,,External upload of collected data,Not observed

@@ -1,0 +1,24 @@
+title: Temporary Directory Executable Connecting to TCP 4444
+id: 392a6c9c-06dd-40fa-b69a-a88fab459b2e
+status: experimental
+description: Detects a user-writable or temporary-directory executable establishing an outbound connection to TCP 4444.
+author: Pam Lee
+date: 2026-08-06
+logsource:
+  category: network_connection
+  product: windows
+detection:
+  selection_path:
+    Image|contains:
+      - '\AppData\Local\Temp\'
+      - '\Windows\Temp\'
+      - '\Users\Public\'
+  selection_port:
+    DestinationPort: 4444
+  condition: selection_path and selection_port
+falsepositives:
+  - Penetration-testing labs
+  - Approved developer services using TCP 4444
+level: high
+tags:
+  - attack.command-and-control

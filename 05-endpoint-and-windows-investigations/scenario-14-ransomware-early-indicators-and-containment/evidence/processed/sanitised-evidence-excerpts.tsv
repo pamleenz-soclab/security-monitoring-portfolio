@@ -1,0 +1,12 @@
+source	event_id	record_id	timestamp_utc	logical_host	account	image	sanitised_key_fields	assessment
+sysmon	1	7756	2026-04-24T10:29:06.9946114Z	EC2AMAZ-I41BETP	NT AUTHORITY\SYSTEM	cmd.exe	Parent qSwUwejx.exe; ProcessGuid relationship retained	Confirmed control-to-shell relationship
+sysmon	1	7765	2026-04-24T10:30:08.9092119Z	EC2AMAZ-I41BETP	NT AUTHORITY\SYSTEM	builder.exe	Encryption-oriented build; key/config/output parameters present; full command withheld	Confirmed preparation
+sysmon	1	7816	2026-04-24T10:32:10.1648399Z	EC2AMAZ-I41BETP	Administrator	LB3.exe	Parent Explorer; Logon ID 0x11c15c; high integrity	Confirmed payload execution
+security	4688	325724	2026-04-24T10:32:10.1627993Z	EC2AMAZ-I41BETP		LB3.exe	Independent process-creation confirmation	Confirmed
+sysmon	3	7144	2026-04-24T09:20:03.3092296Z	EC2AMAZ-I41BETP	Administrator	qSwUwejx.exe	10.0.2.12:50834→10.0.2.13:4444	Confirmed connection
+sysmon	3	7781	2026-04-24T10:30:53.7167867Z	EC2AMAZ-I41BETP	NETWORK SERVICE	svchost.exe	10.0.1.10:55386→10.0.2.12:3389	Confirmed RDP transport
+security	4648	325702	2026-04-24T10:31:01.6216839Z	EC2AMAZ-I41BETP	Administrator	svchost.exe	Explicit credentials; source 10.0.1.10	Confirmed
+security	4624	325703	2026-04-24T10:31:01.6217140Z	EC2AMAZ-I41BETP	Administrator	svchost.exe	Logon Type 7; source 10.0.1.10	Confirmed; reconnect/unlock inferred
+security	4625	325725–325731	2026-04-24T10:32:11Z	EC2AMAZ-I41BETP	Multiple attempted accounts	LB3.exe	Process ID 0x734; seven failed attempts	Confirmed failures
+sysmon	11	multiple	2026-04-24T10:32:10Z–10:32:59Z	EC2AMAZ-I41BETP	Administrator	LB3.exe	183 × 7duXYi3SC.README.txt in distinct directories	Confirmed impact marker
+sysmon	1	7406–7408	2026-04-24T09:56:51Z	EC2AMAZ-I41BETP	Administrator	wevtutil.exe	System, Application, and Security clear commands	Confirmed command execution

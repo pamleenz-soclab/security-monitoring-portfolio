@@ -1,0 +1,16 @@
+```spl
+index=windows source="*sysmon*" EventID=1
+| eval image=lower(coalesce(Image, process_path)),
+       command_line=lower(coalesce(CommandLine, process))
+| where
+    (like(image, "%\\wevtutil.exe") AND
+     (like(command_line, "% cl %") OR like(command_line, "% clear-log %")))
+ OR ((like(image, "%\\net.exe") OR like(image, "%\\net1.exe") OR like(image, "%\\sc.exe"))
+     AND like(command_line, "%stop%")
+     AND (like(command_line, "%termservice%")
+          OR like(command_line, "%backup%")
+          OR like(command_line, "%vss%")))
+ OR match(command_line, "(?i)vssadmin.*delete.*shadows|wmic.*shadowcopy.*delete|wbadmin.*delete")
+| table _time host User Image CommandLine ProcessGuid ParentImage
+| sort _time
+```

@@ -1,0 +1,17 @@
+timestamp_utc,logical_host,source_event,observation,evidence_status,key_fields,record_id
+2026-04-24T09:19:51.0236015Z,EC2AMAZ-I41BETP,Sysmon 3,Java process observed with ActiveMQ TCP/61616 activity,Confirmed,10.0.2.13→10.0.2.12:61616,7133
+2026-04-24T09:20:02.3050753Z,EC2AMAZ-I41BETP,Sysmon 3,Java/ActiveMQ-related TCP/8080 activity,Confirmed,10.0.2.12→10.0.2.13:8080,7140
+2026-04-24T09:20:03.3092296Z,EC2AMAZ-I41BETP,Sysmon 3,Temporary executable connected to TCP/4444,Confirmed,qSwUwejx.exe; 10.0.2.12→10.0.2.13:4444,7144
+2026-04-24T09:56:43.3261832Z,EC2AMAZ-I41BETP,Sysmon 1,Terminal Services stop command executed,Confirmed command; outcome unvalidated,Administrator; net.exe,7389
+2026-04-24T09:56:51.0345816Z,EC2AMAZ-I41BETP,Sysmon 1,System log-clear command executed,Confirmed command; outcome unvalidated,wevtutil.exe,7406
+2026-04-24T09:56:51.0565686Z,EC2AMAZ-I41BETP,Sysmon 1,Application log-clear command executed,Confirmed command; outcome unvalidated,wevtutil.exe,7407
+2026-04-24T09:56:51.0765639Z,EC2AMAZ-I41BETP,Sysmon 1,Security log-clear command executed,Confirmed command; outcome unvalidated,wevtutil.exe,7408
+2026-04-24T10:29:06.9946114Z,EC2AMAZ-I41BETP,Sysmon 1,Temporary control executable spawned cmd.exe as SYSTEM,Confirmed,Parent ProcessGuid correlation,7756
+2026-04-24T10:30:08.9092119Z,EC2AMAZ-I41BETP,Sysmon 1,Builder created encryption-oriented payload output,Confirmed,builder.exe; output LB3.exe,7765
+2026-04-24T10:30:53.7167867Z,EC2AMAZ-I41BETP,Sysmon 3,Inbound RDP transport observed,Confirmed,10.0.1.10→10.0.2.12:3389,7781
+2026-04-24T10:31:01.6216839Z,EC2AMAZ-I41BETP,Security 4648,Explicit Administrator credentials observed from RDP source,Confirmed,Source 10.0.1.10,325702
+2026-04-24T10:31:01.6217140Z,EC2AMAZ-I41BETP,Security 4624,Administrator Logon Type 7 session event,Confirmed; reconnect/unlock inferred,Source 10.0.1.10,325703
+2026-04-24T10:32:10.1648399Z,EC2AMAZ-I41BETP,Sysmon 1,LB3.exe launched from Explorer,Confirmed,Administrator; Logon ID 0x11c15c,7816
+2026-04-24T10:32:11.0715879Z,EC2AMAZ-I41BETP,Security 4625,Payload-associated failed account attempts began,Confirmed failed attempts,Process ID 0x734,325725
+2026-04-24T10:32:10Z–10:32:59Z,EC2AMAZ-I41BETP,Sysmon 11,183 ransom-note files created across 183 directories,Confirmed impact marker,7duXYi3SC.README.txt,multiple
+2026-04-24T10:32:33.5558516Z,EC2AMAZ-I41BETP,Sysmon 1,Notepad opened the Desktop ransom note,Confirmed,Explorer-launched Notepad,9067

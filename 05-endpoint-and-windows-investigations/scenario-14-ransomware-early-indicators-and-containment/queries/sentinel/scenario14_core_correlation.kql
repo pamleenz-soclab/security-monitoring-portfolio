@@ -1,0 +1,44 @@
+// Scenario 14 core correlation.
+// Adapt table and EventData field names to the organisation's connector schema.
+
+let Lookback = 24h;
+let ProcessEvents =
+    WindowsEvent
+    | where TimeGenerated > ago(Lookback)
+    | where EventID == 1 and Provider == "Microsoft-Windows-Sysmon"
+    | extend D = todynamic(EventData)
+    | project TimeGenerated, Computer,
+              ProcessGuid=tostring(D.ProcessGuid),
+              ProcessId=tostring(D.ProcessId),
+              ParentProcessGuid=tostring(D.ParentProcessGuid),
+              Image=tostring(D.Image),
+              CommandLine=tostring(D.CommandLine),
+              ParentImage=tostring(D.ParentImage),
+              User=tostring(D.User),
+              LogonId=tostring(D.LogonId),
+              Hashes=tostring(D.Hashes);
+let FileEvents =
+    WindowsEvent
+    | where TimeGenerated > ago(Lookback)
+    | where EventID == 11 and Provider == "Microsoft-Windows-Sysmon"
+    | extend D = todynamic(EventData)
+    | project FileTime=TimeGenerated, Computer,
+              ProcessGuid=tostring(D.ProcessGuid),
+              FileImage=tostring(D.Image),
+              TargetFilename=tostring(D.TargetFilename);
+ProcessEvents
+| where Image endswith_cs @"\LB3.exe"
+   or (Image endswith_cs @"\builder.exe"
+       and CommandLine has_all ("-type", "enc", "-pubkey", "-config", "-ofile"))
+| join kind=leftouter FileEvents on Computer, ProcessGuid
+| summarize
+    ProcessStart=min(TimeGenerated),
+    LastFileEvent=max(FileTime),
+    FilesCreated=countif(isnotempty(TargetFilename)),
+    DistinctDirectories=dcount(extract(@"^(.*)\\[^\\]+$", 1, TargetFilename)),
+    SampleFiles=make_set(TargetFilename, 20),
+    Users=make_set(User),
+    LogonIds=make_set(LogonId),
+    Hashes=make_set(Hashes)
+  by Computer, ProcessGuid, Image, CommandLine, ParentImage
+| order by ProcessStart asc

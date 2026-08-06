@@ -1,0 +1,28 @@
+title: Suspicious Encryption-Oriented Payload Builder Execution
+id: 2d92ea3e-ff0e-4aab-8d08-6871e14e2014
+status: experimental
+description: Detects an unusual builder process using encryption, public-key, configuration, and executable-output arguments.
+author: Pam Lee
+date: 2026-08-06
+references:
+  - Scenario 14 Ransomware Early Indicators and Containment
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection_image:
+    Image|endswith: '\builder.exe'
+  selection_cli:
+    CommandLine|contains|all:
+      - '-type'
+      - 'enc'
+      - '-pubkey'
+      - '-config'
+      - '-ofile'
+  condition: selection_image and selection_cli
+falsepositives:
+  - Authorised internal software build systems using the same uncommon command-line structure
+level: high
+tags:
+  - attack.impact
+  - attack.t1486

@@ -1,0 +1,4 @@
+file_or_pattern,event_count,distinct_directories,extension,responsible_image,process_guid,operation,assessment
+C:\Intel\Build\LB3.exe,1,1,.exe,builder.exe,{0741354c-4630-69eb-5d07-000000006702},File creation,Confirmed payload output
+7duXYi3SC.README.txt,183,183,.txt,LB3.exe,{0741354c-46aa-69eb-7f07-000000006702},File creation/overwrite observed,Confirmed ransom-note placement
+Pre-existing business files,0 observed deletes,No rename telemetry,Unknown,LB3.exe,,Content impact,"Unable to confirm encryption, deletion, or rename"

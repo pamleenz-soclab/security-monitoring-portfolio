@@ -1,0 +1,30 @@
+title: Ransom Note Style README File Created by an Unusual Process
+id: e210cb25-64ba-4164-8f5f-dda813999114
+status: experimental
+description: Detects creation of a ransom-note-like README text file. Apply SIEM correlation for repeated creation across many directories by one ProcessGuid.
+author: Pam Lee
+date: 2026-08-06
+logsource:
+  category: file_event
+  product: windows
+detection:
+  selection:
+    TargetFilename|contains:
+      - '.README.txt'
+      - 'README_RECOVER'
+      - 'RECOVER_FILES'
+      - 'RESTORE_FILES'
+      - 'DECRYPT'
+  filter_common:
+    Image|endswith:
+      - '\notepad.exe'
+      - '\code.exe'
+      - '\git.exe'
+      - '\msiexec.exe'
+  condition: selection and not filter_common
+falsepositives:
+  - Software packages or repositories containing similarly named documentation
+  - Security simulations and controlled ransomware testing
+level: medium
+tags:
+  - attack.impact

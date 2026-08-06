@@ -1,0 +1,9 @@
+timestamp_utc,phase,event,evidence_status,evidence_basis,limitation
+2026-04-24T10:30:08.9092119Z,Preparation,builder.exe executed as SYSTEM,Confirmed,Encryption-oriented build profile and LB3 output path,Does not prove encryption occurred
+2026-04-24T10:32:10.1648399Z,Execution,LB3.exe launched from Explorer,Confirmed,Administrator; high integrity; payload hash,Interactive user action inferred
+2026-04-24T10:32:10Z–10:32:59Z,Impact marker,183 identical README files created,Confirmed,One payload branch; 183 directories,Ransom-note deployment only
+2026-04-24T10:32:11Z,Credential activity,Seven payload-associated failed logons,Confirmed failed attempts,PID 0x734; Logon ID 0x11c15c,No success or remote target
+2026-04-24T10:32:33.5558516Z,User-visible impact,Ransom note opened in Notepad,Confirmed,Desktop note path,Does not prove file encryption
+Not observed,File encryption,"No content, entropy, rename, delete, or access-failure evidence",Unable to confirm,,T1486 not mapped
+Not observed,Recovery inhibition,No command-bearing VSS or backup-destruction evidence,Not observed,,T1490 not mapped
+Not observed,Multi-host impact,No second-host payload or note evidence,Not observed,,

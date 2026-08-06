@@ -1,0 +1,8 @@
+activity,observation,evidence,limitation,attack_mapping
+vssadmin / shadow-copy deletion,Not observed,No command-bearing event,,T1490 not mapped
+wmic shadowcopy / Win32_ShadowCopy,Not observed,No command-bearing event,,T1490 not mapped
+wbadmin / backup deletion,Not observed,No command-bearing event,,T1490 not mapped
+bcdedit / reagentc / diskshadow,Not observed,No command-bearing event,,T1490 not mapped
+Backup service stop,Not observed,First-pass Backup Operators hits were keyword false positives,,
+Terminal Services stop,Command observed,net.exe and net1.exe at 09:56:43Z,Outcome unvalidated,T1489 command evidence
+System/Application/Security log clear,Commands observed,wevtutil.exe at 09:56:51Z,Outcome unvalidated,T1070.001 command evidence

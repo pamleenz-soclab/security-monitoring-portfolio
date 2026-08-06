@@ -1,0 +1,12 @@
+WindowsEvent
+| where EventID == 1 and Provider == "Microsoft-Windows-Sysmon"
+| extend D=todynamic(EventData)
+| extend Image=tostring(D.Image), CommandLine=tostring(D.CommandLine),
+         User=tostring(D.User), ProcessGuid=tostring(D.ProcessGuid)
+| where
+    (Image endswith_cs @"\wevtutil.exe" and CommandLine matches regex @"(?i)\b(cl|clear-log)\b")
+    or (Image has_any (@"\net.exe", @"\net1.exe", @"\sc.exe")
+        and CommandLine matches regex @"(?i)\bstop\b.*\b(termservice|vss|backup|sql|exchange)\b")
+    or CommandLine matches regex @"(?i)(vssadmin.*delete.*shadows|wmic.*shadowcopy.*delete|wbadmin.*delete|bcdedit.*recoveryenabled)"
+| project TimeGenerated, Computer, User, Image, CommandLine, ProcessGuid
+| order by TimeGenerated asc
