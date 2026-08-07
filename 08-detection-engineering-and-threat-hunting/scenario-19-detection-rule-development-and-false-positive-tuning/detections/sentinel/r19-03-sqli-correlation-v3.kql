@@ -1,0 +1,12 @@
+// R19-03 v3. Native execution: NOT TESTED.
+let SQLi = WAFLogs | where RuleId_s startswith "942";
+let TransactionBranch = SQLi
+| summarize RuleIds=make_set(RuleId_s,32), DistinctRules=dcount(RuleId_s), FirstSeen=min(TimeGenerated), LastSeen=max(TimeGenerated) by TransactionId_s, ClientIP_s, Host_s
+| extend Specialist = set_has_element(RuleIds,"942160") or set_has_element(RuleIds,"942190") or set_has_element(RuleIds,"942360")
+| where DistinctRules >= 2 or Specialist
+| project DetectionBranch="multi_rule_transaction", ClientIP_s, Host_s, Entity=TransactionId_s, Count=DistinctRules, FirstSeen, LastSeen, RuleIds;
+let BurstBranch = SQLi
+| summarize Count=dcount(TransactionId_s), RuleIds=make_set(RuleId_s,32), FirstSeen=min(TimeGenerated), LastSeen=max(TimeGenerated) by bin(TimeGenerated,5m), ClientIP_s, Host_s
+| where Count >= 20
+| project DetectionBranch="burst_20_distinct_transactions_5m", ClientIP_s, Host_s, Entity=strcat(ClientIP_s,"|",Host_s), Count, FirstSeen, LastSeen, RuleIds;
+union TransactionBranch, BurstBranch

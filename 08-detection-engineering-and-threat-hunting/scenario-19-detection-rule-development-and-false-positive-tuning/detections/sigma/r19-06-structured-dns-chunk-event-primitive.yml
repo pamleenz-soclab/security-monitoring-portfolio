@@ -1,0 +1,25 @@
+status: experimental
+author: security-monitoring-portfolio Scenario 19
+date: '2026-08-07'
+references: []
+title: R19-06 Structured DNS Chunk Event Primitive
+id: 2279035e-2e4c-4141-8fac-8b0e68e21906
+description: Atomic DNS primitive for a parsed structured transfer chunk. Full R19-06
+  requires exact deduplication and >=5 unique chunk indexes in 5 minutes.
+logsource:
+  category: dns
+detection:
+  selection:
+    query|contains:
+    - chunk-
+    - part-
+  condition: selection
+falsepositives:
+- Applications with coincidentally similar labels; full detection must parse a governed
+  transfer grammar and correlate unique chunk indexes.
+level: medium
+tags:
+- attack.exfiltration
+- attack.t1048.003
+- attack.command-and-control
+- attack.t1071.004

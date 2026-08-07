@@ -1,0 +1,11 @@
+candidate_id,rule_name,source_scenario,recommendation,rationale,testability
+C01,Repeated SSH invalid-user attempts,Scenario 01-03,Reserve,Legacy evidence less structured than Scenario 17,Medium-Low
+C02,MFA denials/timeouts followed by success,Scenario 17,Selected / Flagship,Strong correlation evidence and confirmed user verification,High
+C03,Suspicious PowerShell execution,Scenario 10,Reserve,Strong investigation evidence but Scenario 12 has better lifecycle baseline,Medium
+C04,Privileged group membership addition,Scenario 11,Selected,Strong processed timeline and authorised Atomic test context,High
+C05,Scheduled task to SYSTEM PowerShell,Scenario 12,Selected / Flagship,Existing Sigma primitives plus source-confirmed process/network chain,High
+C06,SMBExec lateral movement,Scenario 13,Stretch,Good multi-source candidate but lower fixture maturity,Medium-High
+C07,SQL injection WAF correlation,Scenario 15,Selected / Flagship,Large processed corpus plus 46 likely-FP tuning candidates,Very High
+C08,Structured DNS chunk transfer,Scenario 16,Selected,Strong deduplication and incomplete-transfer engineering case,High
+C09,Credential addition to SP sign-in,Scenario 18,Selected / Flagship,Strong stable-ID correlation and cross-platform implementations,Very High
+C10,Application permission to sensitive API use,Scenario 18,Reserve,Strong but overlaps C09 and begins to approach hunting/coverage work,High

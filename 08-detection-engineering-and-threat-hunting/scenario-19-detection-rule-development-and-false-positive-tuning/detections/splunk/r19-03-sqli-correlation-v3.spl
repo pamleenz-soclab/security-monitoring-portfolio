@@ -1,0 +1,13 @@
+# R19-03 v3. Native execution: NOT TESTED.
+multisearch
+  [ search index=waf rule_id=942*
+    | stats values(rule_id) as rule_ids dc(rule_id) as distinct_rules earliest(_time) as first_seen latest(_time) as last_seen by transaction_id src_ip host
+    | eval specialist=if(mvfind(rule_ids,"^(942160|942190|942360)$")>=0,1,0)
+    | where distinct_rules>=2 OR specialist=1
+    | eval detection_branch="multi_rule_transaction", entity=transaction_id, count=distinct_rules ]
+  [ search index=waf rule_id=942*
+    | bin _time span=5m
+    | stats dc(transaction_id) as count values(rule_id) as rule_ids earliest(_time) as first_seen latest(_time) as last_seen by _time src_ip host
+    | where count>=20
+    | eval detection_branch="burst_20_distinct_transactions_5m", entity=src_ip."|".host ]
+| table detection_branch src_ip host entity count first_seen last_seen rule_ids

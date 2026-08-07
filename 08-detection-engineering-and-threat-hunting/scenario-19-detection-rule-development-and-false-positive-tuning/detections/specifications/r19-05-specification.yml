@@ -1,0 +1,39 @@
+rule_id: R19-05
+name: Privileged Security Group Membership Addition
+version: 3.0.0
+detects: Addition of a member to a governed privileged security group using Windows
+  group-membership audit events.
+does_not_detect: All account creation or all group changes; privilege scope is derived
+  from a governed SID/object-ID inventory.
+mandatory_fields:
+- event_time
+- event_id
+- target/member
+- group_id or resolvable group identity
+- group_is_privileged
+strong_fields:
+- actor
+- actor_logon_id
+- host_name
+- event_record_id
+- corroborating process
+logic: Match 4728, 4732 or 4756-equivalent membership-addition event when enriched
+  group identity is governed as privileged.
+alert_entity: Privileged group + added member
+threshold: Single event
+window: N/A
+dedup: Prefer EventRecordID + host/channel.
+severity: High
+confidence: High when stable group identity is present
+tuning: Do not suppress simply because actor is an administrator. Classify authorised
+  test/change after alert using change/test context.
+risk: Display-name-only allowlists are spoofable and localization-sensitive.
+attack:
+- T1098
+response: Validate actor session, member identity, privileged-group SID/object ID,
+  change approval, associated account creation and post-change activity.
+test_status: Tested with local canonical evaluator and public fixture suite; source-derived
+  validation references reviewed
+platform_status: No native SIEM execution; platform files are syntax/semantic candidates
+  only
+performance_status: Not tested

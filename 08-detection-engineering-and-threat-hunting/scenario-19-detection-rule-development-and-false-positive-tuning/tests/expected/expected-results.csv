@@ -1,0 +1,38 @@
+fixture_id,rule_id,expected_result,expected_classification
+FX3-R19-01-001,R19-01,Match,True Positive
+FX3-R19-01-002,R19-01,Match,Benign Positive
+FX3-R19-01-003,R19-01,No match,True Negative
+FX3-R19-01-004,R19-01,No match,True Negative
+FX3-R19-01-005,R19-01,No match,True Negative
+FX3-R19-01-006,R19-01,Unable to evaluate,Unable to test
+FX3-R19-02-001,R19-02,Match,True Positive
+FX3-R19-02-002,R19-02,Match,True Positive
+FX3-R19-02-003,R19-02,No match,True Negative
+FX3-R19-02-004,R19-02,No match,True Negative
+FX3-R19-02-005,R19-02,Unable to evaluate,Unable to test
+FX3-R19-02-006,R19-02,Match,True Positive
+FX3-R19-03-001,R19-03,Match,True Positive
+FX3-R19-03-002,R19-03,Match,True Positive
+FX3-R19-03-003,R19-03,No match,True Negative
+FX3-R19-03-004,R19-03,No match,True Negative
+FX3-R19-03-005,R19-03,Match,True Positive
+FX3-R19-03-006,R19-03,Unable to evaluate,Unable to test
+FX3-R19-04-001,R19-04,Match,True Positive
+FX3-R19-04-002,R19-04,Match,Benign Positive
+FX3-R19-04-003,R19-04,No match,True Negative
+FX3-R19-04-004,R19-04,No match,True Negative
+FX3-R19-04-005,R19-04,Match,True Positive
+FX3-R19-04-006,R19-04,Unable to evaluate,Unable to test
+FX3-R19-05-001,R19-05,Match,Benign Positive
+FX3-R19-05-002,R19-05,Match,True Positive
+FX3-R19-05-003,R19-05,No match,True Negative
+FX3-R19-05-004,R19-05,No match,True Negative
+FX3-R19-05-005,R19-05,Unable to evaluate,Unable to test
+FX3-R19-05-006,R19-05,No match,True Negative
+FX3-R19-06-001,R19-06,Match,True Positive
+FX3-R19-06-002,R19-06,Match,True Positive
+FX3-R19-06-003,R19-06,No match,True Negative
+FX3-R19-06-004,R19-06,Match,True Positive
+FX3-R19-06-005,R19-06,No match,True Negative
+FX3-R19-06-006,R19-06,No match,True Negative
+FX3-R19-06-007,R19-06,Unable to evaluate,Unable to test

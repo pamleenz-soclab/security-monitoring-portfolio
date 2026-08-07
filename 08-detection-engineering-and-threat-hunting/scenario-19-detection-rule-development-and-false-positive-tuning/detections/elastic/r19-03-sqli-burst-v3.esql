@@ -1,0 +1,6 @@
+// R19-03 branch B. Native Elastic execution: NOT TESTED.
+FROM waf-*
+| WHERE TO_STRING(waf.rule.id) LIKE "942%"
+| EVAL bucket=DATE_TRUNC(5 minutes, @timestamp)
+| STATS request_count=COUNT_DISTINCT(waf.transaction_id), rule_ids=VALUES(waf.rule.id), first_seen=MIN(@timestamp), last_seen=MAX(@timestamp) BY bucket, source.ip, url.domain
+| WHERE request_count >= 20

@@ -1,0 +1,5 @@
+area,status,boundary
+Raw source evidence,Not copied,Scenario 19 references only processed/sanitised source artefacts
+Production maliciousness,Varies,Rule match does not prove incident maliciousness
+Native SIEM execution,Not tested,Platform files require native validation
+Performance and cost,Not tested,No production-scale benchmark

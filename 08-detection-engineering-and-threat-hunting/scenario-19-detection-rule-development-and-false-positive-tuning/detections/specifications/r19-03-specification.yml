@@ -1,0 +1,42 @@
+rule_id: R19-03
+name: High-Confidence or Correlated SQL Injection Activity
+version: 3.0.0
+detects: High-confidence SQL-injection attempts using either multi-rule/specialist
+  WAF evidence in one transaction or an automated burst of SQLi-rule transactions.
+does_not_detect: Successful exploitation or backend compromise; those require server/application/database
+  evidence.
+mandatory_fields:
+- event_time
+- source_ip
+- http_host
+- transaction_id
+- waf_rule_ids
+strong_fields:
+- path
+- method
+- payload location
+- WAF action
+- response status
+- backend request correlation
+logic: 'Branch A: a transaction has >=2 distinct SQLi rule IDs or a specialist SQLi
+  rule. Branch B: >=20 distinct SQLi-rule transaction IDs for same source_ip+host
+  in 5m.'
+alert_entity: HTTP transaction or source IP + host
+threshold: 2 rules / transaction OR 20 distinct transactions / 5m
+window: 5m for burst
+dedup: Count distinct transaction IDs, not raw WAF rule rows.
+severity: High
+confidence: High for multi-rule; Medium-High for burst
+tuning: Single generic Rule 942100-only events are retained for review/logging but
+  do not alert unless burst branch is met.
+risk: Low-and-slow or single-rule successful exploitation can be missed. Threshold
+  is a fixture/data-informed starting point, not enterprise baseline.
+attack:
+- T1190
+response: Inspect raw/sanitised request, all WAF rule IDs in transaction, WAF enforcement
+  disposition, backend/app/database evidence and source campaign scope.
+test_status: Tested with local canonical evaluator and public fixture suite; source-derived
+  validation references reviewed
+platform_status: No native SIEM execution; platform files are syntax/semantic candidates
+  only
+performance_status: Not tested

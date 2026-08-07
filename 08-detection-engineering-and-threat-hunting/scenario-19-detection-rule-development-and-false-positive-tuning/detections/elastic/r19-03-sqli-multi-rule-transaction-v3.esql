@@ -1,0 +1,6 @@
+// R19-03 branch A. Native Elastic execution: NOT TESTED.
+FROM waf-*
+| WHERE TO_STRING(waf.rule.id) LIKE "942%"
+| STATS distinct_rules=COUNT_DISTINCT(waf.rule.id), rule_ids=VALUES(waf.rule.id), first_seen=MIN(@timestamp), last_seen=MAX(@timestamp) BY waf.transaction_id, source.ip, url.domain
+| EVAL specialist = MV_CONTAINS(rule_ids, "942160") OR MV_CONTAINS(rule_ids, "942190") OR MV_CONTAINS(rule_ids, "942360")
+| WHERE distinct_rules >= 2 OR specialist == true

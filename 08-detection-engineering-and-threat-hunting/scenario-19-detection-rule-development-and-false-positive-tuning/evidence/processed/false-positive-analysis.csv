@@ -1,0 +1,7 @@
+rule_id,case_type,evidence,root_cause,v3_handling,boundary
+R19-01,Benign Positive,Synthetic legitimate repeated declines followed by success,Target behaviour can be legitimate,Match remains; enrich analyst decision,Do not call this a detection-logic FP.
+R19-02,Potential FP,Legitimate SYSTEM maintenance PowerShell task,Broad task/PowerShell combination common in administration,Require suspicious definition or suspicious correlated follow-on,Enterprise admin baseline not tested.
+R19-03,Likely FP candidate set,46 processed examples; Rule 942100 only; candidate max same src+host/5m = 5,Generic SQLi signature collides with password/session punctuation,No alert unless specialist/multi-rule or >=20 distinct tx/5m,Candidates are not independently verified benign population.
+R19-04,Benign Positive,Approved credential followed by matching SP sign-in,Expected credential lifecycle satisfies behavioural rule,Match; approval/change ticket enriches classification,Governed suppression not production-tested.
+R19-05,Benign Positive,Authorised Atomic privileged-group addition,Controlled security test intentionally performs target action,Match; classify after alert,Do not static-allowlist administrator display names.
+R19-06,Potential FP,Long benign DNS labels / duplicate ingestion controls,Length and row count alone are weak signals,"Parse structured grammar, exact-dedup, count unique chunk indexes",Enterprise DNS baseline not tested.

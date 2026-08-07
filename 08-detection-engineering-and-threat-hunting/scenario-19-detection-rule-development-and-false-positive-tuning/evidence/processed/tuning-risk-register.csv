@@ -1,0 +1,7 @@
+rule_id,risk,failure_mode,mitigation,status
+R19-01,Legitimate repeated MFA rejection followed by success,Benign Positive / alert noise,"Enrich with user verification, device, CA/risk and approved access context; do not weaken core grouping by requiring SessionId",Known
+R19-02,Unobfuscated malicious task lacks suspicious command token,False Negative if token-only,v3 correlated follow-on branch,Addressed in v3 fixture
+R19-03,Low-and-slow or single-rule successful SQLi,False Negative,Keep lower-confidence hunting/telemetry; threshold is not a claim of complete coverage,Residual
+R19-04,Credential IDs or SP IDs unavailable/mis-mapped,Unable to evaluate or wrong join,Require stable IDs; do not substitute app object/app ID without verified mapping,Residual schema dependency
+R19-05,Privileged group identified only by display name,False positive/negative and spoofable allowlist,Governed SID/object-ID enrichment,Residual deployment dependency
+R19-06,Weak dedup inflates chunk threshold; low-and-slow transfer evades 5/5m,False Positive or False Negative,Exact event ID/fingerprint before counting; treat threshold as starting point,Residual

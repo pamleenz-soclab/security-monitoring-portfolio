@@ -1,0 +1,7 @@
+excerpt_id	rule_id	source_scenario	event_chain	sanitised_excerpt	evidence_label
+EX-01	R19-01	Scenario 17	MFA failures -> success	4 deny/timeout events; success +5m10s; same user+IP; session ID absent on failures	Confirmed unauthorised after user verification
+EX-02	R19-02	Scenario 12	Task -> process -> network	TASK-A -> SYSTEM powershell.exe -> csc.exe -> 192.0.2.80:80	Confirmed chain
+EX-03	R19-03	Scenario 15	Representative WAF transaction	TX-A has 942100;942190;942360	Attempted SQLi; success not established
+EX-04	R19-04	Scenario 18	Credential -> SP sign-in	SP-A + CRED-A -> successful sign-in +6m	Stable-ID correlation; maliciousness not independently proven
+EX-05	R19-05	Scenario 11	Privileged membership add	Event 4732 -> governed Administrators group -> TEST-ACCOUNT	Authorised Atomic test / Benign Positive
+EX-06	R19-06	Scenario 16	Interrupted DNS transfer	OBJECT-A had 128 data chunks, no completion marker, no receiver object	Confirmed attempted exfiltration

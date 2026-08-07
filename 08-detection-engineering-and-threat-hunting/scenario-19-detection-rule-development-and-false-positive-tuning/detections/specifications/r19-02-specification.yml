@@ -1,0 +1,42 @@
+rule_id: R19-02
+name: Suspicious Scheduled Task Executing SYSTEM PowerShell
+version: 3.0.0
+detects: Suspicious scheduled-task persistence that launches SYSTEM PowerShell through
+  a suspicious definition or a suspicious follow-on process/network chain.
+does_not_detect: All scheduled tasks or all SYSTEM PowerShell activity.
+mandatory_fields:
+- event_time
+- host_name
+- task_name
+- execution account/integrity
+- process_name or task action
+strong_fields:
+- process_guid
+- parent_process_guid
+- command_line
+- child process
+- registry activity
+- network destination
+logic: 'Branch A: SYSTEM/ONLOGON PowerShell task definition with suspicious action
+  context. Branch B: task launch -> SYSTEM PowerShell -> suspicious child/registry/network
+  follow-on within correlation window.'
+alert_entity: Host + task
+threshold: No count threshold
+window: Implementation-specific starting point 5m for follow-on
+dedup: Prefer TaskScheduler record ID and ProcessGuid.
+severity: High
+confidence: High when branch B follow-on is present
+tuning: Legitimate maintenance PowerShell without suspicious definition/follow-on
+  should not match v3. Avoid token-only tuning.
+risk: Unobfuscated loaders can evade keyword-only rules; missing process/network telemetry
+  weakens branch B.
+attack:
+- T1053.005
+- T1059.001
+response: Inspect task XML/action, creator, SYSTEM context, ProcessGuid lineage, dynamic
+  compiler/LOLBIN children, registry and outbound connections.
+test_status: Tested with local canonical evaluator and public fixture suite; source-derived
+  validation references reviewed
+platform_status: No native SIEM execution; platform files are syntax/semantic candidates
+  only
+performance_status: Not tested

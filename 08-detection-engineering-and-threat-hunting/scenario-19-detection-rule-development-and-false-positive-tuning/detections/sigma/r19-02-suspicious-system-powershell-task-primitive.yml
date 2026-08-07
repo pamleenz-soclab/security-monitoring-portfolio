@@ -1,0 +1,37 @@
+status: experimental
+author: security-monitoring-portfolio Scenario 19
+date: '2026-08-07'
+references: []
+title: R19-02 Suspicious SYSTEM PowerShell Scheduled Task Definition Primitive
+id: d39e04e8-10ef-4bce-ae9a-fc22d3391902
+description: Atomic primitive for R19-02 branch A. Full R19-02 also supports a correlated
+  follow-on branch.
+logsource:
+  product: windows
+  service: security
+detection:
+  selection_event:
+    EventID: 4698
+  selection_task:
+    TaskContent|contains|all:
+    - PowerShell
+    - SYSTEM
+  selection_suspicious:
+    TaskContent|contains:
+    - -enc
+    - EncodedCommand
+    - IEX
+    - Invoke-Expression
+    - DownloadString
+    - hidden
+    - FromBase64String
+  condition: selection_event and selection_task and selection_suspicious
+falsepositives:
+- Legitimate administrative tasks that intentionally use these PowerShell features;
+  validate task creator, governed task inventory and follow-on telemetry.
+level: high
+tags:
+- attack.persistence
+- attack.t1053.005
+- attack.execution
+- attack.t1059.001

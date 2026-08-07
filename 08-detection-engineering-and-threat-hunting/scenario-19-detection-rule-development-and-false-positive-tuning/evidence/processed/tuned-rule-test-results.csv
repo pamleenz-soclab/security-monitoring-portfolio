@@ -1,0 +1,25 @@
+fixture_id,rule_id,rule_version,expected_result,actual_result,classification,ground_truth_label,benign_context,pass,evaluation_detail,test_basis
+FX-R19-01-001,R19-01,v2,Match,Match,True Positive,Malicious target behaviour,No,Yes,4 MFA failures before success within 10m; grouping=user+session,Synthetic deterministic fixture
+FX-R19-01-002,R19-01,v2,No match,No match,True Negative,Normal/benign non-target behaviour,Yes - unrelated authentication sessions,Yes,Threshold/sequence not satisfied,Synthetic deterministic fixture
+FX-R19-01-003,R19-01,v2,Match,Match,Benign Positive,Benign target behaviour,Yes - user error/retry,Yes,3 MFA failures before success within 10m; grouping=user+session,Synthetic deterministic fixture
+FX-R19-01-004,R19-01,v2,Unable to evaluate,Unable to evaluate,Unable to test,Target behaviour with schema gap,No,Yes,v2 requires session_id for all sequence events,Synthetic deterministic fixture
+FX-R19-02-001,R19-02,v2,Match,Match,True Positive,Malicious target behaviour,No,Yes,SYSTEM PowerShell task contains suspicious execution token,Synthetic deterministic fixture
+FX-R19-02-002,R19-02,v2,No match,No match,True Negative,Normal/benign non-target behaviour after tuning,Yes - approved maintenance,Yes,Task/action conditions not satisfied,Synthetic deterministic fixture
+FX-R19-02-003,R19-02,v2,Match,Match,True Positive,Malicious target behaviour,No,Yes,SYSTEM PowerShell task contains suspicious execution token,Synthetic deterministic fixture
+FX-R19-02-004,R19-02,v2,Unable to evaluate,Unable to evaluate,Unable to test,Target behaviour with schema gap,No,Yes,Scheduled-task rule requires task action/command telemetry,Synthetic deterministic fixture
+FX-R19-03-001,R19-03,v2,Match,Match,True Positive,Malicious target behaviour,No,Yes,High-confidence multi-rule SQLi transaction,Synthetic deterministic fixture
+FX-R19-03-002,R19-03,v2,No match,No match,True Negative,Normal/benign non-target behaviour,Yes - search syntax collision,Yes,Single low-context signature suppressed by tuned logic,Synthetic deterministic fixture
+FX-R19-03-003,R19-03,v2,Match,Match,Benign Positive,Benign target behaviour,Yes - approved security scanner,Yes,High-confidence multi-rule SQLi transaction,Synthetic deterministic fixture
+FX-R19-03-004,R19-03,v2,Unable to evaluate,Unable to evaluate,Unable to test,Target behaviour with schema gap,No,Yes,v2 correlation requires source_ip,Synthetic deterministic fixture
+FX-R19-04-001,R19-04,v2,Match,Match,True Positive,Malicious target behaviour,No,Yes,Same service principal and credential key used after addition,Synthetic deterministic fixture
+FX-R19-04-002,R19-04,v2,No match,No match,True Negative,Normal/benign non-target behaviour after governed exclusion,Yes - approved rotation,Yes,Governed rotation exclusion: approval + change ticket + managed source context,Synthetic deterministic fixture
+FX-R19-04-003,R19-04,v2,No match,No match,True Negative,Normal/benign non-target behaviour,No - correlation mismatch,Yes,Correlation/key/timing conditions not satisfied,Synthetic deterministic fixture
+FX-R19-04-004,R19-04,v2,Unable to evaluate,Unable to evaluate,Unable to test,Target behaviour with schema gap,No,Yes,v2 requires credential_key_id on add and sign-in,Synthetic deterministic fixture
+FX-R19-05-001,R19-05,v2,Match,Match,True Positive,Malicious target behaviour,No,Yes,Membership added to privileged security group,Synthetic deterministic fixture
+FX-R19-05-002,R19-05,v2,Match,Match,Benign Positive,Benign target behaviour,Yes - controlled security test,Yes,Membership added to privileged security group,Synthetic deterministic fixture
+FX-R19-05-003,R19-05,v2,No match,No match,True Negative,Normal/benign non-target behaviour,Yes,Yes,No privileged group membership addition,Synthetic deterministic fixture
+FX-R19-05-004,R19-05,v2,Unable to evaluate,Unable to evaluate,Unable to test,Target behaviour with schema gap,No,Yes,Privileged-group rule requires resolved group/resource,Synthetic deterministic fixture
+FX-R19-06-001,R19-06,v2,Match,Match,True Positive,Malicious target behaviour,No,Yes,"Deduplicated structured chunks=5 plus completion marker for ('198.51.100.80', '203.0.113.53')",Synthetic deterministic fixture
+FX-R19-06-002,R19-06,v2,No match,No match,True Negative,Normal/benign non-target behaviour,Yes - duplicate ingestion,Yes,Deduplicated structured chunk sequence not satisfied,Synthetic deterministic fixture
+FX-R19-06-003,R19-06,v2,No match,No match,True Negative,Normal/benign non-target behaviour,Yes - CDN/service naming,Yes,Deduplicated structured chunk sequence not satisfied,Synthetic deterministic fixture
+FX-R19-06-004,R19-06,v2,Unable to evaluate,Unable to evaluate,Unable to test,Target behaviour with schema gap,No,Yes,v2 requires source+destination direction,Synthetic deterministic fixture

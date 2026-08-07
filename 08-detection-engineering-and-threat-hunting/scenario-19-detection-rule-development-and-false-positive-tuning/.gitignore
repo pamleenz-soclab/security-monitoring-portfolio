@@ -1,0 +1,27 @@
+# Local evidence and temporary outputs
+evidence/raw/*
+!evidence/raw/.gitkeep
+evidence/working/*
+!evidence/working/.gitkeep
+
+# Python/runtime caches
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Large/raw investigation artefacts
+*.pcap
+*.pcapng
+*.evtx
+*.sqlite
+*.sqlite3
+*.db
+*.etl
+*.dmp
+
+# Local archives and editor files
+*.zip
+.DS_Store
+.vscode/
+.idea/

@@ -1,0 +1,7 @@
+area,status,impact
+Native platform execution,Not tested,KQL/SPL/ES|QL/Sigma syntax and vendor-field compatibility require native validation.
+Production false-positive rate,Not measured,Fixture suite and 46 likely-FP candidates are not an independent enterprise benign population.
+Performance/query cost,Not tested,"No production-scale table/index scan, latency, memory or compute-cost measurement."
+Threshold generalisability,Proposed starting point,"R19-01 3/15m, R19-03 20/5m, R19-06 5/5m are source/fixture-informed but not enterprise-baselined."
+Cross-platform equivalence,Partially aligned,"Same-family implementations still differ in binning, field mappings, null semantics and native functions."
+Source evidence,Processed/sanitised only,Scenario 19 does not copy raw evidence; some source conclusions remain bounded by original scenarios.

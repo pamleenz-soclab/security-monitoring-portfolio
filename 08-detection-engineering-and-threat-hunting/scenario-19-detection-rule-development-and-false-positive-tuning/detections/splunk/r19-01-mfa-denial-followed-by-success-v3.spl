@@ -1,0 +1,8 @@
+# R19-01 v3 semantic approximation. Native Splunk execution: NOT TESTED.
+# Requires normalized mfa_outcome values denied/timeout/success and a successful-authentication event marker.
+index=cloud_identity earliest=-1d event_category=authentication mfa_method="Authenticator"
+| eval is_failure=if(mfa_outcome="denied" OR mfa_outcome="timeout",1,0), is_success=if(mfa_outcome="success" AND result="success",1,0)
+| sort 0 user src_ip _time
+| streamstats time_window=15m sum(is_failure) as failures max(is_success) as success_window earliest(eval(if(is_failure=1,_time,null()))) as first_failure by user src_ip
+| where is_success=1 AND failures>=3
+| table _time user src_ip failures first_failure session_id sign_in_id

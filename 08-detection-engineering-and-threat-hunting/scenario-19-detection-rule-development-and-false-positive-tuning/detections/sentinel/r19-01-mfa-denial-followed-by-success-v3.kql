@@ -1,0 +1,19 @@
+// R19-01 v3. Native Sentinel execution: NOT TESTED.
+// Sliding-window semantics are anchored on each successful MFA authentication.
+let Lookback = 1d;
+let MFA = SigninLogs
+| where TimeGenerated > ago(Lookback)
+| extend AuthDetails=todynamic(AuthenticationDetails)
+| mv-expand Step=AuthDetails
+| extend Method=tostring(Step.authenticationMethod), Succeeded=tobool(Step.succeeded), Detail=tolower(tostring(Step.authenticationStepResultDetail))
+| where Method has "Authenticator"
+| extend MFAOutcome=case(Succeeded and (ResultType == "0" or ResultType == 0), "success", Detail has_any("denied","declined"), "denied", Detail has_any("timeout","no response"), "timeout", "other")
+| project TimeGenerated, UserPrincipalName, IPAddress, MFAOutcome, AppDisplayName, SessionId, Id;
+let Successes = MFA | where MFAOutcome == "success" | project SuccessTime=TimeGenerated, UserPrincipalName, IPAddress, SuccessId=Id, SessionId;
+let Failures = MFA | where MFAOutcome in ("denied","timeout") | project FailureTime=TimeGenerated, UserPrincipalName, IPAddress, MFAOutcome;
+Successes
+| join kind=inner Failures on UserPrincipalName, IPAddress
+| where FailureTime between (SuccessTime - 15m .. SuccessTime)
+| summarize FailureCount=count(), Denied=countif(MFAOutcome=="denied"), Timeout=countif(MFAOutcome=="timeout"), FirstFailure=min(FailureTime), LastFailure=max(FailureTime) by UserPrincipalName, IPAddress, SuccessTime, SuccessId, SessionId
+| where FailureCount >= 3
+| project UserPrincipalName, IPAddress, FirstFailure, LastFailure, SuccessTime, FailureCount, Denied, Timeout, SuccessId, SessionId

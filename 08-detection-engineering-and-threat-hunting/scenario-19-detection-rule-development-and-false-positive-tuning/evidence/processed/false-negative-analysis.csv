@@ -1,0 +1,7 @@
+rule_id,observed_in_final_fixture_suite,risk,status,interpretation
+R19-01,No,Legitimate repeated MFA rejection followed by success,Known,No FN observed in curated v3 regression does not prove production recall.
+R19-02,No,Unobfuscated malicious task lacks suspicious command token,Addressed in v3 fixture,No FN observed in curated v3 regression does not prove production recall.
+R19-03,No,Low-and-slow or single-rule successful SQLi,Residual,No FN observed in curated v3 regression does not prove production recall.
+R19-04,No,Credential IDs or SP IDs unavailable/mis-mapped,Residual schema dependency,No FN observed in curated v3 regression does not prove production recall.
+R19-05,No,Privileged group identified only by display name,Residual deployment dependency,No FN observed in curated v3 regression does not prove production recall.
+R19-06,No,Weak dedup inflates chunk threshold; low-and-slow transfer evades 5/5m,Residual,No FN observed in curated v3 regression does not prove production recall.

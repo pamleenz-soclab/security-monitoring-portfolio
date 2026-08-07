@@ -1,0 +1,10 @@
+rule_id,version,fixture_count,regression_passes,regression_pass_rate,true_positive,benign_positive,true_negative,false_positive,false_negative,unable_to_test,precision,recall,false_positive_rate,metric_boundary
+R19-01,v3,6,6,1.000,1,1,3,0,0,1,Not reported,Not reported,Not reported,Curated fixture regression only; not production prevalence/performance
+R19-02,v3,6,6,1.000,3,0,2,0,0,1,Not reported,Not reported,Not reported,Curated fixture regression only; not production prevalence/performance
+R19-03,v3,6,6,1.000,3,0,2,0,0,1,Not reported,Not reported,Not reported,Curated fixture regression only; not production prevalence/performance
+R19-04,v3,6,6,1.000,2,1,2,0,0,1,Not reported,Not reported,Not reported,Curated fixture regression only; not production prevalence/performance
+R19-05,v3,6,6,1.000,1,1,3,0,0,1,Not reported,Not reported,Not reported,Curated fixture regression only; not production prevalence/performance
+R19-06,v3,7,7,1.000,3,0,3,0,0,1,Not reported,Not reported,Not reported,Curated fixture regression only; not production prevalence/performance
+ALL,v3,37,37,1.000,13,3,15,0,0,6,Not reported,Not reported,Not reported,Curated fixture regression only; not production prevalence/performance
+ALL,v1,24,17,0.708,,,,7,0,2,Not reported,Not reported,Not reported,Historical synthetic lifecycle suite
+ALL,v2,24,24,1.000,,,,0,0,6,Not reported,Not reported,Not reported,Historical synthetic-tuned suite; source review later changed rule semantics

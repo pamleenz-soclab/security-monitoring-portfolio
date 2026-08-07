@@ -1,0 +1,37 @@
+{
+  "rule_id": "R19-04",
+  "name": "Credential Addition Followed by Service-Principal Sign-In",
+  "version": "3.0.0",
+  "detects": "A newly added application/service-principal credential being used for a successful service-principal sign-in within 24 hours.",
+  "does_not_detect": "Credential creation alone, sign-in alone, or credential use outside the 24-hour lifecycle scope.",
+  "mandatory_fields": [
+    "event_time",
+    "service_principal_id",
+    "credential_key_id",
+    "operation/event category",
+    "sign-in result"
+  ],
+  "strong_fields": [
+    "application_id",
+    "credential type",
+    "source_ip",
+    "resource",
+    "change_ticket",
+    "approved_context",
+    "owner"
+  ],
+  "logic": "Correlate credential-add and successful SP sign-in on BOTH service_principal_id and credential_key_id. Sign-in must occur after add and no later than +24h.",
+  "alert_entity": "Service principal + credential",
+  "threshold": "One add + one successful use",
+  "window": "24h",
+  "dedup": "Use audit record ID and sign-in ID independently; do not dedup across event types.",
+  "severity": "High",
+  "confidence": "High with both stable IDs",
+  "tuning": "Approved change context remains enrichment/Benign Positive classification unless governed suppression data is reliable. Never allowlist by display name alone.",
+  "risk": "Platforms expose credential IDs differently; application object ID, app ID and service-principal object ID are not interchangeable.",
+  "attack": [],
+  "response": "Validate credential type, owner/change ticket, source IP, resource, subsequent API activity, other credentials and containment actions.",
+  "test_status": "Tested with local canonical evaluator and public fixture suite; source-derived validation references reviewed",
+  "platform_status": "No native SIEM execution; platform files are syntax/semantic candidates only",
+  "performance_status": "Not tested"
+}

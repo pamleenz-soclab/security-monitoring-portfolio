@@ -1,0 +1,19 @@
+rule_id,version,stage,status,summary
+R19-01,v1,Broad initial,Historical Phase 2 fixture test,Broad logic intentionally retained noise to expose lifecycle issues.
+R19-01,v2,Synthetic-tuned,Historical Phase 2.1 fixture test,Reduced designed synthetic noise; not final because source review exposed schema/semantic risks.
+R19-01,v3,Source-evidence-informed final candidate,Final Scenario 19 package,Anchor on each successful authentication. Count denied/timeout MFA steps for the same user+source_ip in the preceding 15 minutes. Match when count >= 3.
+R19-02,v1,Broad initial,Historical Phase 2 fixture test,Broad logic intentionally retained noise to expose lifecycle issues.
+R19-02,v2,Synthetic-tuned,Historical Phase 2.1 fixture test,Reduced designed synthetic noise; not final because source review exposed schema/semantic risks.
+R19-02,v3,Source-evidence-informed final candidate,Final Scenario 19 package,Branch A: SYSTEM/ONLOGON PowerShell task definition with suspicious action context. Branch B: task launch -> SYSTEM PowerShell -> suspicious child/registry/network follow-on within correlation window.
+R19-03,v1,Broad initial,Historical Phase 2 fixture test,Broad logic intentionally retained noise to expose lifecycle issues.
+R19-03,v2,Synthetic-tuned,Historical Phase 2.1 fixture test,Reduced designed synthetic noise; not final because source review exposed schema/semantic risks.
+R19-03,v3,Source-evidence-informed final candidate,Final Scenario 19 package,Branch A: a transaction has >=2 distinct SQLi rule IDs or a specialist SQLi rule. Branch B: >=20 distinct SQLi-rule transaction IDs for same source_ip+host in 5m.
+R19-04,v1,Broad initial,Historical Phase 2 fixture test,Broad logic intentionally retained noise to expose lifecycle issues.
+R19-04,v2,Synthetic-tuned,Historical Phase 2.1 fixture test,Reduced designed synthetic noise; not final because source review exposed schema/semantic risks.
+R19-04,v3,Source-evidence-informed final candidate,Final Scenario 19 package,Correlate credential-add and successful SP sign-in on BOTH service_principal_id and credential_key_id. Sign-in must occur after add and no later than +24h.
+R19-05,v1,Broad initial,Historical Phase 2 fixture test,Broad logic intentionally retained noise to expose lifecycle issues.
+R19-05,v2,Synthetic-tuned,Historical Phase 2.1 fixture test,Reduced designed synthetic noise; not final because source review exposed schema/semantic risks.
+R19-05,v3,Source-evidence-informed final candidate,Final Scenario 19 package,"Match 4728, 4732 or 4756-equivalent membership-addition event when enriched group identity is governed as privileged."
+R19-06,v1,Broad initial,Historical Phase 2 fixture test,Broad logic intentionally retained noise to expose lifecycle issues.
+R19-06,v2,Synthetic-tuned,Historical Phase 2.1 fixture test,Reduced designed synthetic noise; not final because source review exposed schema/semantic risks.
+R19-06,v3,Source-evidence-informed final candidate,Final Scenario 19 package,Exact-dedup first. Parse transfer grammar. Group same source+destination/domain+transfer_object; match >=5 unique chunk indexes in 5m. Completion marker is enrichment only.

@@ -1,0 +1,64 @@
+field,data_type,semantic,requirement
+event_time,datetime,Event time used for detection ordering/windowing,Mandatory for correlation rules
+ingestion_time,datetime,Collector/SIEM ingestion time,Optional; detection-health enrichment
+source_scenario,string,Portfolio source scenario,Fixture provenance
+source_product,string,Source telemetry product,Required for mapping/triage
+source_dataset,string,Dataset/table/channel,Required for mapping/triage
+event_category,string,Canonical category,Required
+event_action,string,Canonical action,Required where rule depends on operation
+event_outcome,string,success/denied/timeout/failure/unknown,Required where rule depends on outcome
+event_id,string,Native event type ID,Optional/required by Windows rules
+event_record_id,string,Stable source event record ID,Preferred dedup key
+provider,string,Event provider,Enrichment
+channel,string,Event channel,Enrichment
+host_name,string,Host alias,Required for host-scoped rules
+host_id,string,Stable host ID,Preferred enrichment
+user_name_or_alias,string,Sanitised user alias,Required for R19-01
+user_id_or_alias,string,Stable user alias/ID,Preferred
+user_type,string,human/admin/service,Enrichment
+source_ip,ip/string,Documentation/sanitised IP,Required for R19-01/R19-03/R19-06
+source_port,integer,Source port,Optional
+destination_ip,ip/string,Destination IP,Required for R19-06 if destination identity not otherwise stable
+destination_port,integer,Destination port,Optional
+network_protocol,string,Protocol,Optional
+process_name,string,Process image basename,Required for endpoint branches
+process_path,string,Process full path,Strong telemetry
+process_id,string/integer,PID,Correlation
+process_guid,string,Stable process GUID,Preferred correlation
+parent_process_name,string,Parent image,Strong telemetry
+parent_process_id,string/integer,Parent PID,Correlation
+parent_process_guid,string,Parent process GUID,Preferred
+command_line,string,Sanitised command line,Required for R19-02 branch A; enrichment for branch B
+file_name,string,File/object alias,Optional
+file_path,string,File path,Optional
+file_hash,string,Hash,Forensic enrichment
+service_name,string,Service,Optional
+task_name,string,Scheduled task alias,R19-02 correlation
+application_id,string,Application alias/ID,Enrichment
+application_object_id,string,Application object alias/ID,Do not treat as SP ID
+service_principal_id,string,Stable SP alias/ID,Mandatory R19-04
+credential_key_id,string,Credential/federated credential alias/ID,Mandatory R19-04
+session_id,string,Session alias,"Enrichment for R19-01, not mandatory"
+correlation_id,string,Transaction correlation alias,Enrichment
+request_id,string,Request alias,Enrichment
+token_alias,string,Sanitised token alias,Enrichment only
+resource,string,Target resource,Triage enrichment
+operation,string,Source operation,Required when mapping audit operations
+result,string,Source result,Required where success matters
+change_ticket,string,Sanitised change ticket alias,Governance enrichment; not core match logic
+approved_context,boolean/string,Governed approval context,"Enrichment/suppression input, not static allowlist"
+synthetic,boolean,Fixture synthetic flag,Fixture provenance
+evidence_label,string,Confirmed/Inferred/etc.,Evidence boundary
+transaction_id,string,HTTP transaction alias,Mandatory R19-03 transaction/burst counting
+waf_rule_ids,array/string,SQLi WAF rule IDs,Mandatory R19-03 branch A
+http_host,string,HTTP Host alias,Mandatory R19-03
+dns_query,string,Sanitised DNS query,R19-06
+dns_transaction_id,string,DNS transaction ID alias,Preferred exact dedup
+dns_qr,string/int,Query/response direction flag,Preferred exact dedup
+frame_length,integer,Frame length,Preferred exact dedup
+chunk_index,integer,Derived structured chunk index,Mandatory R19-06 correlation
+transfer_object,string,Sanitised transfer object alias,Mandatory R19-06 grouping
+completion_marker,boolean,Observed completion signal,Confidence enrichment only
+group_id,string,Stable privileged group SID/object alias,Preferred R19-05
+group_name,string,Group display name,Fallback only
+group_is_privileged,boolean,Derived from governed group inventory,Mandatory R19-05 after enrichment

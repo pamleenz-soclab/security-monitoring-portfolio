@@ -1,0 +1,38 @@
+fixture_id,rule_id,expected_result,expected_classification,ground_truth_label,telemetry_label,source_scenario,synthetic_or_sanitised,notes
+FX3-R19-01-001,R19-01,Match,True Positive,Confirmed unauthorised MFA-fatigue sequence,Sanitised-derived,Scenario 17,sanitised-derived-temporal-shift,Preserves source timing deltas; failure records intentionally have no session_id.
+FX3-R19-01-002,R19-01,Match,Benign Positive,Legitimate user repeatedly declined prompts then signed in,Synthetic,Scenario 19,synthetic,Correct behaviour match; incident is benign.
+FX3-R19-01-003,R19-01,No match,True Negative,Below threshold,Synthetic,Scenario 19,synthetic,
+FX3-R19-01-004,R19-01,No match,True Negative,Success outside 15-minute rule scope,Synthetic,Scenario 19,synthetic,
+FX3-R19-01-005,R19-01,No match,True Negative,Shared NAT IP but no user reaches threshold,Synthetic,Scenario 19,synthetic,
+FX3-R19-01-006,R19-01,Unable to evaluate,Unable to test,Mandatory source IP missing,Synthetic,Scenario 19,synthetic,
+FX3-R19-02-001,R19-02,Match,True Positive,Confirmed task execution chain,Sanitised-derived,Scenario 12,sanitised-derived-temporal-shift,Source-informed branch B; no encoded-command token required.
+FX3-R19-02-002,R19-02,Match,True Positive,Suspicious SYSTEM/ONLOGON PowerShell task definition,Synthetic,Scenario 19,synthetic,
+FX3-R19-02-003,R19-02,No match,True Negative,Legitimate SYSTEM maintenance task without suspicious definition or follow-on,Synthetic,Scenario 19,synthetic,
+FX3-R19-02-004,R19-02,No match,True Negative,PowerShell task not SYSTEM and no suspicious follow-on,Synthetic,Scenario 19,synthetic,
+FX3-R19-02-005,R19-02,Unable to evaluate,Unable to test,No task action command and no process/follow-on telemetry,Synthetic,Scenario 19,synthetic,
+FX3-R19-02-006,R19-02,Match,True Positive,Unobfuscated loader with suspicious follow-on process,Synthetic,Scenario 19,synthetic,
+FX3-R19-03-001,R19-03,Match,True Positive,Attempted SQL injection behaviour; exploitation not established,Sanitised-derived,Scenario 15,sanitised-derived-temporal-shift,Representative multi-rule transaction derived from processed WAF evidence.
+FX3-R19-03-002,R19-03,Match,True Positive,20 distinct SQLi transactions inside 5-minute window,Synthetic,Scenario 19,synthetic,
+FX3-R19-03-003,R19-03,No match,True Negative,19 single-rule transactions remain below v3 starting threshold,Synthetic,Scenario 19,synthetic,
+FX3-R19-03-004,R19-03,No match,True Negative,Single generic-rule password punctuation below burst threshold,Synthetic,Scenario 19,synthetic,
+FX3-R19-03-005,R19-03,Match,True Positive,Specialist SQLi rule alone qualifies branch A,Synthetic,Scenario 19,synthetic,
+FX3-R19-03-006,R19-03,Unable to evaluate,Unable to test,Transaction ID missing,Synthetic,Scenario 19,synthetic,
+FX3-R19-04-001,R19-04,Match,True Positive,No-approved-change credential followed by matching SP sign-in,Sanitised-derived,Scenario 18,sanitised-derived-temporal-shift,
+FX3-R19-04-002,R19-04,Match,Benign Positive,Approved credential rotation/use,Sanitised-derived,Scenario 18,sanitised-derived-temporal-shift,Core rule still matches; change context is analyst enrichment.
+FX3-R19-04-003,R19-04,No match,True Negative,Credential use far outside 24-hour lifecycle scope,Sanitised-derived,Scenario 18,sanitised-derived-temporal-shift,
+FX3-R19-04-004,R19-04,No match,True Negative,Credential ID matches but service principal differs,Synthetic,Scenario 19,synthetic,
+FX3-R19-04-005,R19-04,Match,True Positive,Boundary: matching use at 23h59m,Synthetic,Scenario 19,synthetic,
+FX3-R19-04-006,R19-04,Unable to evaluate,Unable to test,Credential stable ID missing,Synthetic,Scenario 19,synthetic,
+FX3-R19-05-001,R19-05,Match,Benign Positive,Authorised Atomic privileged-group change,Sanitised-derived,Scenario 11,sanitised-derived-temporal-shift,
+FX3-R19-05-002,R19-05,Match,True Positive,Unauthorised addition to governed privileged group,Synthetic,Scenario 19,synthetic,
+FX3-R19-05-003,R19-05,No match,True Negative,Addition to non-privileged group,Synthetic,Scenario 19,synthetic,
+FX3-R19-05-004,R19-05,No match,True Negative,Display name resembles privileged group but governed ID is not privileged,Synthetic,Scenario 19,synthetic,
+FX3-R19-05-005,R19-05,Unable to evaluate,Unable to test,Privileged-group identity/enrichment missing,Synthetic,Scenario 19,synthetic,
+FX3-R19-05-006,R19-05,No match,True Negative,Account creation without membership addition,Synthetic,Scenario 19,synthetic,
+FX3-R19-06-001,R19-06,Match,True Positive,Interrupted structured DNS exfiltration; no completion marker,Sanitised-derived,Scenario 16,sanitised-derived-temporal-shift,Minimal fixture represents source-confirmed interrupted transfer with many chunks but no completion marker.
+FX3-R19-06-002,R19-06,Match,True Positive,Completed structured DNS transfer pattern,Sanitised-derived,Scenario 16,sanitised-derived-temporal-shift,
+FX3-R19-06-003,R19-06,No match,True Negative,Duplicate ingestion must not inflate three unique chunks over threshold,Synthetic,Scenario 19,synthetic,Exact duplicate event_record_id values intentionally repeated.
+FX3-R19-06-004,R19-06,Match,True Positive,Out-of-order records still form five unique chunks in window,Synthetic,Scenario 19,synthetic,
+FX3-R19-06-005,R19-06,No match,True Negative,Four unique chunks remain below starting threshold,Synthetic,Scenario 19,synthetic,
+FX3-R19-06-006,R19-06,No match,True Negative,Long DNS labels without structured transfer grammar,Synthetic,Scenario 19,synthetic,
+FX3-R19-06-007,R19-06,Unable to evaluate,Unable to test,Destination identity missing,Synthetic,Scenario 19,synthetic,
