@@ -1,0 +1,29 @@
+title: Repeated MFA Denial or Timeout Followed by Success
+id: 7f46ab06-0581-4cc3-a768-12b2348b7071
+status: experimental
+description: Detects multiple Microsoft Authenticator denials or timeouts followed by a successful MFA event for the same user and source in a short window.
+author: Pam Lee
+date: 2026-08-07
+logsource:
+  category: authentication
+  product: azure
+detection:
+  selection_failure:
+    authentication_method|contains: Microsoft Authenticator
+    authentication_outcome:
+      - denied
+      - timeout
+  selection_success:
+    authentication_method|contains: Microsoft Authenticator
+    authentication_outcome: success
+    signin_result: success
+  timeframe: 15m
+  condition: selection_failure | count(user) by user, source_ip >= 3 and selection_success
+falsepositives:
+  - Authenticator connectivity issues
+  - Legitimate re-enrollment
+  - Repeated user mistakes
+level: high
+tags:
+  - attack.credential_access
+  - attack.t1621

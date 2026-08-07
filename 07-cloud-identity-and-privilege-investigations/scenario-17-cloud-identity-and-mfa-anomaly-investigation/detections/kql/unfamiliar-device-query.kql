@@ -1,0 +1,13 @@
+SigninLogs
+| where ResultType == "0"
+| extend DeviceId=tostring(DeviceDetail.deviceId),
+         OS=tostring(DeviceDetail.operatingSystem),
+         Browser=tostring(DeviceDetail.browser),
+         Managed=tobool(DeviceDetail.isManaged),
+         Compliant=tobool(DeviceDetail.isCompliant),
+         TrustType=tostring(DeviceDetail.trustType)
+| where isempty(DeviceId) or Managed == false or Compliant == false
+| project TimeGenerated, UserPrincipalName, IPAddress, AppDisplayName,
+          DeviceId, OS, Browser, Managed, Compliant, TrustType,
+          RiskLevelDuringSignIn, ConditionalAccessStatus, CorrelationId, SessionId
+| order by TimeGenerated desc

@@ -1,0 +1,15 @@
+let IdentitySessions =
+SigninLogs
+| where ResultType == "0"
+| project SignInTime=TimeGenerated, UserPrincipalName, IPAddress,
+          CorrelationId, SessionId, AppDisplayName, RiskLevelDuringSignIn;
+OfficeActivity
+| extend Session=tostring(SessionId)
+| join kind=inner IdentitySessions on $left.UserId == $right.UserPrincipalName,
+                                      $left.Session == $right.SessionId
+| where TimeGenerated between (SignInTime .. SignInTime + 2h)
+| where Operation in~ ("New-InboxRule","Set-InboxRule","FileDownloaded",
+                       "Add-MailboxPermission","Set-Mailbox")
+| project SignInTime, TimeGenerated, UserPrincipalName, IPAddress,
+          AppDisplayName, Operation, OfficeWorkload, ObjectId, Parameters,
+          CorrelationId, SessionId

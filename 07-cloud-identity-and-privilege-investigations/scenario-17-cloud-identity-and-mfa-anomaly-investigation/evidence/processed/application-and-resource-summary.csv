@@ -1,0 +1,8 @@
+app_display_name,resource_display_name,event_count,success_count,failure_count,client_applications,authentication_protocols
+SP-001,Azure Key Vault,1,1,0,"{""Other clients"":1}","{""oAuth2"":1}"
+Exchange Online,Office 365 Exchange Online,1,0,1,"{""IMAP"":1}","{""ropc"":1}"
+Microsoft 365,Microsoft 365,72,58,14,"{""Browser"":44,""Mobile Apps and Desktop clients"":28}","{""oAuth2"":72}"
+Microsoft Graph,Microsoft Graph,1,1,0,"{""Mobile Apps and Desktop clients"":1}","{""oAuth2"":1}"
+Office 365 Exchange Online,Office 365 Exchange Online,85,85,0,"{""Browser"":28,""Mobile Apps and Desktop clients"":57}","{""oAuth2"":85}"
+MI-001,Azure Storage,1,1,0,"{""Other clients"":1}","{""oAuth2"":1}"
+SharePoint Online,SharePoint Online,1,1,0,"{""Mobile Apps and Desktop clients"":1}","{""oAuth2"":1}"

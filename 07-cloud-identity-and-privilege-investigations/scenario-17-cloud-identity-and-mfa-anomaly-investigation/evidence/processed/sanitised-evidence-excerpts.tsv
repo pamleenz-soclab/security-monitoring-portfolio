@@ -1,0 +1,7 @@
+excerpt_id	evidence_class	time_utc	entity_or_identifier	sanitised_observation	interpretation
+EX-001	Telemetry-confirmed fact	2026-06-18T01:40:00Z–01:41:46Z	ATTACK-IP-01/02	10 invalid-password failures across five users	Confirms distributed password spray; no successful authentication implied.
+EX-002	Telemetry-confirmed fact	2026-06-18T01:44:00Z–01:47:15Z	USER-001	Two MFA denials and two timeouts after correct primary authentication	Supports MFA fatigue pattern; intent requires context.
+EX-003	Telemetry-confirmed fact	2026-06-18T01:49:10Z	SIGNIN-INCIDENT-001	Number matching succeeded and SESSION-001 was created	Confirms method completion and session creation, not authorization by itself.
+EX-004	Conditional Access	2026-06-18T01:49:10Z	CA-POLICY-003	Report-only device policy returned reportOnlyFailure	Did not block the sign-in.
+EX-005	Session correlation	2026-06-18T01:52:00Z–02:22:00Z	SESSION-001	Three non-interactive token events and four M365 events shared the session	Confirms session continuity; not repeated MFA approval.
+EX-006	Business verification	2026-06-18T02:55:00Z	SYN-IR-2026-0017	User confirmed the sign-in and follow-on actions were unauthorized	Provides the authorization boundary for confirmed compromise.

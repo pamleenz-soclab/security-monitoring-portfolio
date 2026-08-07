@@ -1,0 +1,25 @@
+// Password spray
+FROM entra-signin-*
+| WHERE event.code == "50126"
+| STATS attempts = COUNT(*),
+        distinct_users = COUNT_DISTINCT(user.name)
+  BY source.ip, BUCKET(@timestamp, 10 minutes)
+| WHERE distinct_users >= 5
+| SORT distinct_users DESC
+
+// Legacy authentication
+FROM entra-signin-*
+| WHERE entra.client_app IN ("IMAP", "POP", "SMTP", "Exchange ActiveSync", "Other clients")
+    OR entra.authentication_protocol == "ropc"
+| KEEP @timestamp, user.name, source.ip, entra.app, entra.resource,
+       entra.client_app, entra.authentication_protocol,
+       entra.conditional_access_status, event.outcome, error.code
+
+// Unusual successful sign-in from unmanaged device
+FROM entra-signin-*
+| WHERE event.outcome == "success"
+  AND (entra.device.managed == false OR entra.device.compliant == false
+       OR entra.device.id IS NULL)
+| KEEP @timestamp, user.name, source.ip, source.geo.country_iso_code,
+       source.as.number, entra.app, entra.device.id, entra.device.os,
+       entra.device.browser, entra.risk.level, entra.session.id

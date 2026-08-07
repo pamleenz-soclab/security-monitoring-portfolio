@@ -1,0 +1,27 @@
+let TargetUser="<USER>";
+let StartTime=datetime(2026-06-18T01:30:00Z);
+let EndTime=datetime(2026-06-18T04:00:00Z);
+union isfuzzy=true
+(
+  AuditLogs
+  | where TimeGenerated between (StartTime .. EndTime)
+  | where tostring(InitiatedBy.user.userPrincipalName) =~ TargetUser
+     or TargetResources has TargetUser
+  | project TimeGenerated, Source="Entra Audit",
+            Activity=ActivityDisplayName, Result,
+            Actor=tostring(InitiatedBy.user.userPrincipalName),
+            ActorIP=tostring(InitiatedBy.user.ipAddress),
+            Target=tostring(TargetResources), CorrelationId,
+            SessionId=""
+),
+(
+  OfficeActivity
+  | where TimeGenerated between (StartTime .. EndTime)
+  | where UserId =~ TargetUser
+  | where Operation in~ ("New-InboxRule","Set-InboxRule","FileDownloaded",
+                         "Add-MailboxPermission","Set-Mailbox")
+  | project TimeGenerated, Source="M365 Audit", Activity=Operation,
+            Result, Actor=UserId, ActorIP=ClientIP,
+            Target=ObjectId, CorrelationId="", SessionId=tostring(SessionId)
+)
+| order by TimeGenerated asc

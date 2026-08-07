@@ -1,0 +1,43 @@
+// Repeated MFA denial/timeout followed by a successful MFA sign-in.
+// Tune thresholds and field parsing for the tenant's actual export shape.
+let Window = 15m;
+let MinFailures = 3;
+let Steps =
+SigninLogs
+| extend AuthDetails = todynamic(AuthenticationDetails)
+| mv-expand AuthStep = AuthDetails
+| extend
+    StepTime = todatetime(AuthStep.authenticationStepDateTime),
+    Method = tostring(AuthStep.authenticationMethod),
+    StepSucceeded = tobool(AuthStep.succeeded),
+    StepDetail = tostring(AuthStep.authenticationStepResultDetail)
+| where Method has "Authenticator"
+| extend Outcome = case(
+    StepSucceeded == true, "success",
+    StepDetail has_any ("denied", "declined"), "denied",
+    StepDetail has_any ("timeout", "no response"), "timeout",
+    "other")
+| project TimeGenerated, StepTime, UserPrincipalName, IPAddress, CorrelationId,
+          SessionId, AppDisplayName, Outcome, ResultType, DeviceDetail;
+let Failures =
+Steps
+| where Outcome in ("denied", "timeout")
+| summarize FailureCount=count(),
+            DeniedCount=countif(Outcome=="denied"),
+            TimeoutCount=countif(Outcome=="timeout"),
+            FirstFailure=min(TimeGenerated),
+            LastFailure=max(TimeGenerated)
+  by UserPrincipalName, IPAddress;
+let Successes =
+Steps
+| where Outcome == "success" and ResultType == "0"
+| project SuccessTime=TimeGenerated, UserPrincipalName, IPAddress,
+          CorrelationId, SessionId, AppDisplayName, DeviceDetail;
+Failures
+| where FailureCount >= MinFailures
+| join kind=inner Successes on UserPrincipalName, IPAddress
+| where SuccessTime between (FirstFailure .. FirstFailure + Window)
+| project SuccessTime, UserPrincipalName, IPAddress, FailureCount,
+          DeniedCount, TimeoutCount, CorrelationId, SessionId,
+          AppDisplayName, DeviceDetail
+| order by SuccessTime desc

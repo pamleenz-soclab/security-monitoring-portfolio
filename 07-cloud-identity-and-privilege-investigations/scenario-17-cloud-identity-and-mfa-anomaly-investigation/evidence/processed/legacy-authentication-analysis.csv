@@ -1,0 +1,2 @@
+created_utc,user_principal_name,ip_address,client_app_used,authentication_protocol,error_code,conditional_access_status,result,token_issued,final_classification,assessment
+2026-06-18T02:08:00Z,USER-001,198.51.100.88,IMAP,ropc,53003,failure,failure,False,Unsuccessful attack,IMAP/ROPC was blocked by enforced Conditional Access; no session or token was issued.

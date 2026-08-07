@@ -1,0 +1,36 @@
+let TargetSession="<SESSION_ID>";
+let TargetCorrelation="<CORRELATION_ID>";
+union isfuzzy=true
+(
+  SigninLogs
+  | where SessionId == TargetSession or CorrelationId == TargetCorrelation
+  | project TimeGenerated, Source="SigninLogs", UserPrincipalName,
+            IPAddress, Activity=AppDisplayName, Result=tostring(ResultType),
+            CorrelationId, SessionId, OriginalRequestId, UniqueTokenIdentifier
+),
+(
+  AADNonInteractiveUserSignInLogs
+  | where SessionId == TargetSession or CorrelationId == TargetCorrelation
+  | project TimeGenerated, Source="AADNonInteractiveUserSignInLogs",
+            UserPrincipalName, IPAddress, Activity=AppDisplayName,
+            Result=tostring(ResultType), CorrelationId, SessionId,
+            OriginalRequestId, UniqueTokenIdentifier
+),
+(
+  AuditLogs
+  | where CorrelationId == TargetCorrelation
+  | project TimeGenerated, Source="AuditLogs",
+            UserPrincipalName=tostring(InitiatedBy.user.userPrincipalName),
+            IPAddress=tostring(InitiatedBy.user.ipAddress),
+            Activity=ActivityDisplayName, Result,
+            CorrelationId, SessionId="", OriginalRequestId="", UniqueTokenIdentifier=""
+),
+(
+  OfficeActivity
+  | where tostring(SessionId) == TargetSession
+  | project TimeGenerated, Source="OfficeActivity", UserPrincipalName=UserId,
+            IPAddress=ClientIP, Activity=Operation, Result,
+            CorrelationId="", SessionId=tostring(SessionId),
+            OriginalRequestId="", UniqueTokenIdentifier=""
+)
+| order by TimeGenerated asc

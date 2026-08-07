@@ -1,0 +1,14 @@
+SigninLogs
+| where UserPrincipalName =~ "<USER>"
+| extend Policies=todynamic(ConditionalAccessPolicies)
+| mv-expand Policy=Policies
+| extend PolicyId=tostring(Policy.id),
+         PolicyName=tostring(Policy.displayName),
+         PolicyResult=tostring(Policy.result),
+         GrantControls=tostring(Policy.enforcedGrantControls),
+         SessionControls=tostring(Policy.enforcedSessionControls)
+| project TimeGenerated, UserPrincipalName, IPAddress, AppDisplayName,
+          ResultType, ConditionalAccessStatus, PolicyId, PolicyName,
+          PolicyResult, GrantControls, SessionControls,
+          CorrelationId, SessionId
+| order by TimeGenerated asc

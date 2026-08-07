@@ -1,0 +1,19 @@
+SigninLogs
+| extend Country=tostring(LocationDetails.countryOrRegion),
+         City=tostring(LocationDetails.city),
+         DeviceId=tostring(DeviceDetail.deviceId),
+         OS=tostring(DeviceDetail.operatingSystem),
+         Browser=tostring(DeviceDetail.browser),
+         Managed=tobool(DeviceDetail.isManaged),
+         Compliant=tobool(DeviceDetail.isCompliant),
+         TrustType=tostring(DeviceDetail.trustType)
+| summarize Events=count(),
+            Successes=countif(ResultType=="0"),
+            Failures=countif(ResultType!="0"),
+            Users=dcount(UserPrincipalName),
+            Countries=make_set(Country,20),
+            Cities=make_set(City,20),
+            Devices=make_set(DeviceId,50)
+  by IPAddress, AutonomousSystemNumber, AppDisplayName, ResourceDisplayName,
+     ClientAppUsed, AuthenticationProtocol, OS, Browser, Managed, Compliant, TrustType
+| order by Events desc

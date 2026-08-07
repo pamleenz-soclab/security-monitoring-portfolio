@@ -1,0 +1,6 @@
+authentication_method,method_detail,outcome,event_count,evidence_boundary
+Certificate,Client certificate,success,1,"Success confirms method completion, not user authorization."
+Microsoft Authenticator,Authenticator app notification with number matching,denied,2,Denial is telemetry-confirmed; motive is not.
+Microsoft Authenticator,Authenticator app notification with number matching,success,2,"Success confirms method completion, not user authorization."
+Microsoft Authenticator,Authenticator app notification with number matching,timeout,2,Timeout is telemetry-confirmed; push bombing requires sequence/context.
+Previously satisfied,MFA claim,satisfied_by_claim,143,No fresh user interaction should be inferred.

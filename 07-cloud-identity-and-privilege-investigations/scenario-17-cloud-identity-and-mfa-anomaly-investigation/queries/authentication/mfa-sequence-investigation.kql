@@ -1,0 +1,14 @@
+SigninLogs
+| where UserPrincipalName =~ "<USER>"
+| extend AuthDetails=todynamic(AuthenticationDetails)
+| mv-expand Step=AuthDetails
+| extend StepTime=todatetime(Step.authenticationStepDateTime),
+         Method=tostring(Step.authenticationMethod),
+         Detail=tostring(Step.authenticationStepResultDetail),
+         StepSucceeded=tobool(Step.succeeded),
+         Requirement=tostring(Step.authenticationStepRequirement)
+| project TimeGenerated, StepTime, UserPrincipalName, IPAddress,
+          AppDisplayName, ResultType, ResultDescription,
+          Method, Detail, StepSucceeded, Requirement,
+          CorrelationId, OriginalRequestId, SessionId, UniqueTokenIdentifier
+| order by TimeGenerated asc, StepTime asc

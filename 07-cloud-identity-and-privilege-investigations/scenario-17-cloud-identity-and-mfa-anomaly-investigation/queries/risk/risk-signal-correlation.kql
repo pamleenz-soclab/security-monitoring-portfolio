@@ -1,0 +1,14 @@
+IdentityProtectionRiskEvents
+| where UserPrincipalName =~ "<USER>"
+| project RiskTime=TimeGenerated, UserPrincipalName, Activity, RiskEventType,
+          RiskLevel, RiskState, CorrelationId, RequestId, IPAddress
+| join kind=leftouter (
+    SigninLogs
+    | project SignInTime=TimeGenerated, UserPrincipalName, IPAddress,
+              AppDisplayName, ResultType, CorrelationId,
+              RequestId=OriginalRequestId, SessionId
+) on CorrelationId
+| project RiskTime, SignInTime, UserPrincipalName, IPAddress,
+          RiskEventType, RiskLevel, RiskState,
+          AppDisplayName, ResultType, CorrelationId, RequestId, SessionId
+| order by RiskTime asc

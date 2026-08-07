@@ -1,0 +1,8 @@
+area,status,impact
+Authenticator approval context,Not available,"No Authenticator GPS or approving-device telemetry; accidental approval is confirmed through business verification, not device telemetry."
+Raw token material,Intentionally excluded,"No access token, refresh token, cookie, Authorization header, MFA seed or secret is present."
+Conditional Access internal condition trace,Not available,Applied policy results and controls are present; internal condition evaluation traces are not modeled.
+Real GeoIP enrichment,Not applicable,IPs and locations are synthetic; location analysis tests logic rather than third-party GeoIP accuracy.
+Cross-tenant activity,Not observed,"The scenario does not model B2B, service-provider or passthrough sign-ins."
+Production license behavior,Synthetic,Risk fields emulate P2-equivalent visibility; actual tenants may return hidden or delayed values.
+Original portal export fidelity,Detection gap,"Field semantics follow official schemas, but the files are not byte-for-byte portal or Graph exports."

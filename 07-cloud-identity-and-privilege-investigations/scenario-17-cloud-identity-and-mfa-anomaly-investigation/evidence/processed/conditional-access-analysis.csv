@@ -1,0 +1,10 @@
+policy_alias,result,grant_controls,event_count,enforcement_interpretation,final_interpretation
+CA-POLICY-001,failure,"[""mfa""]",4,enforced_or_evaluated,Enforced policy result; interpret with overall sign-in result and grant controls.
+CA-POLICY-001,success,"[""mfa""]",1,enforced_or_evaluated,Enforced policy result; interpret with overall sign-in result and grant controls.
+CA-POLICY-002,failure,"[""block""]",1,enforced_or_evaluated,Enforced policy result; interpret with overall sign-in result and grant controls.
+CA-POLICY-002,notApplied,"[""block""]",152,not_enforced,Not applied; exact internal condition trace not available.
+CA-POLICY-003,reportOnlyFailure,"[""compliantDevice""]",8,not_enforced,Report-only evaluation; did not block or grant access.
+CA-POLICY-003,reportOnlySuccess,"[""compliantDevice""]",1,not_enforced,Report-only evaluation; did not block or grant access.
+CA-POLICY-004,failure,"[""mfa""]",4,enforced_or_evaluated,Enforced policy result; interpret with overall sign-in result and grant controls.
+CA-POLICY-004,notApplied,"[""mfa""]",11,not_enforced,Not applied; exact internal condition trace not available.
+CA-POLICY-004,success,"[""mfa""]",145,enforced_or_evaluated,Enforced policy result; interpret with overall sign-in result and grant controls.

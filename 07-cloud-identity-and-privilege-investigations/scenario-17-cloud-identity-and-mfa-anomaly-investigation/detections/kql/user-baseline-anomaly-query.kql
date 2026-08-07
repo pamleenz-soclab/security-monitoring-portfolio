@@ -1,0 +1,22 @@
+let Historical =
+SigninLogs
+| where TimeGenerated between (ago(30d) .. ago(1d))
+| where ResultType == "0"
+| summarize BaselineCountries=make_set(tostring(LocationDetails.countryOrRegion), 50),
+            BaselineASNs=make_set(tostring(AutonomousSystemNumber), 100),
+            BaselineApps=make_set(AppDisplayName, 100),
+            BaselineClientApps=make_set(ClientAppUsed, 50)
+  by UserPrincipalName;
+SigninLogs
+| where TimeGenerated > ago(1d) and ResultType == "0"
+| extend Country=tostring(LocationDetails.countryOrRegion),
+         ASN=tostring(AutonomousSystemNumber)
+| join kind=leftouter Historical on UserPrincipalName
+| extend CountryDeviation=not(set_has_element(BaselineCountries, Country)),
+         ASNDeviation=not(set_has_element(BaselineASNs, ASN)),
+         AppDeviation=not(set_has_element(BaselineApps, AppDisplayName)),
+         ClientDeviation=not(set_has_element(BaselineClientApps, ClientAppUsed))
+| where CountryDeviation or ASNDeviation or AppDeviation or ClientDeviation
+| project TimeGenerated, UserPrincipalName, IPAddress, Country, ASN,
+          AppDisplayName, ClientAppUsed, CountryDeviation, ASNDeviation,
+          AppDeviation, ClientDeviation, CorrelationId, SessionId

@@ -1,0 +1,13 @@
+union isfuzzy=true
+    (SigninLogs | extend SignInLogType="interactiveUser"),
+    (AADNonInteractiveUserSignInLogs | extend SignInLogType="nonInteractiveUser"),
+    (AADServicePrincipalSignInLogs | extend SignInLogType="servicePrincipal"),
+    (AADManagedIdentitySignInLogs | extend SignInLogType="managedIdentity")
+| summarize EventCount=count(),
+            SuccessCount=countif(ResultType=="0"),
+            FailureCount=countif(ResultType!="0"),
+            FirstSeen=min(TimeGenerated),
+            LastSeen=max(TimeGenerated)
+  by SignInLogType,
+     Identity=coalesce(UserPrincipalName, ServicePrincipalName, Identity)
+| order by EventCount desc

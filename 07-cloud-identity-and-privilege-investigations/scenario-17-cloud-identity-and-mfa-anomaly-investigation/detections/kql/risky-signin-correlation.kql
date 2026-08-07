@@ -1,0 +1,15 @@
+let SuspiciousSignins =
+SigninLogs
+| where ResultType == "0"
+| where RiskLevelDuringSignIn in~ ("medium","high")
+   or RiskState in~ ("atRisk","confirmedCompromised")
+| project SignInTime=TimeGenerated, UserPrincipalName, IPAddress,
+          CorrelationId, SessionId, AppDisplayName, RiskLevelDuringSignIn, RiskState;
+AuditLogs
+| extend Actor=tostring(InitiatedBy.user.userPrincipalName),
+         ActorIP=tostring(InitiatedBy.user.ipAddress)
+| join kind=inner SuspiciousSignins on $left.CorrelationId == $right.CorrelationId
+| where TimeGenerated between (SignInTime .. SignInTime + 1h)
+| project SignInTime, TimeGenerated, UserPrincipalName, IPAddress,
+          AppDisplayName, RiskLevelDuringSignIn, RiskState,
+          ActivityDisplayName, Result, TargetResources, CorrelationId, SessionId

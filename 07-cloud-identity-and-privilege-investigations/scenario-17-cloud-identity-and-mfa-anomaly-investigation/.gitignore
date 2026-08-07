@@ -1,0 +1,30 @@
+# Raw evidence remains local.
+evidence/raw/*
+!evidence/raw/.gitkeep
+
+# Working databases, extracted files, consoles, and intermediate results remain local.
+evidence/working/*
+!evidence/working/.gitkeep
+
+# Python runtime files.
+__pycache__/
+*.py[cod]
+
+# Local databases and caches.
+*.sqlite
+*.sqlite3
+*.db
+*.sqlite-wal
+*.sqlite-shm
+
+# Archives and large evidence packages.
+*.zip
+*.7z
+*.tar
+*.tar.gz
+*.tgz
+*.gz
+
+# Operating-system metadata.
+.DS_Store
+Thumbs.db

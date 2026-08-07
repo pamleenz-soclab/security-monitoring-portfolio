@@ -1,0 +1,8 @@
+identity_alias,identity_type,event_count,success_count,failure_count,sign_in_types,final_classification
+MI-001,managedIdentity,1,1,0,"{""managedIdentity"":1}",Benign
+SP-001,servicePrincipal,1,1,0,"{""servicePrincipal"":1}",Benign
+USER-005,user,30,28,2,"{""interactiveUser"":16,""nonInteractiveUser"":14}",Unsuccessful attack
+USER-002,user,30,28,2,"{""interactiveUser"":16,""nonInteractiveUser"":14}",Unsuccessful attack
+USER-001,user,40,33,7,"{""interactiveUser"":23,""nonInteractiveUser"":17}",Confirmed account compromise
+USER-003,user,30,28,2,"{""interactiveUser"":16,""nonInteractiveUser"":14}",Unsuccessful attack
+USER-004,user,30,28,2,"{""interactiveUser"":16,""nonInteractiveUser"":14}",Unsuccessful attack

@@ -1,0 +1,7 @@
+ip_address,ip_role,asn,provider,country,state,city,anonymous_proxy,corporate_network,approved_network,event_count,success_count,failure_count,distinct_users,risk_levels,assessment
+192.0.2.44,BASELINE-ISP-01,64512,Example Fibre NZ,NZ,Auckland,Auckland,False,False,False,90,90,0,5,"{""none"":90}",Normal synthetic user baseline network.
+192.0.2.80,CORP-OFFICE-01,64513,Synthetic Organisation Corporate Internet,NZ,Auckland,Auckland,False,True,True,50,50,0,5,"{""none"":50}",Approved corporate office egress used for response activity.
+198.51.100.77,ATTACK-IP-01,64550,Example Privacy Hosting,RO,Bucharest,Bucharest,True,False,False,13,4,9,5,"{""high"":8,""medium"":5}",Malicious infrastructure in scenario ground truth; suspicious independent of GeoIP.
+198.51.100.88,ATTACK-IP-02,64551,Example Virtual Hosting,DE,Hesse,Frankfurt,False,False,False,6,0,6,5,"{""high"":1,""medium"":5}",Second attack source; password spray and blocked legacy-authentication attempt.
+203.0.113.10,CORP-VPN-01,64520,Synthetic Organisation Corporate VPN,AU,New South Wales,Sydney,False,True,True,1,1,0,1,"{""low"":1}",Approved corporate VPN exit; benign anomaly.
+203.0.113.50,AZURE-EGRESS-01,64530,Synthetic Azure New Zealand,NZ,Auckland,Auckland,False,True,False,2,2,0,0,"{""none"":2}",Expected synthetic Azure workload egress.

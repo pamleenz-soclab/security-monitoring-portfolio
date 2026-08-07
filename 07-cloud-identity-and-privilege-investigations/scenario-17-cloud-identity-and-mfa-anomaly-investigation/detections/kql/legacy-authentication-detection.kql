@@ -1,0 +1,10 @@
+SigninLogs
+| where ClientAppUsed in~ ("IMAP","POP","SMTP","Exchange ActiveSync",
+                           "MAPI","Other clients")
+   or AuthenticationProtocol =~ "ropc"
+| extend Outcome=iff(ResultType=="0","success","failure")
+| project TimeGenerated, UserPrincipalName, IPAddress, AppDisplayName,
+          ResourceDisplayName, ClientAppUsed, AuthenticationProtocol,
+          ConditionalAccessStatus, ResultType, ResultDescription, Outcome,
+          CorrelationId, SessionId
+| order by TimeGenerated desc

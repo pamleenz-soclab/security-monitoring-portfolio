@@ -1,0 +1,27 @@
+let Baseline = 30d;
+let Recent = 1d;
+let UserBaseline =
+SigninLogs
+| where TimeGenerated between (ago(Baseline) .. ago(Recent))
+| where ResultType == "0"
+| summarize KnownCountries=make_set(tostring(LocationDetails.countryOrRegion), 50),
+            KnownASNs=make_set(tostring(AutonomousSystemNumber), 100),
+            KnownApps=make_set(AppDisplayName, 100),
+            KnownDevices=make_set(tostring(DeviceDetail.deviceId), 100)
+  by UserPrincipalName;
+SigninLogs
+| where TimeGenerated > ago(Recent) and ResultType == "0"
+| extend Country=tostring(LocationDetails.countryOrRegion),
+         DeviceId=tostring(DeviceDetail.deviceId),
+         Managed=tobool(DeviceDetail.isManaged),
+         Compliant=tobool(DeviceDetail.isCompliant)
+| join kind=leftouter UserBaseline on UserPrincipalName
+| extend NewCountry=not(set_has_element(KnownCountries, Country)),
+         NewASN=not(set_has_element(KnownASNs, tostring(AutonomousSystemNumber))),
+         NewApp=not(set_has_element(KnownApps, AppDisplayName)),
+         NewDevice=isempty(DeviceId) or not(set_has_element(KnownDevices, DeviceId))
+| where NewCountry or NewASN or NewApp or NewDevice
+| project TimeGenerated, UserPrincipalName, IPAddress, Country,
+          AutonomousSystemNumber, AppDisplayName, DeviceId, Managed, Compliant,
+          RiskLevelDuringSignIn, ConditionalAccessStatus, NewCountry, NewASN,
+          NewApp, NewDevice, CorrelationId, SessionId

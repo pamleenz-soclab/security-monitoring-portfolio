@@ -1,0 +1,25 @@
+let Lookback = 1d;
+SigninLogs
+| where TimeGenerated > ago(Lookback)
+| extend AuthDetails=todynamic(AuthenticationDetails)
+| mv-expand Step=AuthDetails
+| extend Method=tostring(Step.authenticationMethod),
+         Succeeded=tobool(Step.succeeded),
+         Detail=tostring(Step.authenticationStepResultDetail)
+| where Method has "Authenticator"
+| extend Outcome=case(
+    Succeeded, "success",
+    Detail has_any("denied","declined"), "denied",
+    Detail has_any("timeout","no response"), "timeout",
+    "other")
+| summarize
+    Denied=countif(Outcome=="denied"),
+    Timeout=countif(Outcome=="timeout"),
+    Success=countif(Outcome=="success" and ResultType=="0"),
+    FirstSeen=min(TimeGenerated),
+    LastSeen=max(TimeGenerated),
+    Apps=make_set(AppDisplayName, 10),
+    Sessions=make_set(SessionId, 10)
+  by UserPrincipalName, IPAddress, bin(TimeGenerated, 15m)
+| where Denied + Timeout >= 3 and Success >= 1
+| order by LastSeen desc

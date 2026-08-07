@@ -1,0 +1,11 @@
+file_name	file_type	size_bytes	sha256	synthetic	redistribution
+.gitkeep	text	0	e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855	true	Generator-derived synthetic data; raw remains local by project convention
+DATASET-LICENSE.txt	text	229	38bbfeec580b558712db1bf1aecffdb6efa5a457987ab291af343a6741932dca	true	Generator-derived synthetic data; raw remains local by project convention
+acquisition-manifest.json	JSON	1872	cae03d11bdc84fe39eb1099a12bc20851b17f8e8195abd95ca2d9a051e011e7f	true	Generator-derived synthetic data; raw remains local by project convention
+business-context.json	JSON	5410	9657419c6a24f9f182f110dab14a2a455a0970a13b013d6ac2f57b819312eaa1	true	Generator-derived synthetic data; raw remains local by project convention
+entra-directory-audit.jsonl	JSONL	3378	cc33ee72a4d0503557f44af64a0e16eac111ec3baa97136e0c732fd0834553cd	true	Generator-derived synthetic data; raw remains local by project convention
+entra-signins.jsonl	JSONL	503055	b75f2a4cb26d3a311c40e6bf86037e808a009621196017536862da1f76a49000	true	Generator-derived synthetic data; raw remains local by project convention
+ground-truth.json	JSON	1483	57f1cc6cf9c35e54fbfa1884b883003ce54eb30919868527dc5d45ae4c70a124	true	Generator-derived synthetic data; raw remains local by project convention
+identity-protection-risk-detections.jsonl	JSONL	4731	a7b674c7a509b0aae30426b1077abfc521daaba8747057f6af81edfc305978da	true	Generator-derived synthetic data; raw remains local by project convention
+m365-unified-audit.jsonl	JSONL	2434	6ac35c95d6a6100a72c68b17e54e90cb0d5c5cbfa31e478346d4129f93f52c14	true	Generator-derived synthetic data; raw remains local by project convention
+schema-basis.json	JSON	1891	5934b308beb3072370facfdf8fed0d95529b7c88505500488e8588d727093e37	true	Generator-derived synthetic data; raw remains local by project convention

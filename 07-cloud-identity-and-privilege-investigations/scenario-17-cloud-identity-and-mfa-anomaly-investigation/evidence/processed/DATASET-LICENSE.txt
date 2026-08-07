@@ -1,0 +1,4 @@
+Scenario 17 synthetic dataset
+
+To the extent possible under law, the generated synthetic dataset is dedicated to the public domain under CC0 1.0.
+No real tenant, account, secret, token, or personal data is included.

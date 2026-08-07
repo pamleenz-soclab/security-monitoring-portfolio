@@ -1,0 +1,12 @@
+SigninLogs
+| extend Policies=todynamic(ConditionalAccessPolicies)
+| mv-expand Policy=Policies
+| extend PolicyName=tostring(Policy.displayName),
+         PolicyResult=tostring(Policy.result),
+         GrantControls=tostring(Policy.enforcedGrantControls),
+         SessionControls=tostring(Policy.enforcedSessionControls)
+| where PolicyResult in~ ("failure","notApplied","reportOnlyFailure")
+| project TimeGenerated, UserPrincipalName, IPAddress, AppDisplayName,
+          ResultType, ConditionalAccessStatus, PolicyName, PolicyResult,
+          GrantControls, SessionControls, CorrelationId, SessionId
+| order by TimeGenerated desc

@@ -1,0 +1,6 @@
+identifier_type,identifier_value,linked_sources,linked_event_count,interpretation
+Sign-in ID,SIGNIN-INCIDENT-001,"[""interactive sign-in""]",1,Identifies the successful interactive sign-in record only.
+Session ID,SESSION-001,"[""interactive sign-in"", ""non-interactive sign-ins"", ""M365 unified audit""]",8,Strongest cross-source chain for the successful session and follow-on M365 activity; it does not prove token theft by itself.
+Correlation ID,CORRELATION-001,"[""successful sign-in"", ""risk detections"", ""security-info registration audit""]",6,Links the authentication transaction to platform risk records and the directory audit event in this synthetic package.
+Request ID,REQUEST-001,"[""successful sign-in"", ""risk detections""]",5,Links risk detections to the exact successful request; it is not a whole-session identifier.
+Unique token identifiers,"[""SYNID-CDA21A9B13D4"", ""SYNID-DE49BE5A603F"", ""SYNID-972BB4E90F84"", ""SYNID-4AB6FE91DAF5""]","[""interactive and non-interactive sign-ins""]",4,Token identifiers differ across token events; do not use them as a substitute for Session ID.

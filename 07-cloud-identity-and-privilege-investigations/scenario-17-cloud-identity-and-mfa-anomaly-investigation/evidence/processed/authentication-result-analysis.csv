@@ -1,0 +1,12 @@
+result,error_code,failure_reason,additional_details,authentication_requirement,event_count,investigation_interpretation
+failure,50126,Error validating credentials due to invalid username or password.,Primary authentication failed before MFA evaluation.,multiFactorAuthentication,10,Invalid username/password; does not prove correct credentials.
+failure,53003,Access has been blocked by Conditional Access policies.,Legacy authentication was blocked; no token was issued.,singleFactorAuthentication,1,Conditional Access blocked the request; no token/session issued.
+failure,500121,Authentication failed during strong authentication request.,MFA denied; user declined the authentication,multiFactorAuthentication,2,MFA challenge failed; primary authentication had already succeeded.
+failure,500121,Authentication failed during strong authentication request.,MFA timeout; no response received,multiFactorAuthentication,2,MFA challenge failed; primary authentication had already succeeded.
+success,0,,MFA requirement satisfied by claim in the token.,multiFactorAuthentication,70,Successful authentication or token activity; inspect authentication details and session context.
+success,0,,Token refresh completed without user interaction.,multiFactorAuthentication,70,Successful authentication or token activity; inspect authentication details and session context.
+success,0,,MFA completed using number matching.,multiFactorAuthentication,1,Successful authentication or token activity; inspect authentication details and session context.
+success,0,,Client credential authentication succeeded.,singleFactorAuthentication,1,Successful authentication or token activity; inspect authentication details and session context.
+success,0,,Managed identity token acquisition succeeded.,singleFactorAuthentication,1,Successful authentication or token activity; inspect authentication details and session context.
+success,0,,MFA completed using Microsoft Authenticator number matching.,multiFactorAuthentication,1,Successful authentication or token activity; inspect authentication details and session context.
+success,0,,Token refresh completed without additional user interaction.,multiFactorAuthentication,3,Successful authentication or token activity; inspect authentication details and session context.

@@ -1,0 +1,6 @@
+risk_event_type,risk_level,risk_state,detection_timing,event_count,evidence_class,assessment
+anonymizedIPAddress,high,atRisk,realtime,1,platform-generated risk,"Platform-generated lead; corroborating evidence only, not proof of compromise."
+authenticatorPhishing,high,atRisk,realtime,1,platform-generated risk,"Platform-generated lead; corroborating evidence only, not proof of compromise."
+passwordSpray,high,atRisk,realtime,1,platform-generated risk,"Platform-generated lead; corroborating evidence only, not proof of compromise."
+unfamiliarFeatures,high,atRisk,realtime,1,platform-generated risk,"Platform-generated lead; corroborating evidence only, not proof of compromise."
+unlikelyTravel,medium,atRisk,offline,1,platform-generated risk,"Platform-generated lead; corroborating evidence only, not proof of compromise."

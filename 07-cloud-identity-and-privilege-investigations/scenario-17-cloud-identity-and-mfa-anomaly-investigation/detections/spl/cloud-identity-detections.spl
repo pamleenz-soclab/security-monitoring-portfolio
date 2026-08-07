@@ -1,0 +1,38 @@
+# 1. Password spray
+index=entra sourcetype=entra:signin resultType=50126
+| bin _time span=10m
+| stats count as attempts dc(userPrincipalName) as distinct_users
+        values(userPrincipalName) as users by _time ipAddress
+| where distinct_users>=5
+
+# 2. Repeated MFA denial/timeout followed by success
+index=entra sourcetype=entra:signin
+| spath input=authenticationDetails
+| mvexpand authenticationDetails{}
+| spath input=authenticationDetails{} path=authenticationMethod output=method
+| spath input=authenticationDetails{} path=authenticationStepResultDetail output=detail
+| spath input=authenticationDetails{} path=succeeded output=step_succeeded
+| eval outcome=case(step_succeeded="true","success",
+                    match(lower(detail),"denied|declined"),"denied",
+                    match(lower(detail),"timeout|no response"),"timeout",
+                    true(),"other")
+| bin _time span=15m
+| stats count(eval(outcome="denied")) as denied
+        count(eval(outcome="timeout")) as timeout
+        count(eval(outcome="success" AND resultType=0)) as success
+        values(sessionId) as sessions by _time userPrincipalName ipAddress
+| where denied+timeout>=3 AND success>=1
+
+# 3. Legacy authentication
+index=entra sourcetype=entra:signin
+(clientAppUsed IN ("IMAP","POP","SMTP","Exchange ActiveSync","Other clients")
+ OR authenticationProtocol="ropc")
+| table _time userPrincipalName ipAddress appDisplayName clientAppUsed
+        authenticationProtocol conditionalAccessStatus resultType failureReason
+
+# 4. Suspicious successful sign-in plus follow-on activity
+(index=entra sourcetype=entra:signin resultType=0)
+OR (index=m365 sourcetype=m365:audit operation IN ("New-InboxRule","FileDownloaded"))
+| transaction sessionId maxspan=2h
+| search operation IN ("New-InboxRule","FileDownloaded")
+| table _time userPrincipalName ipAddress sessionId appDisplayName operation objectId

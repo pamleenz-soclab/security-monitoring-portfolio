@@ -1,0 +1,9 @@
+device_alias,device_name,operating_system,browser,is_compliant,is_managed,trust_type,event_count,success_count,failure_count,users,device_context
+NOT-AVAILABLE,,,,,,,3,2,1,"[""USER-001""]",not_available
+NOT-AVAILABLE,,Windows 11,Chrome,False,False,,8,4,4,"[""USER-001""]",unknown/unmanaged
+NOT-AVAILABLE,,Windows 11,Chrome,,,,10,0,10,"[""USER-005"",""USER-002"",""USER-001"",""USER-003"",""USER-004""]",not_available
+DEVICE-001,LIAM-WIN-01,Windows 11,Edge,True,True,AzureAD,28,28,0,"[""USER-002""]",known/managed
+DEVICE-002,OLIVIA-MBP-01,macOS,Chrome,True,True,AzureAD,28,28,0,"[""USER-004""]",known/managed
+DEVICE-003,NOAH-IOS-01,iOS,Mobile Safari,True,True,AzureAD,28,28,0,"[""USER-003""]",known/managed
+DEVICE-004,MAYA-MBP-01,macOS,Safari,True,True,AzureAD,29,29,0,"[""USER-001""]",known/managed
+DEVICE-005,ETHAN-WIN-01,Windows 11,Edge,True,True,AzureAD,28,28,0,"[""USER-005""]",known/managed
