@@ -1,0 +1,9 @@
+attack_stage,telemetry,coverage_status,evidence,detection_state,priority
+Execution,Sysmon process + PowerShell,Strong visibility,Exact process lineage and PowerShell content available.,Sequence correlation should be engineered.,High
+Persistence,System 7045 + Sysmon process,Strong visibility,Service configuration and later SYSTEM execution observed.,Correlate service path/account with later process.,High
+Privilege Escalation,Service config + process lineage,Partial mechanism / strong outcome,SYSTEM service execution observed; exact elevation mechanism incomplete.,Do not treat 4672 alone as escalation.,High
+Credential Access,Sysmon EID 10 + ProcessGuid,Strong visibility,Malicious PowerShell exact ProcessGuid accesses LSASS.,High-value correlation opportunity.,High
+Lateral Movement,Sysmon EID 3 + Security 4624/5140/5145 + System 7045 + process,Strong host-side visibility,WinRM and PsExec sequences reconstructed.,Cross-host/source-target correlation required.,High
+Collection,Sysmon process,Visible,RAR staging command observed.,Contextual rule required for dual-use archive tools.,Medium
+Command and Control,Sysmon EID 3 + process lineage,Strong endpoint visibility; independent network temporal gap,Exact processes connect to incident lab destinations.,Endpoint process-network correlation strong; Zeek cannot validate same event window.,High
+Exfiltration,No receiver/object outcome evidence,Insufficient,No proof staged data left environment.,Visibility/logging gap rather than negative conclusion.,High

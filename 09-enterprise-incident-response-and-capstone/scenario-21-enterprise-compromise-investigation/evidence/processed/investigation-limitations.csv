@@ -1,0 +1,8 @@
+limitation_id,limitation,effect,handling
+LIM-001,Controlled adversary-emulation dataset,"Demonstrates IR methodology, not a real victim case.",Label as source-derived adversary-emulation investigation; separate telemetry from ground truth.
+LIM-002,Zeek and host capture windows do not overlap,Independent network-sensor records cannot corroborate exact host incident events.,Use process-attributed Sysmon network telemetry for the May 2 chain and document Zeek temporal limitation.
+LIM-003,Initial-delivery telemetry absent,Initial Access cannot be reconstructed.,Begin with first observed execution; mark Initial Access Not available/Unable to assess.
+LIM-004,Credential extraction result absent,LSASS access cannot become a successful credential-dump claim.,Record credential-access behavior; preserve outcome uncertainty; record failed PFX export separately.
+LIM-005,No exfiltration outcome/receiver evidence,Collection plus C2 does not prove data theft.,Keep Exfiltration Not observed/Unable to assess.
+LIM-006,No real business owner/containment/recovery telemetry,Business impact/recovery effectiveness cannot be demonstrated.,Publish decision and validation design without claiming execution.
+LIM-007,Day 2 excluded,Activity outside Day 1 is not part of the case.,Do not extend timeline without source-defined continuity.

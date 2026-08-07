@@ -1,0 +1,15 @@
+# Raw upstream evidence — source-derived, read-only, do not publish.
+evidence/raw/**
+!evidence/raw/.gitkeep
+!evidence/raw/host/
+!evidence/raw/network/
+!evidence/raw/network/pcap/
+!evidence/raw/network/zeek/
+
+# Investigator working data — reproducible but not portfolio artifacts.
+evidence/working/**
+
+# Local transient files.
+.DS_Store
+__pycache__/
+*.pyc

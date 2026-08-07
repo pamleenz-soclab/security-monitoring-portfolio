@@ -1,0 +1,12 @@
+stage,technique_id,technique,status,evidence,source_reference,boundary
+Execution,T1204.002,User Execution: Malicious File,Observed behavior,ProgramData .scr executed in user Explorer context,HOSTJSON:373,Initial delivery remains unknown.
+Execution,T1059.001,Command and Scripting Interpreter: PowerShell,Observed,"Hidden, registry-loaded and encoded PowerShell execution",HOSTJSON:6930;185395;185832,"Mapped from observed commands, not emulation ground truth."
+Defense Evasion,T1027.003,Obfuscated/Compressed Files and Information: Steganography,Observed behavior,PowerShell reads pixel values from monkey.png and executes reconstructed bytes,HOSTJSON:6930,Payload attribution not inferred.
+Persistence / Privilege Escalation,T1543.003,Create or Modify System Process: Windows Service,Correlated,Auto-start LocalSystem service javamtsup.exe later executes as SYSTEM,HOSTJSON:50937;132298,Exact installation mechanism not fully reconstructed.
+Defense Evasion,T1070.004,Indicator Removal: File Deletion,Observed,SDelete targets initial .scr and later Rar.exe,HOSTJSON:45305;114683,Does not prove all traces were removed.
+Credential Access,T1003.001,OS Credential Dumping: LSASS Memory,Behavior observed; extraction outcome unconfirmed,Incident-correlated PowerShell accesses lsass.exe with 0x1fffff,HOSTJSON:53270,Credential material recovery is not directly observed.
+Credential Access,T1649,Steal or Forge Authentication Certificates,Attempted only,Export-PfxCertificate attempted to write PFX,HOSTJSON:52560,Telemetry explicitly records failure: private key non-exportable.
+Lateral Movement,T1021.006,Remote Services: Windows Remote Management,Correlated,SCRANTON PowerShell -> NASHUA:5985 plus target Kerberos logon/wsmprovhost,HOSTJSON:90586;90461;90531,Cross-host bridge is Moderate because no shared stable ID spans both hosts.
+Lateral Movement,T1021.002,Remote Services: SMB/Windows Admin Shares,Correlated,ADMIN$ activity and PSEXESVC.exe write from 10.0.1.4 under stable Logon IDs,HOSTJSON:92330;93856;93862,Temp\python.exe 5145 is not used as proof of copy/write.
+Execution,T1569.002,System Services: Service Execution,Correlated,svcctl + PSEXESVC service creation and process execution,HOSTJSON:94190;94192;102363;102446,Multiple Windows event types support the sequence.
+Collection,T1560.001,Archive Collected Data: Archive via Utility,Observed behavior,Rar.exe archive-staging command,HOSTJSON:105507,Archive success/content sensitivity not independently verified.

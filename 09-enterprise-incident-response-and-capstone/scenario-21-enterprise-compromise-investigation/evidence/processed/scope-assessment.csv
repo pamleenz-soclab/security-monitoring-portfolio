@@ -1,0 +1,11 @@
+scope_type,entity,assessment,confidence,evidence,boundary
+Account,DMEVALS\pbeesly,Affected / attacker-controlled or misused,High,Malicious execution on SCRANTON; credential-access process; multiple remote-access/payload events on NASHUA.,"Telemetry proves misuse, not how the credential was obtained."
+Host,SCRANTON.dmevals.local,Affected / compromised,High,"Execution, persistence, SYSTEM execution, credential access, C2 and lateral-movement source.",
+Host,NASHUA.dmevals.local,Affected / compromised,High,"WinRM/wsmprovhost, SMB/PsExec, python execution/C2 and collection staging.",
+Host,NEWYORK.dmevals.local,Observed only / not established compromised,Medium,Infrastructure activity present; no retained incident-correlated chain.,Appearance in logs is not compromise proof.
+Host,UTICA.dmevals.local,Observed only / unable to assess,Medium,Present in Day 1 telemetry with no retained incident correlation.,
+Network destination,192.168.0.4,Incident-related lab infrastructure,High,Repeated exact-process communications and later encoded-payload context.,RFC1918 address; not a reusable public IOC.
+Network destination,192.168.0.5,Incident-related lab infrastructure,High,Exact-process connections from initial .scr and hidden PowerShell.,RFC1918 address; not a reusable public IOC.
+Data,working.zip,Collection/staging observed; content/transfer unknown,Medium,RAR command on NASHUA.,No evidence proves sensitive content or successful exfiltration.
+Cloud identity,N/A,Not available,,No cloud identity telemetry in selected Day 1 boundary.,
+Business service,N/A,Unable to assess business impact,,Adversary-emulation dataset has no real business consequence telemetry.,

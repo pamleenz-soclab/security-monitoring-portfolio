@@ -1,0 +1,10 @@
+source_entity,relationship,target_entity,strength,basis
+SCRANTON initial .scr,parent_process_lineage,cmd.exe -> sdclt.exe -> control.exe -> hidden PowerShell,Strong,Exact ProcessGuid/ParentProcessGuid chain
+Hidden PowerShell ProcessGuid e1e4,accessed,lsass.exe,Strong,Exact SourceProcessGuid
+SCRANTON child PowerShell ProcessGuid e374,connected_to,NASHUA 10.0.1.6:5985,Strong source-side,Exact ProcessGuid
+NASHUA LogonId 0x85aad2,executed,wsmprovhost.exe,Strong,Exact Logon ID
+NASHUA LogonId 0x866b2c,wrote/accessed,ADMIN$\PSEXESVC.exe and IPC$\svcctl,Strong,Exact Logon ID + source IP
+PSEXESVC.exe ProcessGuid e5b7-7603,parent_process_of,python.exe ProcessGuid e5b7-7703,Strong,Exact ParentProcessGuid
+python.exe ProcessGuid e5b8-7903,connected_to,192.168.0.4:8443,Strong,348 exact-ProcessGuid Sysmon network events
+Java support service,executed_as,javamtsup.exe / NT AUTHORITY\SYSTEM,Strong contextual,Exact path + LocalSystem config + services.exe parent
+hostui.exe,parent_process_lineage,registry-IEX PowerShell -> encoded hidden PowerShell,Strong,Exact ProcessGuid/ParentProcessGuid chain

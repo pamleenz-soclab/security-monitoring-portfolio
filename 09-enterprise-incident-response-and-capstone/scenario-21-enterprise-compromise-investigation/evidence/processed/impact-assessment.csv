@@ -1,0 +1,6 @@
+impact_category,activity_status,evidence,proof,source_reference,boundary
+Endpoint compromise,Successful / observed,Malicious execution and persistence on SCRANTON; remote execution and payload activity on NASHUA.,Two endpoints show incident-correlated unauthorized execution.,HOSTJSON:373;6930;132298;90531;102446,"Security compromise, not an ATT&CK Impact-stage business-disruption claim."
+Credential/certificate access,Observed behavior + failed attempt,Incident PowerShell accessed LSASS; PFX export attempt failed.,Credential-access behavior observed; no credential material output shown.,HOSTJSON:53270;52560,Do not claim successful credential dump or certificate theft.
+Data collection/staging,Observed behavior,RAR staging command involving working.zip.,Archive/staging command executed.,HOSTJSON:105507,Archive success and data sensitivity are not independently proven.
+Exfiltration,Not observed / Unable to assess,Outbound C2-like connections exist without transferred-object/receiver proof.,,,Traffic alone does not prove exfiltration.
+Business/service disruption,Not observed,"No ransomware, destructive data modification or service-outage outcome retained.",,,Emulation dataset does not provide real business consequence data.

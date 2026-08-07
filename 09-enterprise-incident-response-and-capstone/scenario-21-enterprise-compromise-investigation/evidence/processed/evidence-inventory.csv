@@ -1,0 +1,9 @@
+evidence_id,domain,source,artifact,role,availability,boundary
+E-001,Endpoint / Windows,OTRF Day 1 host JSON,apt29_evals_day1_manual.zip -> extracted JSON,Primary incident telemetry,Available locally; raw Git-ignored,Source-derived adversary-emulation telemetry
+E-002,Identity / Authentication,Windows Security events,4624/4672/5140/5145 etc.,Authentication/session/share correlation,Available,"Windows host identity telemetry, not enterprise IdP"
+E-003,Endpoint / Windows,Sysmon,Process/network/process-access telemetry,"Process lineage, LSASS and network attribution",Available,Primary host correlation source
+E-004,Endpoint / PowerShell,PowerShell Operational,4103/4104,Command/script behavior and explicit PFX failure,Available,Source-derived script telemetry
+E-005,Endpoint / Windows,Windows System,7045 service installation,Persistence/remote-service evidence,Available,Service configuration telemetry
+E-006,Network,Upstream Day 1 Zeek NASHUA/SCRANTON,conn/dns/http/kerberos/SMB/DCE-RPC/TLS,Independent source-associated network context,Available,April 30 capture does not overlap May 2 host incident; not direct event-level corroboration
+E-007,Network,Upstream Day 1 PCAP archives,NASHUA.zip; SCRANTON.zip,Packet-level source,Available locally; raw Git-ignored,Integrity-validated but not used for final May 2 event claims
+E-008,Validation,Precision-selected host events,selected-host-events.jsonl,Manual validation of disputed/high-value findings,Working-only,Derived validation set; raw source remains authoritative

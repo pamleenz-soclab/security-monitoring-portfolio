@@ -1,0 +1,15 @@
+correlation_id,left_reference,right_reference,correlation_key,strength,conclusion,limitation
+C-001,HOSTJSON:373,HOSTJSON:3876,ParentProcessGuid={47ab858c-e13c-5eac-a903-000000000400},Strong,.scr directly spawned cmd.exe,
+C-002,HOSTJSON:3876,HOSTJSON:6640;HOSTJSON:6747;HOSTJSON:6930,Exact chained ProcessGuid/ParentProcessGuid values,Strong,Initial execution structurally reaches hidden PowerShell,
+C-003,HOSTJSON:6930,HOSTJSON:53270,SourceProcessGuid={47ab858c-e1e4-5eac-b803-000000000400},Strong,LSASS access belongs to the exact malicious PowerShell instance,Credential extraction outcome not observed.
+C-004,HOSTJSON:6930,HOSTJSON:53541,ParentProcessGuid={47ab858c-e1e4-5eac-b803-000000000400},Strong,Follow-on PowerShell is part of the same endpoint lineage,
+C-005,HOSTJSON:53541,HOSTJSON:90586,ProcessGuid={47ab858c-e374-5eac-d803-000000000400},Strong,Child PowerShell initiated WinRM-port traffic to NASHUA,Source-side correlation only.
+C-006,HOSTJSON:90586,HOSTJSON:90461;HOSTJSON:90531,same account + target host/IP + TCP/5985 + same-second window; target LogonId=0x85aad2,Moderate cross-host; Strong target-side,Evidence supports SCRANTON-to-NASHUA WinRM lateral movement,No shared stable identifier spans the two hosts.
+C-007,HOSTJSON:92330,HOSTJSON:92334;HOSTJSON:92335,LogonId=0x861a79 + source_ip=10.0.1.4,Strong,ADMIN$ activity belongs to the same network logon,Temp\python.exe event is ReadAttributes only.
+C-008,HOSTJSON:93856,HOSTJSON:93862;HOSTJSON:94190,LogonId=0x866b2c + source_ip=10.0.1.4,Strong,PSEXESVC write and svcctl access belong to the same remote session,
+C-009,HOSTJSON:94190,HOSTJSON:94192,same host/user + service=PSEXESVC + near-time svcctl/service-create sequence,Moderate,svcctl activity is consistent with the observed PSEXESVC service installation,System 7045 does not carry the Security Logon ID.
+C-010,HOSTJSON:102363,HOSTJSON:102446,ParentProcessGuid={5aa8ec29-e5b7-5eac-7603-000000000400},Strong,PSEXESVC directly launched python.exe,
+C-011,HOSTJSON:102446,HOSTJSON:102632,LogonId=0x89177d,Strong,python.exe executed in the same pbeesly logon session,
+C-012,HOSTJSON:102644,HOSTJSON:102844..HOSTJSON:118721,ProcessGuid={5aa8ec29-e5b8-5eac-7903-000000000400},Strong,348 network events are directly attributable to the same python process,No time-aligned independent Zeek record exists.
+C-013,HOSTJSON:50937,HOSTJSON:132298,same host + exact javamtsup.exe path + LocalSystem service config + services.exe parent,Strong contextual,Persistence mechanism later executed as SYSTEM,No shared ProcessGuid spans service configuration and later launch.
+C-014,HOSTJSON:183900,HOSTJSON:185073;HOSTJSON:185395;HOSTJSON:185832,Exact ProcessGuid/ParentProcessGuid lineage,Strong,RunAs/hostui/registry-IEX/encoded-PowerShell chain is structurally linked,RunAs alone is not proof of UAC bypass.

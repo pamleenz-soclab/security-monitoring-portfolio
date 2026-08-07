@@ -1,0 +1,11 @@
+entity_type,entity,scope_status,evidence_status,basis,key_references
+account,DMEVALS\pbeesly,Affected / attacker-controlled or misused,Correlated,Malicious execution on SCRANTON and remote-access/payload activity on NASHUA.,HOSTJSON:373;6930;92330;93856;102446
+host,SCRANTON.dmevals.local,Affected / compromised,Correlated,"Initial suspicious execution, LSASS access, persistence, SYSTEM execution, C2 and lateral-movement source.",HOSTJSON:373;53270;50937;90586;132298
+host,NASHUA.dmevals.local,Affected / compromised,Correlated,"WinRM remote execution, SMB/PsExec, python payload/C2 and archive staging.",HOSTJSON:90461;90531;93862;94192;102446;105507
+host,NEWYORK.dmevals.local,Observed infrastructure only,Observed,Present in host telemetry/DNS and domain services; no incident-correlated compromise chain retained.,dataset profile / source-associated DNS
+host,UTICA.dmevals.local,Observed only / unable to assess,Observed,Present in Day 1 host telemetry but no retained incident-correlated chain.,dataset profile
+network_destination,192.168.0.4,High-confidence incident lab observable,Correlated,PowerShell/WebDAV/python communications; also referenced by later encoded payload behavior.,HOSTJSON:89587;89609;102844..118721;185832;186659
+network_destination,192.168.0.5,High-confidence incident lab observable,Correlated,Initial .scr and hidden PowerShell both connect using exact ProcessGuid correlation.,HOSTJSON:567;7665
+service,Java(TM) Virtual Machine Support Service,Suspicious persistence mechanism,Correlated,Auto-start LocalSystem javamtsup.exe service later executes as SYSTEM.,HOSTJSON:50937;132298
+service,PSEXESVC,Remote execution mechanism on NASHUA,Correlated,"ADMIN$ write, svcctl, 7045 and later process launch.",HOSTJSON:93862;94190;94192;102363
+data_object,C:\Users\pbeesly\Desktop\working.zip,Collection/staging target,Observed command reference,RAR staging command references this archive.,HOSTJSON:105507

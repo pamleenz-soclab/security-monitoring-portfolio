@@ -1,0 +1,9 @@
+type,observable,assessment,context,source_reference,reuse_boundary
+process/path,C:\ProgramData\victim\<RLO-like>.scr,High-confidence incident observable,Primary lead; parent of cmd.exe; connects to 192.168.0.5:1234.,HOSTJSON:373;567,Display-normalised path; use context rather than exact rendered filename.
+process/path,C:\Windows\System32\javamtsup.exe,High-confidence persistence observable,Auto-start LocalSystem service later executes as SYSTEM.,HOSTJSON:50937;132298,Environment-specific path/name.
+service,Java(TM) Virtual Machine Support Service,High-confidence persistence observable,Auto-start LocalSystem service for javamtsup.exe.,HOSTJSON:50937,Masquerading-style name; validate local software inventory.
+service,PSEXESVC,High-confidence remote-execution observable in this incident,ADMIN$ write + svcctl + service install/process execution.,HOSTJSON:93862;94190;94192;102363,PsExec is dual-use; context required.
+process/path,C:\Windows\Temp\python.exe,High-confidence incident observable,Launched by PSEXESVC; same session; 348 connections to 192.168.0.4:8443.,HOSTJSON:102446;102644,Python is legitimate; parent/path/network context is critical.
+network,192.168.0.4:80/443/8443,High-confidence incident lab infrastructure,PowerShell/WebDAV/python activity references/connects to this address.,HOSTJSON:89587;89609;102844..118721;186659,Private RFC1918 address; not portable threat intelligence.
+network,192.168.0.5:1234/443,High-confidence incident lab infrastructure,Initial .scr and hidden PowerShell connect with exact ProcessGuid correlation.,HOSTJSON:567;7665,Private RFC1918 address; not portable threat intelligence.
+behavior,Rar.exe followed by sdelete64.exe,High-value behavioral observable,Collection/staging followed by cleanup on NASHUA.,HOSTJSON:105507;114683,Dual-use tools; sequence/context matters.

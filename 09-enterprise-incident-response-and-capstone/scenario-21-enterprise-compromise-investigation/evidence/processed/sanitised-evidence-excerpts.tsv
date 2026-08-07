@@ -1,0 +1,11 @@
+source_reference	event	sanitised_excerpt	boundary
+HOSTJSON:373	Initial .scr execution	Image=C:\ProgramData\victim\<RLO-like>.scr; ParentImage=explorer.exe; User=DMEVALS\pbeesly	Display-normalised filename; raw source retains original encoding.
+HOSTJSON:6930	Hidden steganographic PowerShell	PowerShell -noni -noexit -ep bypass -window hidden ... System.Drawing.Bitmap('...\monkey.png') ... IEX(...)	Long command shortened.
+HOSTJSON:53270	LSASS process access	SourceImage=PowerShell.exe; SourceProcessGuid={47ab858c-e1e4-5eac-b803-000000000400}; TargetImage=lsass.exe; GrantedAccess=0x1fffff	Shows process access, not successful credential extraction.
+HOSTJSON:52560	Certificate export attempt	Export-PfxCertificate -> C:\Users\pbeesly\Downloads\<random>.pfx; error='Cannot export non-exportable private key.'	Explicitly unsuccessful.
+HOSTJSON:50937	Persistence service	Service='Java(TM) Virtual Machine Support Service'; ImagePath=C:\Windows\System32\javamtsup.exe; Start=auto; Account=LocalSystem	Later SYSTEM execution validated separately.
+HOSTJSON:92335	python.exe share access check	ADMIN$\Temp\python.exe; source=10.0.1.4; LogonId=0x861a79; Access=ReadAttributes	Does not prove file write/copy.
+HOSTJSON:93862	PsExec file deployment evidence	ADMIN$\PSEXESVC.exe; source=10.0.1.4; LogonId=0x866b2c; Access includes WriteData/AppendData/WriteEA/WriteAttributes	Supports remote-service deployment.
+HOSTJSON:105507	Collection/staging	Rar.exe a -hp<REDACTED> C:\Users\pbeesly\Desktop\working.zip C:\Users\pbeesly\AppData\Roaming\working.zip	Archive password redacted; no exfiltration claim.
+HOSTJSON:185395	Registry-loaded execution	PowerShell Get-ItemPropertyValue 'HKLM:\SOFTWARE\Javasoft' 'value Supplement' | Invoke-Expression	Observed registry read/execution; registry modification not claimed.
+HOSTJSON:185832	Encoded hidden PowerShell	Encoded hidden PowerShell observed; payload body intentionally omitted from public processed evidence.	No raw/decoded payload redistribution.

@@ -1,0 +1,38 @@
+SCENARIO 21 — STAGE 2 FINAL ANALYST SUMMARY
+
+Primary lead:
+HOSTJSON:373 — unusual ProgramData .scr execution on SCRANTON.
+
+Affected scope:
+- SCRANTON.dmevals.local — affected/compromised
+- NASHUA.dmevals.local — affected/compromised
+- DMEVALS\pbeesly — affected/misused identity
+- NEWYORK / UTICA — observed only; compromise not established
+
+High-confidence incident lab observables:
+192.168.0.4 and 192.168.0.5 (RFC1918/environment-specific).
+
+Precision-review corrections:
+1. Export-PfxCertificate FAILED because the private key was non-exportable.
+2. Only HOSTJSON:53270 is incident-correlated LSASS access; wininit.exe/csrss.exe candidates were excluded.
+3. HOSTJSON:92335 requested ReadAttributes on Temp\python.exe and does NOT prove write/copy.
+4. HOSTJSON:93862 PSEXESVC.exe access DOES include WriteData/AppendData and supports remote-service deployment.
+5. Automated discovery candidates were Azure-agent ipconfig activity and were excluded.
+
+Final stage statuses:
+Initial Access: Not available / Unable to assess
+Execution: Observed
+Persistence: Correlated
+Privilege Escalation: Correlated
+Defense Evasion: Observed
+Credential Access: Correlated behavior; extraction outcome unknown
+Discovery: Not observed in the incident chain
+Lateral Movement: Correlated
+Collection: Observed
+Command and Control: Correlated within endpoint telemetry
+Exfiltration: Not observed / Unable to assess
+Impact: Not observed as ATT&CK/business-impact stage
+
+Critical network limitation:
+Source-associated Zeek records are temporally non-overlapping with the May 2 host incident.
+They must not be used as same-event corroboration.

@@ -1,0 +1,13 @@
+field\tvalue
+case_type\tSource-Derived Enterprise Adversary Emulation Investigation
+primary_dataset\tOTRF APT29 ATT&CK Evaluations Day 1
+upstream_commit\tb5989e17465753f46433e77f795f651453c01279
+day1_scope\tIN SCOPE
+day2_scope\tOUT OF PRIMARY SCOPE
+host_archive_bytes\t13944972
+host_extracted_json_bytes\t385334029
+host_json_working_path\tevidence/working/host/apt29_evals_day1_manual_2020-05-01225525.json
+raw_policy\tSource archives are local/read-only and Git-ignored
+working_policy\tExtracted/normalised working data are Git-ignored
+processed_policy\tSmall derived evidence and integrity records are publishable after validation
+ground_truth_policy\tEmulation plan is validation/reference only; it does not substitute for telemetry
