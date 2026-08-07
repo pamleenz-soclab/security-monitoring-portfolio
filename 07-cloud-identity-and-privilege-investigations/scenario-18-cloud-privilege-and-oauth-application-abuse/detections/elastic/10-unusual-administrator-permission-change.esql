@@ -1,0 +1,4 @@
+FROM logs-cloud_identity-*
+| WHERE event.dataset == "entra.audit" AND entra.activity.family == "application_privilege_change" AND @timestamp > NOW() - 30 days
+| STATS first_seen=MIN(@timestamp), last_seen=MAX(@timestamp), operations=VALUES(event.action), ips=VALUES(source.ip), changes=COUNT(*) BY user.id
+| WHERE last_seen > NOW() - 1 day

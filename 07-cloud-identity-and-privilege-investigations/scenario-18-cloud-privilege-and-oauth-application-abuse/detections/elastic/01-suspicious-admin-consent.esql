@@ -1,0 +1,4 @@
+FROM logs-cloud_identity-*
+| WHERE event.dataset == "entra.audit" AND event.action LIKE "*Consent to application*"
+| WHERE entra.consent.type == "AllPrincipals" AND (entra.permission.scope LIKE "*Mail.ReadWrite*" OR entra.permission.scope LIKE "*Files.Read*" OR entra.permission.scope LIKE "*Sites.Read*")
+| KEEP @timestamp, user.id, source.ip, entra.client.service_principal.id, entra.consent.type, entra.permission.scope, event.outcome

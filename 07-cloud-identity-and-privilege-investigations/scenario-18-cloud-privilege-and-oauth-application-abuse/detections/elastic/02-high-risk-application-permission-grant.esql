@@ -1,0 +1,4 @@
+FROM logs-cloud_identity-*
+| WHERE event.dataset == "entra.audit" AND event.action LIKE "*Add app role assignment*"
+| WHERE entra.app_role.value IN ("AppRoleAssignment.ReadWrite.All", "Application.ReadWrite.All", "Directory.ReadWrite.All", "Files.Read.All", "Sites.Read.All")
+| KEEP @timestamp, user.id, source.ip, entra.principal.id, entra.resource.id, entra.app_role.id, entra.app_role.value, event.outcome

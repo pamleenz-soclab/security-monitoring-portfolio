@@ -1,0 +1,2 @@
+app_id,application_object_id,baseline_status_at_incident,business_owner,expected_credential_types,expected_permissions,expected_resources,expected_source_countries,expected_source_ips,last_known_signin_utc,service_principal_object_id,technical_owner
+7e826e1b-2861-5d4f-866a-6366dd986a64,e59726d4-d5cb-5b2d-9884-cd8788d3a59a,Dormant for more than 30 days,Data Operations,Certificate,Storage.Read [SYNTHETIC],Azure Storage [SYNTHETIC REPRESENTATION],NZ,192.0.2.50,2026-04-30T02:00:00Z,13b2b610-6000-5b59-a4c3-66994834a818,application.owner@synthetic.example

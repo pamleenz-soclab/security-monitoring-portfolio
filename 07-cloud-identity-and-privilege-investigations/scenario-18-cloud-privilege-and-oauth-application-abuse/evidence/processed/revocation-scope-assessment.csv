@@ -1,0 +1,7 @@
+action,notes,scope,terminates_application_only_access
+Revoke user sessions,Does not remove service-principal credentials or app-role assignments,Compromised administrator user sessions,No
+Remove OAuth delegated grant,Separate from application permissions,Delegated access on behalf of users,No
+Remove app-role assignments,Already issued tokens may remain valid until expiry or resource enforcement,Application permissions,Prevents newly authorised API use after enforcement
+Remove client secret,Does not automatically revoke every previously issued access token,Future authentication using that secret,Not necessarily immediately
+Remove federated credential,Review tokens already issued,Future token exchange for that trust,Not necessarily immediately
+Disable service principal,Validate effect and downstream dependencies,Application identity,Strong containment control

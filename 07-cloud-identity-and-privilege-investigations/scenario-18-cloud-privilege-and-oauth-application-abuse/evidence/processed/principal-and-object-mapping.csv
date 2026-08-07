@@ -1,0 +1,14 @@
+record_type,object_type,display_name,stable_id,secondary_id,observed_ip,source
+Principal,User,Approved Change Administrator,056630ad-2787-5c9b-91ff-0d7dab821b3c,approved.admin@synthetic.example,192.0.2.20,directory_audit; user_signin
+Principal,User,Survey User,9c4d8718-39db-598e-930a-c2ba50f3cf1e,survey.user@synthetic.example,198.51.100.45,directory_audit
+Principal,User,Cloud Administrator Two,a076be48-5b17-5758-89ba-433d71a97fb5,cloud.admin2@synthetic.example,203.0.113.77,directory_audit; user_signin
+Principal,ServicePrincipal,Northstar Data Operations Connector [SYNTHETIC],13b2b610-6000-5b59-a4c3-66994834a818,7e826e1b-2861-5d4f-866a-6366dd986a64,192.0.2.50; 198.51.100.90; 203.0.113.77,directory_audit; service_principal_signin
+Principal,User,Incident Responder,6de69e55-9d6e-5613-9d8f-3f92961b0c56,incident.responder@synthetic.example,192.0.2.25,directory_audit
+Principal,ServicePrincipal,Approved CI Deployment [SYNTHETIC],ac93700d-cc7e-5965-bcbf-a3a7cbc66426,96223ca7-14d8-5475-ae9f-9725f7b4cab5,198.51.100.22,service_principal_signin
+CloudObject,Application,Northstar Data Operations Connector [SYNTHETIC],e59726d4-d5cb-5b2d-9884-cd8788d3a59a,7e826e1b-2861-5d4f-866a-6366dd986a64,,application snapshot
+CloudObject,ServicePrincipal,Northstar Data Operations Connector [SYNTHETIC],13b2b610-6000-5b59-a4c3-66994834a818,7e826e1b-2861-5d4f-866a-6366dd986a64,,service principal snapshot
+CloudObject,ServicePrincipal,Microsoft Graph resource representation [SYNTHETIC],fba658c4-6949-5c14-b34c-cdfc6f08a125,af818aaf-2f9d-52f5-b05f-ec530aa12dec,,service principal snapshot
+CloudObject,Application,Approved CI Deployment [SYNTHETIC],f3203d3f-a00b-56c2-ab39-31977358f351,96223ca7-14d8-5475-ae9f-9725f7b4cab5,,application snapshot
+CloudObject,ServicePrincipal,Approved CI Deployment [SYNTHETIC],ac93700d-cc7e-5965-bcbf-a3a7cbc66426,96223ca7-14d8-5475-ae9f-9725f7b4cab5,,service principal snapshot
+CloudObject,Application,Approved Survey Tool [SYNTHETIC],902e4b62-0868-54ee-9035-43c58e8d6e6b,6f7bfb17-d1ce-5596-8a70-e611a13496da,,application snapshot
+CloudObject,ServicePrincipal,Approved Survey Tool [SYNTHETIC],6bcbb44c-abb7-5c76-82bb-d1a3bd1fb226,6f7bfb17-d1ce-5596-8a70-e611a13496da,,service principal snapshot

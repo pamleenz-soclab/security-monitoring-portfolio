@@ -1,0 +1,2 @@
+index=cloud_identity sourcetype=entra:audit category=RoleManagement activity_display_name="*Add member to role*" target_type=ServicePrincipal
+| stats values(target_id) as target_ids values(target_name) as target_names values(role_name) as roles by _time initiated_by_user_id src_ip correlation_id result

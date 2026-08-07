@@ -1,0 +1,19 @@
+// Suspicious tenant-wide admin consent with high-impact delegated scopes.
+let HighRiskScopes = dynamic(["Mail.Read","Mail.ReadWrite","Mail.Send","Files.Read.All","Files.ReadWrite.All","Sites.Read.All","Sites.ReadWrite.All","Directory.ReadWrite.All","User.ReadWrite.All","Group.ReadWrite.All"]);
+AuditLogs
+| where TimeGenerated > ago(1d)
+| where coalesce(ActivityDisplayName, OperationName) has "Consent to application"
+| extend Initiator=parse_json(InitiatedBy), Targets=parse_json(TargetResources)
+| mv-expand Target=Targets
+| mv-expand Property=todynamic(Target.modifiedProperties)
+| extend PropertyName=tostring(Property.displayName), NewValue=tostring(Property.newValue)
+| summarize Scopes=make_set_if(NewValue, PropertyName has "Scope"),
+            ConsentTypes=make_set_if(NewValue, PropertyName has "ConsentType"),
+            TargetServicePrincipalIds=make_set(tostring(Target.id)),
+            InitiatingUserId=any(tostring(Initiator.user.id)),
+            InitiatingAppId=any(tostring(Initiator.app.appId)),
+            SourceIP=any(tostring(Initiator.user.ipAddress)),
+            CorrelationIds=make_set(CorrelationId)
+  by TimeGenerated, Activity=coalesce(ActivityDisplayName, OperationName), Result
+| extend ScopeText=tostring(Scopes), ConsentText=tostring(ConsentTypes)
+| where ConsentText has "AllPrincipals" and ScopeText has_any (HighRiskScopes)

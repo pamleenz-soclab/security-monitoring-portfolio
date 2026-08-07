@@ -1,0 +1,6 @@
+assignment_id,assignment_type,created_utc,pim_activated,principal_id,principal_type,resource_id,role_domain,role_or_permission,schedule_type
+6e51e6ac-0759-576d-b83c-f6f108260215,Active,2026-06-15T01:15:00Z,False,13b2b610-6000-5b59-a4c3-66994834a818,ServicePrincipal,fba658c4-6949-5c14-b34c-cdfc6f08a125,Application role / API permission,Application.ReadWrite.All,Permanent
+e369c4d6-d7b5-5e82-89dd-575205fbcd56,Active,2026-06-15T01:15:30Z,False,13b2b610-6000-5b59-a4c3-66994834a818,ServicePrincipal,fba658c4-6949-5c14-b34c-cdfc6f08a125,Application role / API permission,AppRoleAssignment.ReadWrite.All,Permanent
+bd54678e-5128-54e2-9619-1bcf69786832,Active,2026-06-15T01:16:00Z,False,13b2b610-6000-5b59-a4c3-66994834a818,ServicePrincipal,fba658c4-6949-5c14-b34c-cdfc6f08a125,Application role / API permission,Sites.Read.All,Permanent
+6eee1073-a8cd-5a45-b2d2-a3026c7b7c65,Active,2026-06-15T01:16:30Z,False,13b2b610-6000-5b59-a4c3-66994834a818,ServicePrincipal,fba658c4-6949-5c14-b34c-cdfc6f08a125,Application role / API permission,Files.Read.All,Permanent
+e3ebdb4a-7481-5509-a750-79051649838a,Active,2026-06-15T01:17:00Z,False,13b2b610-6000-5b59-a4c3-66994834a818,ServicePrincipal,d4fed30e-b0ae-5901-aeba-4f7d7f2917a5,Entra directory role,Cloud Application Administrator [SYNTHETIC ROLE],Permanent

@@ -1,0 +1,4 @@
+index=cloud_identity sourcetype=entra:service_principal_signin earliest=-90d result=success
+| eventstats max(eval(if(_time<relative_time(now(),"-1d"),_time,null()))) as historical_last by service_principal_id
+| where _time>=relative_time(now(),"-1d") AND (isnull(historical_last) OR historical_last<relative_time(now(),"-30d"))
+| stats min(_time) as recent_first values(src_ip) as src_ips values(resource_name) as resources values(client_credential_type) as credential_types by service_principal_id app_id service_principal_name historical_last

@@ -1,0 +1,73 @@
+version: 1
+status: portfolio-example
+schema_note: >-
+  Generic rules require mapping to local Microsoft, Splunk, Elastic, or normalised fields.
+rules:
+  - id: cloud-oauth-001
+    name: Suspicious tenant-wide admin consent
+    severity: high
+    required_telemetry: [directory_audit, oauth_permission_grant]
+    match:
+      operation: Consent to application
+      consent_type: AllPrincipals
+      scopes_any: [Mail.ReadWrite, Mail.Send, Files.Read.All, Files.ReadWrite.All, Sites.Read.All, Sites.ReadWrite.All, Directory.ReadWrite.All]
+    exclusions: [approved_application, approved_change_ticket, approved_administrator]
+  - id: cloud-app-002
+    name: High-risk application permission grant
+    severity: high
+    required_telemetry: [directory_audit, app_role_assignment]
+    match:
+      principal_type: ServicePrincipal
+      permissions_any: [RoleManagement.ReadWrite.Directory, AppRoleAssignment.ReadWrite.All, Application.ReadWrite.All, Directory.ReadWrite.All, Files.Read.All, Sites.Read.All]
+    exclusions: [approved_permission_baseline, approved_change_ticket]
+  - id: cloud-app-003
+    name: New credential on existing service principal
+    severity: medium
+    required_telemetry: [directory_audit, application_or_service_principal_snapshot]
+    match:
+      credential_types_any: [ClientSecret, Certificate]
+    risk_raisers: [dormant_application, no_change_ticket, unusual_initiator]
+  - id: cloud-app-004
+    name: Credential addition followed by service-principal sign-in
+    severity: critical
+    required_telemetry: [directory_audit, service_principal_signin]
+    correlate_by: [credential_key_id_or_federated_credential_id, service_principal_id]
+    window: 24h
+  - id: cloud-app-005
+    name: Application permission followed by sensitive API use
+    severity: critical
+    required_telemetry: [app_role_assignment, graph_or_resource_activity]
+    correlate_by: [service_principal_id, app_id]
+    sensitive_targets: [applications, servicePrincipals, roleManagement, users, groups, sites, drives, mail, keyVault, storage]
+  - id: cloud-role-006
+    name: Suspicious directory-role assignment
+    severity: high
+    required_telemetry: [directory_audit, role_assignment]
+    match:
+      assignment_states_any: [Active, Permanent, TimeBound]
+    exclusions: [approved_pim_request, approved_change_ticket]
+  - id: cloud-role-007
+    name: Service principal assigned privileged directory role
+    severity: critical
+    required_telemetry: [directory_audit, role_assignment]
+    match:
+      principal_type: ServicePrincipal
+  - id: cloud-fic-008
+    name: New federated identity credential
+    severity: high
+    required_telemetry: [directory_audit, application_snapshot]
+    fields: [application_object_id, federated_credential_id, issuer, subject, audiences]
+    exclusions: [approved_ci_cd_subject, approved_issuer, approved_change_ticket]
+  - id: cloud-app-009
+    name: Dormant application becomes active
+    severity: medium
+    required_telemetry: [service_principal_signin]
+    threshold:
+      prior_inactivity_days: 30
+      recent_activity_window: 1d
+    risk_raisers: [new_credential, new_resource, new_country, new_asn]
+  - id: cloud-admin-010
+    name: Unusual administrator permission change
+    severity: high
+    required_telemetry: [directory_audit, administrator_baseline]
+    compare: [operation_family, source_ip, country, time_window, target_application, permission_set]

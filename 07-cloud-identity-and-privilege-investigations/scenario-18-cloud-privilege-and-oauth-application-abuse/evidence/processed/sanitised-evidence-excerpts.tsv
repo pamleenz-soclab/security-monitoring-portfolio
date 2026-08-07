@@ -1,0 +1,11 @@
+excerpt_id	time_utc	source	actor_alias	target_alias	sanitised_excerpt	evidence_label
+E01	2026-06-15T01:14:00Z	DirectoryAudit	USER-SYN-CLOUD-ADMIN-02	SP-SYN-PRIMARY	Tenant-wide delegated grant: offline_access Mail.ReadWrite	Confirmed
+E02	2026-06-15T01:15:00Z–01:16:30Z	DirectoryAudit	USER-SYN-CLOUD-ADMIN-02	SP-SYN-PRIMARY	Application.ReadWrite.All; AppRoleAssignment.ReadWrite.All; Sites.Read.All; Files.Read.All assigned	Confirmed
+E03	2026-06-15T01:17:00Z	DirectoryAudit	USER-SYN-CLOUD-ADMIN-02	SP-SYN-PRIMARY	Active permanent Entra directory role assigned	Confirmed
+E04	2026-06-15T01:18:00Z	DirectoryAudit	USER-SYN-CLOUD-ADMIN-02	CRED-SYN-SECRET-01	Client-secret metadata added; material not recorded	Confirmed
+E05	2026-06-15T01:24:00Z	ServicePrincipalSignIn	SP-SYN-PRIMARY	CRED-SYN-SECRET-01	Exact credential key ID used in successful app-only sign-in	Confirmed
+E06	2026-06-15T01:26:00Z–01:36:00Z	MicrosoftGraphActivity	SP-SYN-PRIMARY	TOKEN-SYN-SECRET-01	Token linked to directory enumeration, site/drive enumeration, file download, and FIC creation	Confirmed
+E07	2026-06-15T01:33:00Z	MicrosoftGraphActivity	SP-SYN-PRIMARY	FILE-SYN-FORECAST-01	Download result: file_content_returned	Confirmed
+E08	2026-06-15T01:36:00Z	API + DirectoryAudit	SP-SYN-PRIMARY	CRED-SYN-FIC-01	Federated identity credential created with matching request/operation IDs	Confirmed
+E09	2026-06-15T02:05:00Z	ServicePrincipalSignIn	SP-SYN-PRIMARY	CRED-SYN-FIC-01	Exact federated credential ID used in successful sign-in	Confirmed
+E10	2026-06-15T03:05:00Z	BusinessContext	OWNER-SYN-APP-01	INC-SYN-2026-0615	Owner found no approved deployment, consent, role assignment, secret rotation, or FIC change	Confirmed

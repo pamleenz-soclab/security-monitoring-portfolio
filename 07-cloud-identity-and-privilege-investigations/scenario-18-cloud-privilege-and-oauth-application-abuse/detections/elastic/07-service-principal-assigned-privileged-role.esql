@@ -1,0 +1,4 @@
+FROM logs-cloud_identity-*
+| WHERE event.dataset == "entra.audit" AND entra.audit.category == "RoleManagement" AND entra.target.type == "ServicePrincipal"
+| WHERE event.action LIKE "*Add member to role*"
+| KEEP @timestamp, user.id, source.ip, entra.target.id, entra.role.id, entra.role.name, event.outcome

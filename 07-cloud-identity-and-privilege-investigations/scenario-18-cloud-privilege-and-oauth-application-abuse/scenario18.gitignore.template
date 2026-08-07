@@ -1,0 +1,10 @@
+# Scenario 18 local evidence
+evidence/raw/**
+!evidence/raw/.gitkeep
+evidence/working/**
+!evidence/working/.gitkeep
+
+# Local Python and macOS artefacts
+__pycache__/
+*.pyc
+.DS_Store

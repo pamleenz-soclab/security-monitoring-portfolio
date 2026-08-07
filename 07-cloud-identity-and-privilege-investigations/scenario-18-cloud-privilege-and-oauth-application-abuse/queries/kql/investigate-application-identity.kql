@@ -1,0 +1,30 @@
+// Set these to the incident's stable identifiers.
+let IncidentAppId = "<APP-ID>";
+let IncidentServicePrincipalId = "<SERVICE-PRINCIPAL-OBJECT-ID>";
+let StartTime = datetime(2026-06-15T00:00:00Z);
+let EndTime = datetime(2026-06-16T00:00:00Z);
+union isfuzzy=true
+(
+    AuditLogs
+    | where TimeGenerated between (StartTime .. EndTime)
+    | where tostring(TargetResources) has IncidentServicePrincipalId or tostring(InitiatedBy) has IncidentAppId
+    | project TimeGenerated, Source="AuditLogs", Operation=coalesce(ActivityDisplayName, OperationName),
+              InitiatedBy, TargetResources, Result, CorrelationId
+),
+(
+    AADServicePrincipalSignInLogs
+    | where TimeGenerated between (StartTime .. EndTime)
+    | where AppId == IncidentAppId or ServicePrincipalId == IncidentServicePrincipalId
+    | project TimeGenerated, Source="AADServicePrincipalSignInLogs", Operation="Service principal sign-in",
+              AppId, ServicePrincipalId, ServicePrincipalCredentialKeyId, FederatedCredentialId,
+              ClientCredentialType, IPAddress, AutonomousSystemNumber, ResourceDisplayName,
+              ResultType, CorrelationId, UniqueTokenIdentifier
+),
+(
+    MicrosoftGraphActivityLogs
+    | where TimeGenerated between (StartTime .. EndTime)
+    | where AppId == IncidentAppId or ServicePrincipalId == IncidentServicePrincipalId
+    | project TimeGenerated, Source="MicrosoftGraphActivityLogs", Operation=strcat(RequestMethod, " ", RequestUri),
+              AppId, ServicePrincipalId, RequestId, ResponseStatusCode, IPAddress
+)
+| order by TimeGenerated asc

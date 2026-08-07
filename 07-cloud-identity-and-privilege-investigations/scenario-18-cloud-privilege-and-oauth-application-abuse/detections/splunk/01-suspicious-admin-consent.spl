@@ -1,0 +1,4 @@
+index=cloud_identity sourcetype=entra:audit activity_display_name="*Consent to application*"
+| spath input=target_resources
+| search consent_type="AllPrincipals" (scope="*Mail.ReadWrite*" OR scope="*Files.Read*" OR scope="*Sites.Read*" OR scope="*Directory.ReadWrite.All*")
+| table _time initiated_by_user_id initiated_by_app_id src_ip client_service_principal_id consent_type scope result correlation_id

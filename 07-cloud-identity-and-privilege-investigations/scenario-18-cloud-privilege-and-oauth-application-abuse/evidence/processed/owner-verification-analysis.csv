@@ -1,0 +1,2 @@
+application_object_id,evidence_type,owner_id,statement,ticket_found,verified_utc
+e59726d4-d5cb-5b2d-9884-cd8788d3a59a,Business/governance context,8ceacc9f-bfcc-5b50-bb37-bc9a06146d3b,"No deployment, consent, role assignment, secret rotation, or federated credential change was approved for 2026-06-15.",False,2026-06-15T03:05:00Z

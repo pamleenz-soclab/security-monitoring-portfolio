@@ -1,0 +1,6 @@
+index=cloud_identity earliest=-7d
+(app_id="<APP-ID>" OR service_principal_id="<SERVICE-PRINCIPAL-OBJECT-ID>")
+| eval event_time=coalesce(_time, activityDateTime, createdDateTime)
+| eval stable_credential_id=coalesce(service_principal_credential_key_id, federated_credential_id)
+| table event_time sourcetype operation activity_display_name actor_id app_id service_principal_id stable_credential_id unique_token_identifier request_id operation_id correlation_id src_ip result target
+| sort 0 event_time

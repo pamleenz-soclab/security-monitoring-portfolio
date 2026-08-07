@@ -1,0 +1,10 @@
+let Lookback = 90d;
+AADServicePrincipalSignInLogs
+| where TimeGenerated > ago(Lookback)
+| summarize FirstSeen=min(TimeGenerated), LastSeen=max(TimeGenerated), SignIns=count(),
+            IPs=make_set(IPAddress, 20), Resources=make_set(ResourceDisplayName, 20),
+            CredentialTypes=make_set(ClientCredentialType, 10),
+            CredentialKeyIds=make_set(ServicePrincipalCredentialKeyId, 20),
+            FederatedCredentialIds=make_set(FederatedCredentialId, 20)
+  by AppId, ServicePrincipalId, ServicePrincipalName
+| order by LastSeen desc

@@ -1,0 +1,6 @@
+// Use an Elastic sequence/EQL rule in production; this ES|QL view surfaces the two event classes.
+FROM logs-cloud_identity-*
+| WHERE (event.dataset == "entra.audit" AND event.action LIKE "*Add app role assignment*") OR (event.dataset == "microsoft_graph.activity" AND http.response.status_code >= 200 AND http.response.status_code < 300)
+| WHERE entra.service_principal.id IS NOT NULL
+| KEEP @timestamp, event.dataset, event.action, entra.service_principal.id, entra.app.id, url.path, http.request.method, http.response.status_code, source.ip
+| SORT @timestamp ASC

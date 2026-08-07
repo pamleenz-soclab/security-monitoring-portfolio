@@ -1,0 +1,4 @@
+index=cloud_identity earliest=-1d (sourcetype=entra:audit activity_display_name="*Add app role assignment*" OR sourcetype=graph:activity)
+| transaction service_principal_id maxspan=24h startswith=(sourcetype="entra:audit") endswith=(sourcetype="graph:activity")
+| search request_uri IN ("*/applications*","*/servicePrincipals*","*/roleManagement*","*/sites*","*/drives*","*/users*","*/groups*") response_status_code>=200 response_status_code<300
+| table _time service_principal_id app_id app_role_value request_method request_uri request_id src_ip response_status_code

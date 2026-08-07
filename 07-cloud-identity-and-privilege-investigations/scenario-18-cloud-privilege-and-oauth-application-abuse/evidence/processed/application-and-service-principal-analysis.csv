@@ -1,0 +1,5 @@
+account_enabled,app_id,application_created_utc,application_object_id,display_name,owner_count,publisher_domain,service_principal_created_utc,service_principal_object_id,service_principal_type,verified_publisher
+True,7e826e1b-2861-5d4f-866a-6366dd986a64,2025-11-10T03:00:00Z,e59726d4-d5cb-5b2d-9884-cd8788d3a59a,Northstar Data Operations Connector [SYNTHETIC],1,synthetic.example,2025-11-10T03:02:00Z,13b2b610-6000-5b59-a4c3-66994834a818,Application,
+True,af818aaf-2f9d-52f5-b05f-ec530aa12dec,,,Microsoft Graph resource representation [SYNTHETIC],0,,2025-01-01T00:00:00Z,fba658c4-6949-5c14-b34c-cdfc6f08a125,Application,
+True,96223ca7-14d8-5475-ae9f-9725f7b4cab5,2025-08-20T04:00:00Z,f3203d3f-a00b-56c2-ab39-31977358f351,Approved CI Deployment [SYNTHETIC],1,synthetic.example,2025-08-20T04:02:00Z,ac93700d-cc7e-5965-bcbf-a3a7cbc66426,Application,Synthetic Engineering
+True,6f7bfb17-d1ce-5596-8a70-e611a13496da,2026-01-12T00:00:00Z,902e4b62-0868-54ee-9035-43c58e8d6e6b,Approved Survey Tool [SYNTHETIC],0,synthetic.example,2026-01-12T00:02:00Z,6bcbb44c-abb7-5c76-82bb-d1a3bd1fb226,Application,Synthetic SaaS Publisher

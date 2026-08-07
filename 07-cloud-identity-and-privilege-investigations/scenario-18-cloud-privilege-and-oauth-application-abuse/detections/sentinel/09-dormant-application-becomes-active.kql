@@ -1,0 +1,16 @@
+let BaselineWindow = 90d;
+let RecentWindow = 1d;
+let Historical = AADServicePrincipalSignInLogs
+| where TimeGenerated between (ago(BaselineWindow) .. ago(RecentWindow))
+| where ResultType == "0" or ResultType == 0
+| summarize HistoricalLastSignIn=max(TimeGenerated), HistoricalSignIns=count() by ServicePrincipalId, AppId, ServicePrincipalName;
+AADServicePrincipalSignInLogs
+| where TimeGenerated > ago(RecentWindow)
+| where ResultType == "0" or ResultType == 0
+| summarize RecentFirstSignIn=min(TimeGenerated), RecentSignIns=count(), RecentIPs=make_set(IPAddress, 20),
+            CredentialTypes=make_set(ClientCredentialType, 10), Resources=make_set(ResourceDisplayName, 20)
+  by ServicePrincipalId, AppId, ServicePrincipalName
+| join kind=leftouter Historical on ServicePrincipalId, AppId
+| where isempty(HistoricalLastSignIn) or HistoricalLastSignIn < ago(30d)
+| project RecentFirstSignIn, HistoricalLastSignIn, ServicePrincipalId, AppId, ServicePrincipalName,
+          RecentSignIns, RecentIPs, CredentialTypes, Resources

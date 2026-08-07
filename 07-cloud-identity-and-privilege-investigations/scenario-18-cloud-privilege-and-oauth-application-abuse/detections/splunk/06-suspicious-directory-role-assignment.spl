@@ -1,0 +1,2 @@
+index=cloud_identity sourcetype=entra:audit category=RoleManagement activity_display_name IN ("*Add member to role*","*Add eligible member to role*")
+| table _time initiated_by_user_id initiated_by_app_id src_ip target_id target_type target_name assignment_type schedule_type pim_activated result correlation_id

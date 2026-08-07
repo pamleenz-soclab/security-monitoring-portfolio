@@ -1,0 +1,11 @@
+AuditLogs
+| where TimeGenerated > ago(1d)
+| where Category =~ "RoleManagement"
+| where coalesce(ActivityDisplayName, OperationName) has "Add member to role"
+| extend Targets=parse_json(TargetResources), Initiator=parse_json(InitiatedBy)
+| mv-expand Target=Targets
+| summarize TargetTypes=make_set(tostring(Target.type)), TargetIds=make_set(tostring(Target.id)),
+            TargetNames=make_set(tostring(Target.displayName)),
+            InitiatorUserId=any(tostring(Initiator.user.id)), InitiatorIP=any(tostring(Initiator.user.ipAddress))
+  by TimeGenerated, Activity=coalesce(ActivityDisplayName, OperationName), Result, CorrelationId
+| where TargetTypes has "ServicePrincipal" and TargetTypes has "Role"

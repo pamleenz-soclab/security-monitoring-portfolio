@@ -1,0 +1,13 @@
+let HighRiskPermissions = dynamic(["RoleManagement.ReadWrite.Directory","AppRoleAssignment.ReadWrite.All","Application.ReadWrite.All","Directory.ReadWrite.All","User.ReadWrite.All","Group.ReadWrite.All","Files.ReadWrite.All","Sites.ReadWrite.All","Files.Read.All","Sites.Read.All","Mail.ReadWrite","Mail.Send"]);
+AuditLogs
+| where TimeGenerated > ago(1d)
+| where coalesce(ActivityDisplayName, OperationName) has "Add app role assignment"
+| extend Targets=parse_json(TargetResources), Initiator=parse_json(InitiatedBy)
+| mv-expand Target=Targets
+| mv-expand Property=todynamic(Target.modifiedProperties)
+| extend PropertyName=tostring(Property.displayName), NewValue=tostring(Property.newValue)
+| where PropertyName has "AppRole" and NewValue has_any (HighRiskPermissions)
+| project TimeGenerated, Activity=coalesce(ActivityDisplayName, OperationName),
+          InitiatorUserId=tostring(Initiator.user.id), InitiatorAppId=tostring(Initiator.app.appId),
+          TargetId=tostring(Target.id), TargetType=tostring(Target.type), Permission=NewValue,
+          Result, CorrelationId

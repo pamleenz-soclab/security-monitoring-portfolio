@@ -1,0 +1,7 @@
+area,impact,status
+Permission claim,A specific app-role permission used for each API call cannot be directly proven from these API records,Not available
+Delegated grant use,No delegated user token or mailbox activity is present,Not observed
+Secret material,Audit metadata does not prove who saw the secret value,Not available by design
+Attacker control,Telemetry supports possible compromise; isolated ground truth is required for simulation validation,Inferred
+Cross-product correlationId,"Correlation IDs are not assumed to have the same scope across audit, sign-in, and API products",Detection gap / semantic limitation
+Production licensing and retention,"Real investigations may lack service-principal sign-ins or Graph activity due to licensing, export, or retention",Not available in synthetic package

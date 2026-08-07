@@ -1,0 +1,8 @@
+client_service_principal_id,consent_type,permission,permission_type,principal_id,resource_service_principal_id,source_id,source_type
+13b2b610-6000-5b59-a4c3-66994834a818,AllPrincipals,offline_access,Delegated,,fba658c4-6949-5c14-b34c-cdfc6f08a125,6ced34fe-7250-5e02-ab29-6b836a3a352e,OAuth2PermissionGrant
+13b2b610-6000-5b59-a4c3-66994834a818,AllPrincipals,Mail.ReadWrite,Delegated,,fba658c4-6949-5c14-b34c-cdfc6f08a125,6ced34fe-7250-5e02-ab29-6b836a3a352e,OAuth2PermissionGrant
+6bcbb44c-abb7-5c76-82bb-d1a3bd1fb226,Principal,User.Read,Delegated,9c4d8718-39db-598e-930a-c2ba50f3cf1e,fba658c4-6949-5c14-b34c-cdfc6f08a125,6a469d6f-be3d-5193-89bc-30d4b1560d89,OAuth2PermissionGrant
+13b2b610-6000-5b59-a4c3-66994834a818,Administrator assignment,Application.ReadWrite.All,Application,13b2b610-6000-5b59-a4c3-66994834a818,fba658c4-6949-5c14-b34c-cdfc6f08a125,6e51e6ac-0759-576d-b83c-f6f108260215,AppRoleAssignment
+13b2b610-6000-5b59-a4c3-66994834a818,Administrator assignment,AppRoleAssignment.ReadWrite.All,Application,13b2b610-6000-5b59-a4c3-66994834a818,fba658c4-6949-5c14-b34c-cdfc6f08a125,e369c4d6-d7b5-5e82-89dd-575205fbcd56,AppRoleAssignment
+13b2b610-6000-5b59-a4c3-66994834a818,Administrator assignment,Sites.Read.All,Application,13b2b610-6000-5b59-a4c3-66994834a818,fba658c4-6949-5c14-b34c-cdfc6f08a125,bd54678e-5128-54e2-9619-1bcf69786832,AppRoleAssignment
+13b2b610-6000-5b59-a4c3-66994834a818,Administrator assignment,Files.Read.All,Application,13b2b610-6000-5b59-a4c3-66994834a818,fba658c4-6949-5c14-b34c-cdfc6f08a125,6eee1073-a8cd-5a45-b2d2-a3026c7b7c65,AppRoleAssignment

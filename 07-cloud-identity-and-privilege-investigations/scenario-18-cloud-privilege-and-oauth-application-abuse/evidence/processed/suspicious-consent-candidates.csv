@@ -1,0 +1,3 @@
+candidate_status,client_service_principal_id,consent_interpretation,consent_type,created_utc,grant_id,permission_type,principal_id,reasons,resource_service_principal_id,risk_score,scope
+Review,13b2b610-6000-5b59-a4c3-66994834a818,Tenant-wide admin consent,AllPrincipals,2026-06-15T01:14:00Z,6ced34fe-7250-5e02-ab29-6b836a3a352e,Delegated,,tenant-wide delegated grant; mail read/write scope; offline_access present,fba658c4-6949-5c14-b34c-cdfc6f08a125,9,offline_access Mail.ReadWrite
+Baseline/low risk,6bcbb44c-abb7-5c76-82bb-d1a3bd1fb226,User-specific consent,Principal,2026-06-14T03:20:00Z,6a469d6f-be3d-5193-89bc-30d4b1560d89,Delegated,9c4d8718-39db-598e-930a-c2ba50f3cf1e,,fba658c4-6949-5c14-b34c-cdfc6f08a125,0,User.Read

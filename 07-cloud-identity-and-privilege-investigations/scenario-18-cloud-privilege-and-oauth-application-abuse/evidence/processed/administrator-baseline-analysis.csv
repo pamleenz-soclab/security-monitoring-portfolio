@@ -1,0 +1,2 @@
+administrator_id,expected_source_countries,expected_source_ips,normal_operations,normal_working_hours,not_normally_performed,upn
+a076be48-5b17-5758-89ba-433d71a97fb5,NZ,192.0.2.30,User and group administration,08:00-18:00 Pacific/Auckland,Application consent; Service principal credential changes; Directory role assignment to applications,cloud.admin2@synthetic.example

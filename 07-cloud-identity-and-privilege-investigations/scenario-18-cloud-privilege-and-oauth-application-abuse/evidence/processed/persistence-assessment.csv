@@ -1,0 +1,4 @@
+evidence,evidence_label,mechanism,object_id,removal_required
+Credential metadata plus matching service-principal sign-in key ID,Confirmed,Client secret,39acbc69-455e-5b9d-adb1-dcd57a386a7b,Remove credential and disable/contain service principal
+Audit addition plus matching FederatedCredentialId in later sign-in,Confirmed,Federated identity credential,20cc77c2-49cf-537d-9db9-b7d166018d7f,Remove federated credential and review issuer/subject trust
+App-role assignments exist and application-only API activity followed; individual permission claim is not logged,Inferred,Application permissions,13b2b610-6000-5b59-a4c3-66994834a818,Remove app-role assignments

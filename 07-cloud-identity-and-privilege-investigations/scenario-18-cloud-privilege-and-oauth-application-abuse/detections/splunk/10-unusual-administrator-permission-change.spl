@@ -1,0 +1,5 @@
+index=cloud_identity sourcetype=entra:audit earliest=-30d activity_family=application_privilege_change
+| eventstats values(eval(if(_time<relative_time(now(),"-1d"),activity_display_name,null()))) as baseline_operations,
+             values(eval(if(_time<relative_time(now(),"-1d"),src_ip,null()))) as baseline_ips by initiated_by_user_id
+| where _time>=relative_time(now(),"-1d") AND (mvfind(baseline_operations,activity_display_name)<0 OR mvfind(baseline_ips,src_ip)<0)
+| table _time initiated_by_user_id src_ip activity_display_name target_id target_type result correlation_id

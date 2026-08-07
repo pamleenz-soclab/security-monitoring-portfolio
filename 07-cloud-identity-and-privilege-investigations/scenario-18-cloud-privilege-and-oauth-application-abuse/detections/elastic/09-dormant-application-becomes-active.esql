@@ -1,0 +1,4 @@
+FROM logs-cloud_identity-*
+| WHERE event.dataset == "entra.service_principal_signin" AND event.outcome == "success" AND @timestamp > NOW() - 90 days
+| STATS first_seen=MIN(@timestamp), last_seen=MAX(@timestamp), signins=COUNT(*), ips=VALUES(source.ip), resources=VALUES(entra.resource.name) BY entra.service_principal.id, entra.app.id, entra.service_principal.name
+| WHERE first_seen < NOW() - 30 days AND last_seen > NOW() - 1 day

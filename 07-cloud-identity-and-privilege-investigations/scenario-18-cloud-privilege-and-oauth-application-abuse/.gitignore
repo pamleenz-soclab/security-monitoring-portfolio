@@ -1,0 +1,10 @@
+# Local raw and working evidence
+/evidence/raw/**
+!/evidence/raw/.gitkeep
+/evidence/working/**
+!/evidence/working/.gitkeep
+
+# Local runtime artefacts
+__pycache__/
+*.pyc
+.DS_Store

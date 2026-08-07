@@ -1,0 +1,16 @@
+let ChangeOperations = dynamic(["Consent to application","Add app role assignment to service principal","Add service principal credentials","Add federated identity credential","Add member to role"]);
+let BaselineStart = ago(30d);
+let RecentStart = ago(1d);
+let Baseline = AuditLogs
+| where TimeGenerated between (BaselineStart .. RecentStart)
+| where coalesce(ActivityDisplayName, OperationName) has_any (ChangeOperations)
+| extend Initiator=parse_json(InitiatedBy), UserId=tostring(Initiator.user.id), IP=tostring(Initiator.user.ipAddress)
+| summarize BaselineOperations=make_set(coalesce(ActivityDisplayName, OperationName), 50), BaselineIPs=make_set(IP, 50) by UserId;
+AuditLogs
+| where TimeGenerated > RecentStart
+| where coalesce(ActivityDisplayName, OperationName) has_any (ChangeOperations)
+| extend Initiator=parse_json(InitiatedBy), UserId=tostring(Initiator.user.id), IP=tostring(Initiator.user.ipAddress)
+| join kind=leftouter Baseline on UserId
+| extend NewOperation=not(BaselineOperations has coalesce(ActivityDisplayName, OperationName)), NewIP=not(BaselineIPs has IP)
+| where NewOperation or NewIP or isempty(BaselineOperations)
+| project TimeGenerated, UserId, IP, Activity=coalesce(ActivityDisplayName, OperationName), NewOperation, NewIP, Result, CorrelationId

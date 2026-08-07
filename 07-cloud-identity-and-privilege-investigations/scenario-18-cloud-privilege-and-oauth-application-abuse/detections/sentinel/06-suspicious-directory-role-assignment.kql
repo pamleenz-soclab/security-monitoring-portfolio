@@ -1,0 +1,10 @@
+AuditLogs
+| where TimeGenerated > ago(1d)
+| where Category =~ "RoleManagement"
+| where coalesce(ActivityDisplayName, OperationName) has_any ("Add member to role", "Add eligible member to role")
+| extend Initiator=parse_json(InitiatedBy), Targets=parse_json(TargetResources)
+| mv-expand Target=Targets
+| project TimeGenerated, Activity=coalesce(ActivityDisplayName, OperationName),
+          InitiatorUserId=tostring(Initiator.user.id), InitiatorAppId=tostring(Initiator.app.appId),
+          InitiatorIP=tostring(Initiator.user.ipAddress), TargetId=tostring(Target.id),
+          TargetType=tostring(Target.type), TargetName=tostring(Target.displayName), Result, CorrelationId
