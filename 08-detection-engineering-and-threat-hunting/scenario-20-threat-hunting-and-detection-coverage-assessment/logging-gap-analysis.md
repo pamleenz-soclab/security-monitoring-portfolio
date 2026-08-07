@@ -1,0 +1,18 @@
+# Logging Gap Analysis
+
+A logging or visibility gap exists when the behaviour cannot be fully tested because a required telemetry source, field, or stable correlation identifier is absent or incomplete.
+
+| gap_id | hunt_id | required_telemetry | current_status | gap_classification | source_label_if_different | evidence_reference | investigative_impact | recommended_logging_or_visibility_improvement | priority |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| LG-01 | HC-03 | HTTP bodies/PCAP/proxy/server logs | Not available | Logging gap | Source: Not available | scenario10:scope-and-gaps.csv | Cannot independently validate HTTP content/outcome. | Collect proxy/server logs or retained PCAP. | Medium |
+| LG-02 | HC-08 | Application request/exception log | Not available | Logging gap | Source: Not available | scenario15:application-and-database-evidence.csv row 2 | Cannot confirm application handling, authentication bypass or SQL exception | Collect independent application/database/access/endpoint telemetry with request IDs. | High |
+| LG-03 | HC-08 | Database/backend audit | Not available | Logging gap | Source: Not available | scenario15:application-and-database-evidence.csv row 3 | Cannot confirm SQL execution, data access, modification or extraction | Collect independent application/database/access/endpoint telemetry with request IDs. | High |
+| LG-04 | HC-08 | Independent web access log | Not available | Logging gap | Source: Not available | scenario15:application-and-database-evidence.csv row 5 | Cannot independently attribute 403/404/503 to WAF, proxy or application | Collect independent application/database/access/endpoint telemetry with request IDs. | High |
+| LG-05 | HC-09 | Stable endpoint process-to-flow/socket identifier | Partial | Visibility gap | Detection gap | scenario16:detection-gap-analysis.csv row 2 | Exact /usr/bin/put PID to individual DNS packet remains inferred | Collect eBPF/EDR socket telemetry or auditd EXECVE plus connect/send events | High |
+| LG-06 | HC-09 | Zeek/session UID | Not available | Logging gap | Not available | scenario16:detection-gap-analysis.csv row 4 | No Zeek-native session pivot | Generate Zeek conn/dns logs from retained PCAP for production validation | Medium |
+| LG-07 | HC-10 | Specific app-role/permission claim per API request | Not available | Logging gap | Not available | scenario18:detection-gap-analysis.csv row 2 | A specific app-role permission used for each API call cannot be directly proven from these API records | Collect claim-aware API audit where feasible; otherwise retain attribution as inference. | High |
+| LG-08 | HC-12 | Cross-host EDR/network follow-on | Not available | Logging gap | Not available | scenario11:field-coverage.csv row 13 | Selected Sysmon coverage is limited to the primary host | Retain/search endpoint and network telemetry across peer hosts after privileged changes. | High |
+
+## Key lesson
+
+A missing join key can be as important as a missing log source. HC-09 demonstrates this: DNS and endpoint evidence are present, but exact process-to-flow attribution remains limited because a stable endpoint process/socket-to-network identifier is not available.

@@ -1,0 +1,5 @@
+limitation_id,scope,category,status,statement,impact,handling
+CL-01,Scenario20,Execution engine,Known limitation,Local Python evaluator is not a native Sentinel/Splunk/Elastic/Sigma engine.,Native parsing/scheduling/suppression semantics are not exercised.,Treat outputs as transparent local evidence analysis.
+CL-02,Scenario20,Deployment,Not available,Repository rule/query presence does not prove live SOC deployment.,"Detection status describes portfolio logic coverage, not verified production deployment.",Keep deployment_status separate.
+CL-03,Scenario20,Coverage metric,By design,No ATT&CK-count coverage percentage is calculated.,Technique counts can overstate coverage.,Assess each behaviour/step using telemetry+detection+validation.
+CL-04,Scenario20,Negative hunts,By design,No hunt result is not evidence the behaviour did not occur.,Absence claims would exceed the evidence.,Preserve reviewed data/time/scope boundary.

@@ -1,0 +1,10 @@
+hunt_id,pivot_type,pivot_value,source_files,linked_record_count,linked_behaviours,assessment
+HC-01,user,USER-001,mfa-fatigue-assessment.csv;follow-on-activity-analysis.csv,6,MFA sequence;follow-on activity,Primary identity pivot
+HC-01,session_id,SESSION-001,mfa-fatigue-assessment.csv;follow-on-activity-analysis.csv,5,success;follow-on,Preferred session pivot
+HC-03,process_guid,{860ba2e3-9f13-5f52-2703-000000000400},process-chain.csv;file-activity.csv;network-activity.csv,10,PowerShell;child;file;network,Stable endpoint pivot
+HC-05,account,pgustavo,authentication-remote-service-evidence.csv;remote-process-chain.csv,6,authentication;remote process,Identity correlation
+HC-07,source_ip+host,100.77.175.132->df7754e.hu,web-request-timeline.csv,3465,SQLi-family requests;time distribution,Campaign pivot
+HC-10,app_id,7e826e1b-2861-5d4f-866a-6366dd986a64,credential-change-analysis.csv;service-principal-signin-analysis.csv;api-and-resource-activity-analysis.csv,14,credential;SP sign-in;API activity,Stable cloud object pivot
+HC-10,app_id,96223ca7-14d8-5475-ae9f-9725f7b4cab5,credential-change-analysis.csv;service-principal-signin-analysis.csv;api-and-resource-activity-analysis.csv,2,credential;SP sign-in;API activity,Stable cloud object pivot
+HC-12,target_account,ATTACKRANGE\T1136.001_Admin,privilege-change-timeline.csv;field-coverage.csv,6,membership change;post-change checks,Primary target pivot
+HC-12,group,BUILTIN\Administrators,privilege-change-timeline.csv,4,privileged membership,Privilege scope

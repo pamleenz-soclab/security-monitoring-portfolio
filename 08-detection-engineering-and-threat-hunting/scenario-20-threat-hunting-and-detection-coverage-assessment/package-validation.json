@@ -1,0 +1,14 @@
+{
+  "missing_docs": [],
+  "missing_evidence": [],
+  "consistency_issues": [],
+  "final_file_count_excluding_manifest": 41,
+  "final_detection_gap_count": 1,
+  "logging_visibility_gap_count": 8,
+  "hunt_outcomes": {
+    "Supported": 5,
+    "Negative hunt result": 2,
+    "Unable to assess": 1
+  },
+  "line_ending_normalisation": "UTF-8 / LF"
+}
