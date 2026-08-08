@@ -29,4 +29,10 @@ Assessment:
 True Positive — Authorized Lab Simulation
 
 Note:
-Wazuh displayed 6 alert records because the same 3 SSH invalid-user events were collected from both /var/log/auth.log and journald.
+Wazuh displayed 6 alert records associated with the test activity.
+Location analysis showed 3 records from /var/log/auth.log and 3 records from journald.
+
+Together with the endpoint count of 3 core SSH invalid-user events, this strongly indicates duplicate ingestion across the two Linux log sources.
+
+Evidence limitation:
+This retained sanitized summary does not preserve sufficient per-record fields, such as the original SSH process ID and source port, to reconstruct a definitive one-to-one pairing of the six Wazuh records.

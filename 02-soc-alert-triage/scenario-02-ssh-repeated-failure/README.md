@@ -72,14 +72,16 @@ The target server rejected the attempts because the test username did not exist.
 
 The Ubuntu Target recorded 3 core SSH invalid-user events in `/var/log/auth.log`.
 
-However, Wazuh displayed 6 alert records for the same activity. Further review showed that the same SSH events were collected from two locations:
+Wazuh displayed 6 alert records associated with the same test activity. Review of the Wazuh record locations showed:
 
-- `/var/log/auth.log`
-- `journald`
+- 3 records from `/var/log/auth.log`
+- 3 records from `journald`
 
-This means each of the 3 endpoint events appeared twice in Wazuh.
+Together with the endpoint count of 3 core SSH invalid-user events, this strongly indicates duplicate ingestion of the authentication activity across the two Linux log sources.
 
-This is an important detection engineering finding because duplicate ingestion can inflate alert counts and create unnecessary SOC noise. Future tuning should review whether both log sources are required for SSH authentication monitoring.
+The retained sanitized evidence does not preserve sufficient per-record fields, such as the original SSH process ID and source port, to reconstruct a one-to-one pairing of all six Wazuh records.
+
+This is an important detection engineering finding because overlapping log collection can inflate SIEM alert counts and create unnecessary SOC noise. Future tuning should review whether both log sources are required for SSH authentication monitoring..
 
 ## Assessment
 

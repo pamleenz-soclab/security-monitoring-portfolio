@@ -169,12 +169,14 @@ The test username `m2test0507` was authorized lab activity, but in production si
 
 ### 5.1 Address Duplicate Log Ingestion
 
-In this scenario, Wazuh displayed 6 alert records even though the endpoint recorded 3 core SSH invalid-user events.
+In this scenario, Wazuh displayed 6 alert records while the endpoint recorded 3 core SSH invalid-user events.
 
-The reason was duplicate ingestion from two Linux log sources:
+The Wazuh records were distributed as:
 
-- `/var/log/auth.log`
-- `journald`
+- 3 from `/var/log/auth.log`
+- 3 from `journald`
+
+This strongly indicates overlapping collection and duplicate ingestion across the two Linux log sources. The retained sanitized evidence does not preserve sufficient per-record fields to reconstruct definitive one-to-one duplicate pairs.
 
 Recommended tuning options:
 

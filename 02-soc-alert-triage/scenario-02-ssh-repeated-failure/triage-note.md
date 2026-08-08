@@ -44,12 +44,14 @@ Three controlled SSH invalid-user authentication attempts were generated against
 
 The Ubuntu endpoint recorded 3 core `Invalid user m2test0507` events in `/var/log/auth.log`.
 
-Wazuh displayed 6 alert records for the same activity because the events were collected from two locations:
+Wazuh displayed 6 alert records associated with the same test activity.
 
-- `/var/log/auth.log`
-- `journald`
+The records were distributed across two locations:
 
-This duplicate ingestion caused each endpoint event to appear twice in Wazuh.
+- 3 from `/var/log/auth.log`
+- 3 from `journald`
+
+Together with the endpoint count of 3 core invalid-user events, this strongly indicates duplicate ingestion across the two collection paths. The retained sanitized evidence does not preserve sufficient per-record fields for definitive one-to-one pairing.
 
 ## Key Observed Fields
 
@@ -76,7 +78,7 @@ This duplicate ingestion caused each endpoint event to appear twice in Wazuh.
 | May 7, 2026 03:49 UTC | Additional invalid-user SSH attempts observed |
 | May 7, 2026 03:53 UTC | Endpoint evidence files saved |
 | May 7, 2026 04:04 UTC | Wazuh alert evidence files saved |
-| May 7, 2026 04:18 UTC | Wazuh location count confirmed duplicate ingestion |
+| May 7, 2026 04:18 UTC | Wazuh location count showed 3 `/var/log/auth.log` records and 3 `journald` records, supporting the duplicate-ingestion assessment |
 | May 7, 2026 15:46–15:49 NZT | Wazuh Dashboard displayed 6 hits for `m2test0507` |
 
 ## MITRE ATT&CK Mapping
@@ -130,7 +132,7 @@ Potential production impact would include:
 
 ## Detection Improvement
 
-The Wazuh alert count was higher than the raw endpoint event count because the same SSH events were collected from both `/var/log/auth.log` and `journald`.
+The Wazuh alert count was higher than the raw endpoint event count, with 3 Wazuh records attributed to `/var/log/auth.log` and 3 to `journald`. This strongly indicates overlapping collection and duplicate ingestion across the two log sources.
 
 Detection tuning should review whether both sources are required. If both are retained, dashboards and reports should account for duplicate ingestion to avoid inflated alert counts.
 

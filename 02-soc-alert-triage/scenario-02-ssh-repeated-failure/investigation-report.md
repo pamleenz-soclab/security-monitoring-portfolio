@@ -6,10 +6,10 @@ This report documents a controlled SSH (Secure Shell) invalid-user authenticatio
 
 Three controlled SSH invalid-user authentication attempts were generated against the monitored Ubuntu endpoint `soc-lab-ubuntu-target-01` using the test username `m2test0507`.
 
-The Ubuntu endpoint recorded 3 core `Invalid user m2test0507` events in `/var/log/auth.log`. Wazuh displayed 6 alert records for the same activity because the same SSH authentication events were ingested from two Linux log sources:
+- 3 from `/var/log/auth.log`
+- 3 from `journald`
 
-- `/var/log/auth.log`
-- `journald`
+This pattern strongly indicates duplicate ingestion across the two log sources. However, the retained sanitized evidence does not preserve sufficient per-record fields to reconstruct a one-to-one pairing of all six Wazuh records.
 
 The alert was assessed as:
 
@@ -144,7 +144,9 @@ evidence/wazuh-alerts-m2test0507-sanitized.txt
 
 Wazuh displayed 6 alert records for `m2test0507`.
 
-This did not mean 6 separate SSH attempts occurred. Further investigation showed that each of the 3 endpoint events appeared twice in Wazuh because the same events were collected from both `/var/log/auth.log` and `journald`.
+The endpoint independently recorded 3 core `Invalid user` events. Therefore, the 6 Wazuh records should not be interpreted automatically as 6 distinct SSH authentication attempts.
+
+Review of the Wazuh record locations showed 3 records from `/var/log/auth.log` and 3 from `journald`. This strongly supports duplicate ingestion across the two collection paths.
 
 ---
 
@@ -163,7 +165,7 @@ Observed location count:
 3 "location":"journald"
 ```
 
-This confirms duplicate ingestion across two Linux log sources.
+This location distribution, together with the endpoint count of 3 core SSH invalid-user events, strongly supports duplicate ingestion across the two Linux log sources.
 
 ---
 
@@ -186,7 +188,7 @@ This confirms duplicate ingestion across two Linux log sources.
 | May 7, 2026 03:49 UTC | Additional SSH invalid-user authentication attempts observed |
 | May 7, 2026 03:53 UTC | Endpoint evidence files saved |
 | May 7, 2026 04:04 UTC | Wazuh alert evidence files saved |
-| May 7, 2026 04:18 UTC | Wazuh location count confirmed duplicate ingestion |
+| May 7, 2026 04:18 UTC | Wazuh location count showed 3 `/var/log/auth.log` records and 3 `journald` records, supporting the duplicate-ingestion assessment |
 | May 7, 2026 15:46–15:49 NZT | Wazuh Dashboard displayed 6 hits for `m2test0507` |
 
 Timezone note:
@@ -223,12 +225,16 @@ This confirms that the Wazuh Agent collected the relevant authentication events 
 
 The endpoint recorded 3 core events, while Wazuh displayed 6 alert records.
 
-The reason was duplicate ingestion from two Linux log sources:
+The Wazuh records were distributed as:
 
-- `/var/log/auth.log`
-- `journald`
+- 3 from `/var/log/auth.log`
+- 3 from `journald`
 
-This is a detection engineering issue because duplicate ingestion can inflate alert counts and increase SOC (Security Operations Center) noise.
+This pattern strongly indicates overlapping collection and duplicate ingestion across the two Linux log sources.
+
+Because the retained sanitized evidence does not preserve sufficient per-record correlation fields, the six Wazuh records cannot now be reconstructed as three definitive one-to-one duplicate pairs.
+
+From a detection engineering perspective, this remains important because overlapping ingestion can inflate alert counts and increase SOC (Security Operations Center) noise.
 
 ---
 
@@ -311,21 +317,19 @@ For a production environment, recommended actions would include:
 
 The most important detection engineering observation in this scenario is duplicate ingestion.
 
-The same SSH authentication events were ingested from both:
+The investigation identified evidence consistent with the same SSH authentication activity being collected through both:
 
-```text
 /var/log/auth.log
 journald
-```
 
-This resulted in:
+The observed counts were:
 
-```text
-3 raw endpoint events
+3 core `/var/log/auth.log` endpoint events
 6 Wazuh alert records
-```
+3 Wazuh records with `location=/var/log/auth.log`
+3 Wazuh records with `location=journald`
 
-This can affect SOC workflows because inflated alert counts may cause analysts to overestimate the scale of an activity.
+This distribution strongly indicates overlapping ingestion across the two collection paths. The retained sanitized evidence does not permit pairwise reconstruction of the six Wazuh records.
 
 ### Recommended Tuning Options
 
@@ -390,6 +394,7 @@ This scenario has several limitations:
 6. The test did not use high-volume brute-force tooling.
 
 These limitations are acceptable for this scenario because the objective was to validate SSH authentication log collection, Wazuh alert generation, alert triage, and duplicate ingestion analysis.
+7. The retained sanitized Wazuh evidence summarizes the six alert records but does not preserve sufficient per-record correlation fields, such as the original SSH process ID and source port, to reconstruct three definitive duplicate pairs.
 
 ---
 
@@ -397,7 +402,9 @@ These limitations are acceptable for this scenario because the objective was to 
 
 This investigation confirmed that Wazuh successfully detected SSH invalid-user authentication attempts against the monitored Ubuntu endpoint.
 
-The endpoint recorded 3 core `Invalid user m2test0507` events. Wazuh displayed 6 alert records because each event was collected from both `/var/log/auth.log` and `journald`.
+The endpoint recorded 3 core `Invalid user m2test0507` events, while Wazuh displayed 6 alert records. The Wazuh records were evenly split between `/var/log/auth.log` and `journald`, strongly indicating duplicate ingestion across the two collection paths.
+
+The retained sanitized evidence does not permit one-to-one reconstruction of the six Wazuh records, so the duplicate-ingestion conclusion is reported as strongly supported rather than pairwise proven.
 
 The alert was assessed as:
 
