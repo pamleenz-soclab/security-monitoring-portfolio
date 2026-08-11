@@ -173,33 +173,42 @@ demonstrate:
 
 ## 7. MITRE ATT&CK Mapping
 
-### Primary mapping
+### Publisher analytic mapping
 
-| ATT&CK ID | Technique | Tactic | Mapping status |
+| ATT&CK ID | Technique | Tactic | Mapping basis |
 |---|---|---|---|
-| `T1185` | Browser Session Hijacking | Collection | Primary publisher mapping; supported by the controlled-lab scenario |
+| `T1185` | Browser Session Hijacking | Collection | Splunk's published mapping for the concurrent-session analytic and attack dataset |
 
-Splunk maps the simulation and associated analytic to `T1185`.
+Splunk maps **Azure AD Concurrent Sessions From Different IPs** to `T1185`.
+That mapping is retained as publisher context. The supplied sign-in telemetry
+shows the resulting divergent authenticated access, but it does not directly
+record browser-process manipulation, browser pivoting, or cookie import.
 
-The supplied logs show the resulting divergent authenticated access, while the
-publisher's lab description establishes that stolen session cookies were
-imported into another browser.
+### Controlled-lab ground-truth mapping
 
-The logs alone do not record browser-process manipulation, cookie import or the
-contents of the authenticated session material.
-
-### Supporting ground-truth mapping
-
-| ATT&CK ID | Technique | Tactic | Mapping status |
+| ATT&CK ID | Technique | Tactic | Mapping basis |
 |---|---|---|---|
-| `T1539` | Steal Web Session Cookie | Credential Access | Supported by publisher ground truth; not directly observed in the supplied sign-in records |
+| `T1539` | Steal Web Session Cookie | Credential Access | Publisher-stated Evilginx2 acquisition and reuse of authenticated session cookies |
 
-`T1539` describes the acquisition and use of web session cookies to access
-services as an authenticated user without needing the original credentials.
+`T1539` is the more direct mapping for the publisher's statement that Evilginx2
+obtained authenticated web-session cookies and that the stolen cookies were
+imported into another browser and reused.
 
-This behaviour is explicitly described in the publisher's controlled-lab
-narrative. The supplied Entra logs represent access after authentication and do
-not record the cookie-theft action itself.
+The sign-in telemetry itself does not directly observe cookie theft. This
+mapping is therefore supported by publisher ground truth rather than by
+`azuread.log` alone.
+
+### Why both mappings are retained
+
+The two mappings describe different aspects of the scenario:
+
+- `T1185` is retained because it is Splunk's published analytic/dataset mapping
+  and provides the browser-session-hijacking context used by the source dataset.
+- `T1539` more precisely describes the controlled-lab theft and reuse of an
+  authenticated web-session cookie.
+
+Neither technique should be represented as directly proven by the supplied
+Microsoft Entra sign-in records alone.
 
 ## 8. Techniques Not Assigned from the Supplied Telemetry
 

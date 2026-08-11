@@ -25,7 +25,7 @@ The analysis distinguishes between:
 | Authentication and timeline analysis | Complete |
 | Incident classification | Complete |
 | Response and detection recommendations | Complete |
-| Publication review | Pending final Git safety and consistency checks |
+| Publication review | Complete |
 
 ## Investigation Objectives
 
@@ -235,10 +235,15 @@ exfiltration, financial loss, service disruption or production business impact.
 
 ## MITRE ATT&CK Mapping
 
-| ATT&CK ID | Technique | Tactic | Evidence basis |
-|---|---|---|---|
-| `T1185` | Browser Session Hijacking | Collection | Primary publisher mapping and controlled-lab ground truth |
-| `T1539` | Steal Web Session Cookie | Credential Access | Publisher ground truth; cookie theft is not directly recorded in the supplied sign-in telemetry |
+| Evidence level | ATT&CK ID | Technique | Tactic | Use in this scenario |
+|---|---|---|---|---|
+| Publisher analytic mapping | `T1185` | Browser Session Hijacking | Collection | Retained because Splunk maps the concurrent-session analytic and dataset to this technique |
+| Controlled-lab ground truth | `T1539` | Steal Web Session Cookie | Credential Access | More directly describes the publisher-stated acquisition and reuse of an authenticated session cookie |
+
+The supplied `azuread.log` does not directly record browser manipulation, cookie
+contents, cookie theft, or cookie import. The ATT&CK mappings therefore describe
+the publisher's controlled attack context rather than behaviours independently
+proven by the sign-in telemetry.
 
 Phishing and Adversary-in-the-Middle are relevant attack-method context because
 the publisher states that Evilginx2 was used. The supplied evidence does not
