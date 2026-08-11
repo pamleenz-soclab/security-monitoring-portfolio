@@ -14,6 +14,17 @@ The goal is to investigate whether a controlled TCP port scan is visible through
 
 This scenario specifically tests whether the existing Wazuh host-log-based configuration can clearly detect network-layer port scanning activity.
 
+## Investigation Workflow
+
+This scenario was not triggered by an initial Wazuh alert.
+
+1. Multi-port TCP probing was intentionally generated from the MacBook using `nc`.
+2. The Ubuntu Target captured inbound TCP traffic using `tcpdump`.
+3. New TCP connection attempts from the same source IP to multiple destination ports within a short time window confirmed the multi-port probing pattern.
+4. `/var/log/auth.log` was reviewed for application-layer evidence related to the activity.
+5. Wazuh alerts were reviewed for the same source IP and scan time window.
+6. No clear Wazuh port-scan alert was identified, resulting in a Detection Gap assessment.
+
 ## Assessment
 
 Detection Gap.
