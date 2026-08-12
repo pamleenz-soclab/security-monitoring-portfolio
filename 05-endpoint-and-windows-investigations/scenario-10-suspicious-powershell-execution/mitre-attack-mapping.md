@@ -10,10 +10,9 @@ Mappings are based on observed event content and are separated by evidence statu
 | [T1059.001](https://attack.mitre.org/techniques/T1059/001/) | Command and Scripting Interpreter: PowerShell | PowerShell process, 4104 stager, 4103 commands, and Event 800 agent pipeline | Confirmed |
 | [T1027](https://attack.mitre.org/techniques/T1027/) | Obfuscated Files or Information | 5,056-character encoded command, mixed case, string concatenation, and nested Base64 | Confirmed |
 | [T1140](https://attack.mitre.org/techniques/T1140/) | Deobfuscate/Decode Files or Information | Runtime Base64 decoding and RC4-like transformation before `IEX` | Confirmed in executed code |
-| [T1562.001](https://attack.mitre.org/techniques/T1562/001/) | Impair Defenses: Disable or Modify Tools | Code attempted to alter Script Block Logging policy state and set `amsiInitFailed` | Attempt confirmed; actual AMSI bypass success unable to confirm |
+| [T1685](https://attack.mitre.org/techniques/T1685/) | Disable or Modify Tools | Code attempted to alter Script Block Logging policy state and set `amsiInitFailed` | Impairment attempt confirmed; successful impairment unable to confirm |
 | [T1105](https://attack.mitre.org/techniques/T1105/) | Ingress Tool Transfer | Initial `DownloadData` logic, attributed network connection, and new second-stage code in the same runspace | Successful in-memory stage transfer confirmed; bytes unavailable |
 | [T1071.001](https://attack.mitre.org/techniques/T1071/001/) | Application Layer Protocol: Web Protocols | HTTP server, port 80, WebClient download/POST methods, and web URI paths | Program flow confirmed; packet content unavailable |
-| [T1573.001](https://attack.mitre.org/techniques/T1573/001/) | Encrypted Channel: Symmetric Cryptography | Executed stage includes RC4, AES-CBC, and HMAC-protected task/channel logic | Cryptographic channel implementation confirmed; exact transmitted bytes unavailable |
 | [T1047](https://attack.mitre.org/techniques/T1047/) | Windows Management Instrumentation | `Get-WmiObject` queried local WMI classes | Local WMI only; no lateral movement mapping |
 | [T1016](https://attack.mitre.org/techniques/T1016/) | System Network Configuration Discovery | `Win32_NetworkAdapterConfiguration` query | Confirmed |
 | [T1082](https://attack.mitre.org/techniques/T1082/) | System Information Discovery | `Win32_OperatingSystem` query and agent host-information collection | Confirmed |
@@ -23,6 +22,7 @@ Mappings are based on observed event content and are separated by evidence statu
 
 | Technique | Name | Evidence | Why not confirmed |
 | --- | --- | --- | --- |
+| [T1573.001](https://attack.mitre.org/techniques/T1573/001/) | Encrypted Channel: Symmetric Cryptography | Executed agent-stage code contains RC4, AES-CBC, and HMAC task/channel logic | Cryptographic implementation is confirmed, but packet contents are unavailable; actual use of symmetric encryption on transmitted C2 traffic is inferred with high confidence |
 | [T1204.002](https://attack.mitre.org/techniques/T1204/002/) | User Execution: Malicious File | Explorer parent and Windows Recent item for `launcher.vbs` | Strongly suggests interactive access, but delivery, click action, and user intent are not directly recorded |
 
 ## Techniques not mapped

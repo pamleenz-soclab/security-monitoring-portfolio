@@ -1,4 +1,4 @@
-time_utc,time_basis,record_number,channel,event_id,host,user,pid,process_guid,summary,evidence_status
+time_utc,time_basis,record_number,channel,event_id,host,user,pid,correlated_process_guid,summary,evidence_status
 2020-09-04T20:09:55.035Z,Sysmon UtcTime,251079,Microsoft-Windows-Sysmon/Operational,1,WORKSTATION5.theshire.local,THESHIRE\\pgustavo,2440,{860ba2e3-9f13-5f52-2603-000000000400},explorer.exe launched wscript.exe with launcher.vbs,Confirmed
 2020-09-04T20:09:55.760Z,Sysmon UtcTime,251258,Microsoft-Windows-Sysmon/Operational,1,WORKSTATION5.theshire.local,THESHIRE\\pgustavo,2316,{860ba2e3-9f13-5f52-2703-000000000400},wscript.exe launched hidden encoded PowerShell,Confirmed
 2020-09-04T20:09:58.627Z,Sysmon UtcTime,251530;251531,Microsoft-Windows-Sysmon/Operational,11,WORKSTATION5.theshire.local,THESHIRE\\pgustavo,2316,{860ba2e3-9f13-5f52-2703-000000000400},PowerShell created two __PSScriptPolicyTest files,Confirmed benign PowerShell side effect

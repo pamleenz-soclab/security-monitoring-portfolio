@@ -47,5 +47,6 @@ Processed evidence is limited to aggregate data and minimal, attributable extrac
 - Use `@timestamp` and embedded Sysmon `UtcTime` as the primary UTC fields. The unzoned `EventTime` field must not be treated as UTC without validation.
 - Use `RecordNumber` as the dataset's event-record sequence field; do not rename it to `EventRecordID` without documenting the mapping.
 - PID matching alone is insufficient. Prefer ProcessGuid, parent ProcessGuid, host, user, Logon ID, image, and command line together.
+- The `correlated_process_guid` field in the processed key-event timeline is analyst-enriched. PowerShell 4103/4104/800 records are linked to the Sysmon ProcessGuid through host, process ID, account/session context, and time; the PowerShell records are not claimed to contain that Sysmon field natively.
 - PowerShell 4103 events should be joined by host, `ExecutionProcessID`, Runspace ID, Host Application, account, and time window.
 - The author-provided emulation narrative is provenance/context, not a substitute for raw-event evidence.

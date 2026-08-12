@@ -36,7 +36,7 @@ sequenceDiagram
     U->>V: launcher.vbs
     V->>P: hidden encoded command
     P->>C: GET/POST-capable staged session
-    C-->>P: encrypted stage and task data
+    C-->>P: stage/task data (transport inferred; payload unavailable)
     P->>O: execute whoami
     O-->>P: theshire\pgustavo
 ```
