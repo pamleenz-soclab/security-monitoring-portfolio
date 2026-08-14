@@ -86,8 +86,8 @@ Processed evidence excludes the demonstration hash and the full encoded payload.
 - `triage-note.md` — analyst triage record.
 - `dataset-decision-record.md` — selected/rejected dataset rationale.
 - `evidence-inventory.md` — source, integrity, publication and evidence-handling inventory.
+- `evidence-reading-guide.md` — guided walkthrough for correlating the key evidence.
 - `recommended-actions.md` — validation, containment, credential and scoping actions.
-- `containment-plan.md` — operational containment and recovery sequence.
 - `detection-engineering.md` — detection logic, tuning and telemetry requirements.
 - `queries.md` — reproducible hunt and correlation queries.
 - `detections/` — Sigma, Splunk and Microsoft Sentinel content.
