@@ -10,7 +10,7 @@ MordorElevatedTask executed as SYSTEM,Confirmed,Task Scheduler 129 to Security 4
 Dynamic compilation occurred,Confirmed,csc.exe child process records,Compiled source not available
 TCP connection to deactivated destination occurred,Confirmed,Security 5156 tied to PowerShell PIDs,Application protocol not available
 Destination traffic was HTTP,Unable to confirm,Destination port was 80,No packet proxy or application-layer telemetry
-MordorElevatedTask creator and creation time,Not observed,Task lifecycle search completed,Collection window may begin after creation
+MordorElevatedTask creation event,Not observed,Task lifecycle search completed,Collection window may begin after creation
 Creator login source for 0xa1d79,Not observed,Focused 4624/4672 correlation completed,Original session may predate collection
 Payload file hash and signer,Not available,No usable file evidence,Registry or memory-backed execution may not expose a file
 Production change authorisation,Not available,No change or deployment data,Dataset is a simulation

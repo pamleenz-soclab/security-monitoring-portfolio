@@ -23,7 +23,13 @@ mkdir -p "$OUTPUT_DIR"
 
 # Validate that every input record is a JSON object. The script only reads logs;
 # it never executes command lines or decodes payload content found in events.
-jq -e 'type == "object"' "$RAW_JSON" >/dev/null
+jq -e '
+  if type == "object" then
+    true
+  else
+    error("Input record is not a JSON object")
+  end
+' "$RAW_JSON" >/dev/null
 
 jq -r '
   [

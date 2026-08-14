@@ -58,7 +58,7 @@ Task Scheduler recorded decimal PIDs, while Security Event ID `4688` recorded he
 - `recommended-actions.md` — containment, eradication, recovery, and validation
 - `detections/sigma/` — two process-creation detection rules
 - `evidence/processed/` — sanitised timelines, correlations, status matrix, and validation results
-- `scripts/extract-scenario12-evidence.sh` — reproducible offline evidence extraction
+- `scripts/extract-scenario12-evidence.sh` — core offline evidence-extraction script
 
 ## Evidence status vocabulary
 

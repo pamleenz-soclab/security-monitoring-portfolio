@@ -39,6 +39,8 @@ This logic is implemented in:
 
 Dataset validation produced two matching Security 4688 events, one for each task-launched PowerShell PID.
 
+This process-creation rule detects the suspicious registry-backed PowerShell loader. Attribution to Scheduled Task execution requires correlation with Task Scheduler telemetry, such as Event ID `129`.
+
 ## Recommended multi-event correlation
 
 The following correlation provides higher confidence than any single event:
