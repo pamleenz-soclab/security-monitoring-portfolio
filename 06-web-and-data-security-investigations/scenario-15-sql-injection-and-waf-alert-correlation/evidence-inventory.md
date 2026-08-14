@@ -8,6 +8,7 @@
 | Extracted ModSecurity logs | `evidence/working/extracted/` | Ignored | Native audit transactions |
 | First-pass parser output and SQLite | `evidence/working/first-pass/` | Ignored | Broad profiling and candidate generation |
 | Precise-validation output | `evidence/working/precise-validation/` | Ignored | Representative transaction validation |
+| Reproduction sample | `evidence/working/reproduced/` | Ignored | Bounded local output used to verify the analytical workflow |
 
 ## Publishable processed evidence
 
@@ -25,7 +26,6 @@
 | `sanitised-evidence-excerpts.tsv` | Minimal representative payload and rule evidence |
 | `false-positive-examples.csv` | Rule 942100-only contextual false-positive candidates |
 | `source-sha256-records.tsv` | Original archive SHA-256 record |
-| `analysis-artifact-sha256-records.tsv` | Hashes for uploaded analytical result packages |
 | `event-summary.tsv` | Compact key metrics and final labels |
 
 ## Data handling

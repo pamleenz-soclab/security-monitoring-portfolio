@@ -2,11 +2,12 @@
 
 ## Detection objectives
 
-1. Detect high-confidence SQLi transactions using specialised Rule 942xxx combinations.
-2. Detect sustained SQLi bursts from the same trusted source, Host and User-Agent.
-3. Distinguish WAF detection from final enforcement.
-4. Identify 403 responses without a recorded interception marker.
-5. Reduce priority for Rule 942100-only password and session-cookie matches.
+1. Detect high-confidence SQLi events using specialised Rule 942xxx signals.
+2. Correlate multiple SQLi rules within the same transaction ID.
+3. Detect sustained SQLi bursts from the same trusted source, Host and User-Agent using both volume and diversity thresholds.
+4. Distinguish WAF detection from final enforcement.
+5. Identify 403 responses without a recorded interception marker.
+6. Reduce priority for Rule 942100 password/session-cookie context when peer SQLi evidence is absent.
 
 ## Normalised fields
 
@@ -36,7 +37,13 @@ Prioritise a transaction when one or more of the following applies:
 - Rule 942160, 942190 or 942360 is present.
 - Two or more distinct SQLi Rule 942xxx IDs occur in one transaction.
 - Explicit SQL syntax appears in a matched argument and activity repeats from the same source/Host.
-- Time-based patterns repeat but do not rely on one slow request as proof.
+- Time-based patterns repeat, while response delay is treated as exploitation evidence only when supported by a reproducible baseline difference.
+
+The Sigma rules are single-event examples. Transaction-level multi-rule and burst correlation is implemented in the generic and vendor-query examples.
+
+## Burst threshold
+
+The included burst queries require at least **20 distinct transactions in five minutes** and also require either **three distinct request paths** or **two distinct SQLi rule IDs**. This reduces escalation based on volume alone.
 
 ## Disposition logic
 
@@ -48,8 +55,11 @@ Do not map HTTP 403 directly to `blocked`. Require a final enforcement field or 
 
 ## Included content
 
-- Sigma-style rules in `detections/sigma/`
-- KQL in `queries/sentinel/`
-- SPL in `queries/splunk/`
-- ES|QL in `queries/elastic/`
-- Vendor-neutral correlation logic in `queries/generic/`
+- Sigma-style event rules in `detections/sigma/`
+- Vendor-neutral correlation logic in `detections/generic/`
+- Microsoft Sentinel KQL in `queries/sentinel/`
+- Splunk SPL in `queries/splunk/`
+- Elastic ES|QL in `queries/elastic/`
+- Conceptual field mapping in `queries/generic/`
+
+The vendor queries are schema examples and require local field mapping and platform-side testing before production deployment.

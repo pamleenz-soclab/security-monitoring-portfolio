@@ -9,6 +9,6 @@ WAFLogs
     FirstSeen=min(TimeGenerated),
     LastSeen=max(TimeGenerated)
   by bin(TimeGenerated, Window), ClientIP_s, Host_s, UserAgent_s
-| where RequestCount >= Threshold
 | extend DistinctRules=array_length(RuleIds), DistinctPaths=array_length(Paths)
+| where RequestCount >= Threshold and (DistinctPaths >= 3 or DistinctRules >= 2)
 | order by RequestCount desc

@@ -8,7 +8,7 @@ This scenario reconstructs a production WAF investigation from the originating H
 
 **Scenario result: `Attempted`**
 
-A sustained automated SQL injection campaign was confirmed against the anonymised host `df7754e.hu`. The dominant anonymised source `100.77.175.132` generated **3,465 related requests**, including **3,396 SQLi-related requests**, from `2025-07-28T02:20:59+00:00` to `2025-07-28T07:48:58+00:00`. The sequence contained Boolean-based, UNION-based, concatenated and time-based payloads.
+A sustained SQL injection campaign was confirmed against the anonymised host `df7754e.hu`. The dominant anonymised source `100.77.175.132` generated **3,465 related requests**, including **3,396 SQLi-related requests**, from `2025-07-28T02:20:59+00:00` to `2025-07-28T07:48:58+00:00`. A fixed browser-like User-Agent and systematic payload variation support a **high-confidence inference of automation**. The sequence contained Boolean-based, UNION-based, concatenated and time-based payloads.
 
 ModSecurity/OWASP CRS rule matches were confirmed. However, the SQLi transactions did not contain a final `Action: Intercepted`, `Access denied` or blocking-evaluation marker. HTTP 403 responses were therefore not treated as proof of WAF enforcement. Application logs, database audit and endpoint telemetry were unavailable, so SQL execution, data access, Web shell activity, RCE and business impact could not be confirmed.
 
@@ -39,15 +39,19 @@ ModSecurity/OWASP CRS rule matches were confirmed. However, the SQLi transaction
 - `evidence/processed/` — sanitised, publishable evidence.
 - `detections/` — Sigma-style detections and generic logic.
 - `queries/` — Microsoft Sentinel KQL, Splunk SPL and Elastic ES|QL.
-- `scripts/` — acquisition, safe extraction, parsing, precise validation, processed-evidence generation and package validation.
-- `evidence/raw/` and `evidence/working/` — local-only directories protected by `.gitignore`.
+- `scripts/` — acquisition, safe extraction, parsing, precise validation, local reproduction sampling and portfolio validation.
+- `evidence/raw/` and `evidence/working/` — local-only paths excluded by `.gitignore`; the scripts create them when needed.
 
 ## Reproduction
 
-The safe wrapper does not attack any target. It operates only on the published offline dataset:
+The safe wrapper does not attack any target. It downloads the published dataset when requested, then performs only local parsing and representative validation. It does **not** overwrite the curated files in `evidence/processed/`; its reproduced sample stays under Git-ignored `evidence/working/`.
 
 ```bash
 bash scripts/reproduce-safe.sh /path/to/this/scenario --acquire
 ```
 
-Review `source-and-license-record.md`, `validation-checklist.md` and `github-publishing-guide.md` before publishing.
+Before publishing from the Git worktree, run:
+
+```bash
+python3 scripts/portfolio_validator.py . --git-aware
+```

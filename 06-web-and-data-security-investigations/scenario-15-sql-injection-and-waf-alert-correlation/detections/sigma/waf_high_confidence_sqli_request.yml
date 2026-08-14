@@ -1,7 +1,7 @@
 title: WAF High-Confidence SQL Injection Request
 id: 506c1799-52b8-44d3-956e-4f1dbfb78ed9
 status: experimental
-description: Detects specialist OWASP CRS SQLi rules or multiple SQLi rules in one WAF transaction. Field mapping is required.
+description: Detects specialist OWASP CRS SQLi rule events. Multi-rule transaction correlation is implemented separately because this Sigma rule evaluates one event at a time. Field mapping is required.
 references:
   - https://doi.org/10.5281/zenodo.17178461
 author: Security Monitoring Portfolio

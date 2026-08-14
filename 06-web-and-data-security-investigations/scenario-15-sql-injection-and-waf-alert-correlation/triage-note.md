@@ -6,7 +6,7 @@
 
 ## What happened
 
-The anonymised source `100.77.175.132` generated 3,465 related requests to `df7754e.hu` over approximately 5.5 hours. Of these, 3,396 were SQLi-related. The sequence included Boolean, UNION, concatenated and time-based payload variants and used a fixed browser-like User-Agent.
+The anonymised source `100.77.175.132` generated 3,465 related requests to `df7754e.hu` over approximately 5.5 hours. Of these, 3,396 were SQLi-related. The sequence included Boolean, UNION, concatenated and time-based payload variants and used a fixed browser-like User-Agent; the volume and systematic variation support a high-confidence inference of automation.
 
 ## Key evidence
 
@@ -18,7 +18,7 @@ The anonymised source `100.77.175.132` generated 3,465 related requests to `df77
 
 ## Triage decision
 
-Escalate as a sustained automated SQL injection attempt. Do not report successful exploitation or confirmed WAF blocking. Treat Rule 942100-only password/cookie matches as lower-confidence candidates pending context review.
+Escalate as a sustained SQL injection attempt with high-confidence evidence of automation. Do not report successful exploitation or confirmed WAF blocking. Treat Rule 942100-only password/cookie matches as lower-confidence candidates pending context review.
 
 ## Immediate actions
 

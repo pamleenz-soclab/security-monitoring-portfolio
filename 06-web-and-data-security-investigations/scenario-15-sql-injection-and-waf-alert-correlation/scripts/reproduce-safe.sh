@@ -16,6 +16,12 @@ if [[ ! -f "$SCENARIO_DIR/evidence/raw/owasp.zip" ]]; then
 fi
 bash "$SCENARIO_DIR/scripts/run-first-pass.sh" "$SCENARIO_DIR"
 bash "$SCENARIO_DIR/scripts/run-precise-validation.sh" "$SCENARIO_DIR"
-python3 "$SCENARIO_DIR/scripts/build_processed_evidence.py" "$SCENARIO_DIR"
-python3 "$SCENARIO_DIR/scripts/portfolio_validator.py" "$SCENARIO_DIR"
-echo "Safe offline reproduction complete. Raw and working evidence remain Git ignored."
+python3 "$SCENARIO_DIR/scripts/build_reproduction_sample.py" "$SCENARIO_DIR"
+
+if git -C "$SCENARIO_DIR" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  python3 "$SCENARIO_DIR/scripts/portfolio_validator.py" "$SCENARIO_DIR" --git-aware
+else
+  python3 "$SCENARIO_DIR/scripts/portfolio_validator.py" "$SCENARIO_DIR" --local-reproduction
+fi
+
+echo "Safe offline analytical reproduction complete. Raw and working evidence remain local; curated processed evidence was not overwritten."

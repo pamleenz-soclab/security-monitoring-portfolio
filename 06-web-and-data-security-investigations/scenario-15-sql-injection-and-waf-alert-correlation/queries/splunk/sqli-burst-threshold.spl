@@ -1,6 +1,6 @@
 index=waf rule_id=942*
 | bin _time span=5m
 | stats dc(transaction_id) as request_count values(rule_id) as rule_ids dc(uri_path) as distinct_paths earliest(_time) as first_seen latest(_time) as last_seen by _time src_ip host user_agent
-| where request_count>=20
 | eval distinct_rules=mvcount(rule_ids)
+| where request_count>=20 AND (distinct_paths>=3 OR distinct_rules>=2)
 | sort - request_count

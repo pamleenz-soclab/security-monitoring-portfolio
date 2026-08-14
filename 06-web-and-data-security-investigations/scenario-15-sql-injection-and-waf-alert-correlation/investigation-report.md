@@ -2,7 +2,7 @@
 
 ## 1. Executive finding
 
-The investigation confirmed a sustained automated SQL injection campaign against the anonymised host `df7754e.hu`. The final scenario outcome is **Attempted**. WAF detection was confirmed; final WAF enforcement and successful exploitation were not confirmed.
+The investigation confirmed a sustained SQL injection campaign against the anonymised host `df7754e.hu`. The request volume, fixed browser-like User-Agent and systematic payload variation support a **high-confidence inference of automation**. The final scenario outcome is **Attempted**. WAF detection was confirmed; final WAF enforcement and successful exploitation were not confirmed.
 
 ## 2. Scope
 
@@ -39,7 +39,7 @@ Transaction `aIVVouq5vQMKq02KFfSFpAAAAAI` contained the URL-encoded password val
 
 ## 5. WAF enforcement assessment
 
-`Engine-Mode: "ENABLED"` confirms that the engine was active. It does not establish that a particular SQLi transaction was intercepted. The validated SQLi transactions contained warning messages, but no `Action: Intercepted`, `Access denied`, Rule 949110 or equivalent final blocking marker. HTTP 403 was therefore not attributed to the WAF solely from status.
+`Engine-Mode: "ENABLED"` confirms that the engine was active. It does not establish that a particular SQLi transaction was intercepted. The validated SQLi transactions contained warning messages, but no `Action: Intercepted`, `Access denied`, Rule 949110 or equivalent final blocking marker. The parser did identify interception markers elsewhere in the dataset, so their absence in the validated SQLi transactions is meaningful; it still does not prove that another control did not generate the HTTP status. HTTP 403 was therefore not attributed to the WAF solely from status.
 
 **Assessment:**
 
@@ -67,4 +67,4 @@ The dataset author describes the source traffic as malicious and blocked. That d
 
 ## 8. Final conclusion
 
-The event is classified as **Attempted**. The evidence demonstrates a high-volume automated SQL injection campaign and reliable WAF detection. It does not demonstrate successful exploitation, and it does not provide sufficient transaction-level evidence to label the requests as WAF-blocked.
+The event is classified as **Attempted**. The evidence demonstrates a high-volume SQL injection campaign and reliable WAF detection; automation is inferred with high confidence from the campaign pattern. It does not demonstrate successful exploitation, and it does not provide sufficient transaction-level evidence to label the requests as WAF-blocked.

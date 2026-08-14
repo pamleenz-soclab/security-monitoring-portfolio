@@ -11,6 +11,10 @@ WAFLogs
     Actions=make_set(Action_s, 16)
   by TransactionId_s, ClientIP_s, Host_s, HttpMethod_s, RequestPath_s, UserAgent_s
 | extend DistinctRules=array_length(RuleIds)
-| where DistinctRules >= 2 or RuleIds has_any ("942160", "942190", "942360")
-| extend EnforcementEvidence=iff(Actions has_any ("deny", "blocked", "intercepted", "drop"), "Observed", "Not observed")
+| where DistinctRules >= 2
+    or set_has_element(RuleIds, "942160")
+    or set_has_element(RuleIds, "942190")
+    or set_has_element(RuleIds, "942360")
+| extend ActionText=tolower(strcat_array(Actions, " "))
+| extend EnforcementEvidence=iff(ActionText has_any ("deny", "blocked", "intercepted", "drop"), "Observed", "Not observed")
 | order by FirstSeen desc
