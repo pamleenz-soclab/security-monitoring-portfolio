@@ -19,9 +19,7 @@ REQUIRED_FILES = [
     "containment-decision-record.md",
     "recovery-plan.md",
     "detection-engineering.md",
-    "validation-checklist.md",
     "source-and-license-record.md",
-    "github-publishing-guide.md",
     ".gitignore",
 ]
 

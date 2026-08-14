@@ -133,9 +133,7 @@ See [containment-decision-record.md](containment-decision-record.md) for the bus
 ├── containment-decision-record.md
 ├── recovery-plan.md
 ├── detection-engineering.md
-├── validation-checklist.md
 ├── source-and-license-record.md
-├── github-publishing-guide.md
 ├── diagrams/
 ├── detections/
 │   └── sigma/
@@ -147,7 +145,6 @@ See [containment-decision-record.md](containment-decision-record.md) for the bus
 │   ├── raw/
 │   ├── working/
 │   └── processed/
-└── screenshots/
 ```
 
 ## Safety and publication notes
