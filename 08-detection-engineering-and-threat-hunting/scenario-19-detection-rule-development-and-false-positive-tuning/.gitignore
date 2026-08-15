@@ -1,14 +1,13 @@
-# Local evidence and temporary outputs
-evidence/raw/*
-!evidence/raw/.gitkeep
-evidence/working/*
-!evidence/working/.gitkeep
+# Local evidence and working material
+evidence/raw/
+evidence/working/
 
 # Python/runtime caches
 __pycache__/
 *.py[cod]
 .venv/
 venv/
+.pytest_cache/
 
 # Large/raw investigation artefacts
 *.pcap
