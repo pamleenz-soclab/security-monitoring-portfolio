@@ -22,7 +22,23 @@ The evidence **does not establish** the original delivery mechanism, successful 
 - Weak/time-only relationships are not promoted to a confirmed chain.
 - `Not observed`, `Not available`, and `Unable to assess` remain distinct.
 - Attempted behavior is separated from successful outcome.
-- Raw evidence remains local, read-only, and Git-ignored.
+- Raw and working evidence remain local and Git-ignored.
 - Source-associated Zeek evidence is not used as same-event corroboration because its capture window does not overlap the host incident window.
 
-Start with `executive-summary.md`, `technical-investigation-report.md`, `master-timeline.md`, and `interview-walkthrough.md`.
+## Publication and reproducibility boundary
+
+The repository publishes small processed evidence, source provenance, investigation logic, and a standard-library validation script. It does not publish the upstream raw archives, extracted ~385 MB host JSON, packet captures, or working analyst subsets.
+
+`evidence/processed/source-acquisition-manifest.tsv` is the authoritative acquisition ledger for upstream artifact path, size, SHA-256, pinned commit, URL, and role. `evidence/processed/dataset-boundary-record.tsv` records the investigation boundary.
+
+Run `python3 scripts/validate_portfolio.py` from the scenario directory to validate the published package. This validates publication consistency; it does not re-run the original raw-evidence investigation or reproduce a live SIEM/EDR environment.
+
+## Recommended reading order
+
+1. `executive-summary.md`
+2. `technical-investigation-report.md`
+3. `attack-chain-reconstruction.md`
+4. `master-timeline.md`
+5. `correlation-analysis.md`
+6. `scope-assessment.md`
+7. `containment-strategy.md` and `recovery-validation.md`
