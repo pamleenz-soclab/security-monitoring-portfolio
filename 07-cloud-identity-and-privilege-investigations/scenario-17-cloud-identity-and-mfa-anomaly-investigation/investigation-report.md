@@ -4,7 +4,7 @@
 
 A deterministic synthetic Microsoft Entra and Microsoft 365 dataset was investigated for a cloud-identity anomaly involving password spray, MFA fatigue, Conditional Access evaluation, token/session continuation, and follow-on business activity.
 
-The incident affected five user accounts. Four accounts were unsuccessfully targeted. `USER-001` was successfully authenticated after repeated Microsoft Authenticator prompts and was subsequently used to modify authentication information, create an external-forwarding inbox rule, and download confidential finance documents.
+Five user accounts were targeted. Four accounts had only unsuccessful attack activity. `USER-001` was successfully authenticated after repeated Microsoft Authenticator prompts and was subsequently used to modify authentication information, create an external-forwarding inbox rule, and download confidential finance documents.
 
 ## 2. Final classification
 
@@ -66,7 +66,7 @@ The sequence was:
 Denied → Timeout → Denied → Timeout → Success
 ```
 
-The success used Microsoft Authenticator number matching. Authentication telemetry proved that the method completed successfully. User verification was required to establish that the approval was unauthorized.
+The success used Microsoft Authenticator number matching. Authentication telemetry proved that the method completed successfully. User verification later established that the user had approved one unexpected prompt while trying to stop repeated notifications; that verification established the resulting sign-in and follow-on activity as unauthorized.
 
 ## 6. Conditional Access analysis
 
@@ -104,12 +104,14 @@ The Bucharest event remained suspicious because of the combination of:
 
 ## 9. Session and token analysis
 
-`SESSION-001` was the strongest cross-source identifier. It linked:
+Within this synthetic dataset, `SESSION-001` was the strongest cross-source identifier. The modeled records linked:
 
 - the successful interactive sign-in;
 - three non-interactive user sign-ins;
 - one Exchange inbox-rule event;
 - three SharePoint file-download events.
+
+This direct M365 session linkage is a dataset feature used to make the portfolio correlation deterministic. Production Microsoft Sentinel `OfficeActivity` should be correlated with supported audit fields and user/IP/time context rather than assuming the Entra `SessionId` is present there.
 
 Each non-interactive token event had its own request, correlation, original-request, and unique-token identifier. These records were interpreted as separate token/resource operations within the same session, not repeated interactive logins or repeated MFA approvals.
 
@@ -177,7 +179,7 @@ The recommended complete response also includes disabling the account if session
 
 ### Business verification
 
-The user confirmed the sign-in, approval, authentication-method change, inbox rule, and file downloads were unauthorized.
+The user confirmed that the successful sign-in and follow-on changes were unauthorized, and reported that one unexpected MFA prompt had been approved while attempting to stop the repeated notifications.
 
 ### Ground truth
 

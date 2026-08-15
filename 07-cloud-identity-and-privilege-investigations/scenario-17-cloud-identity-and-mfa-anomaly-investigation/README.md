@@ -61,19 +61,18 @@ This scenario therefore uses a deterministic, explicitly synthetic dataset whose
 ## Repository structure
 
 ```text
-evidence/raw/          Local-only generated source evidence; Git ignored
-evidence/working/      Local-only databases and intermediate outputs; Git ignored
+evidence/raw/          Created locally by the reproduction wrapper; Git ignored
+evidence/working/      Created locally for databases and intermediate outputs; Git ignored
 evidence/processed/    Sanitised, publishable evidence
 detections/            KQL, SPL, ES|QL, and generic detection content
 queries/               Investigation queries organised by purpose
 scripts/               Reproducible generation, parsing, correlation, validation, and sanitisation
-screenshots/           Optional screenshots
 ```
 
 ## Reproduction
 
 ```bash
-REPO_ROOT="/Users/pamlee/Documents/GitHub/security-monitoring-portfolio"
+REPO_ROOT="$(git rev-parse --show-toplevel)"
 SCENARIO_DIR="$REPO_ROOT/07-cloud-identity-and-privilege-investigations/scenario-17-cloud-identity-and-mfa-anomaly-investigation"
 
 bash "$SCENARIO_DIR/scripts/safe-reproducibility-wrapper.sh"
@@ -83,14 +82,18 @@ The wrapper performs no network activity. It generates the local synthetic evide
 
 ## Principal outputs
 
+- `triage-note.md`
 - `investigation-report.md`
-- `executive-summary.md`
+- `containment-decision-record.md`
 - `evidence/processed/cloud-identity-event-timeline.csv`
 - `evidence/processed/account-compromise-assessment.csv`
-- `detections/kql/`
-- `detections/spl/`
-- `detections/elastic/`
-- `scripts/validation/portfolio_validator.py`
+- `detection-engineering.md`
+- `detections/`
+- `queries/`
+
+## Operational mapping note
+
+The synthetic Microsoft 365 audit records intentionally carry a session alias so the portfolio can demonstrate deterministic cross-source correlation. Production Microsoft Sentinel `OfficeActivity` data should not be assumed to expose the Entra `SessionId`; operational follow-on queries therefore use supported Office audit fields plus user, IP and time context instead of claiming a direct session-ID join.
 
 ## References
 

@@ -1,14 +1,13 @@
-# Raw evidence remains local.
-evidence/raw/*
-!evidence/raw/.gitkeep
-
-# Working databases, extracted files, consoles, and intermediate results remain local.
-evidence/working/*
-!evidence/working/.gitkeep
+# Raw and working evidence remain local.
+evidence/raw/
+evidence/working/
 
 # Python runtime files.
 __pycache__/
 *.py[cod]
+.pytest_cache/
+.venv/
+venv/
 
 # Local databases and caches.
 *.sqlite

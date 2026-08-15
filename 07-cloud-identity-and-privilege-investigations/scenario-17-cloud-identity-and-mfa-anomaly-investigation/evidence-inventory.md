@@ -52,16 +52,16 @@ All processed files use aliases for identities and stable identifiers. Synthetic
 | `account-compromise-assessment.csv` | Fact, risk, verification, ground truth, gap, and conclusion use |
 | `detection-gap-analysis.csv` | Missing or intentionally excluded evidence |
 | `sanitised-evidence-excerpts.tsv` | Compact interview and report excerpts |
-| `source-sha256-records.tsv` | Integrity record for local raw sources |
+| `source-sha256-records.tsv` | Integrity record for deterministic local source files |
 
 ## Integrity
 
 The precise verifier confirmed:
 
-- 10 of 10 local source hashes matched;
+- all deterministic local source hashes matched;
 - 162 sign-in IDs were unique;
 - no orphan authentication steps;
 - no orphan Conditional Access policy records;
 - first-pass and SQLite record counts aligned.
 
-A first-pass manifest warning was recorded because the console log continued changing after that manifest was generated. The final package manifest is generated only after all publishable files are closed.
+The source-integrity record excludes hidden directory placeholders so regeneration is independent of whether an empty local evidence directory previously existed.

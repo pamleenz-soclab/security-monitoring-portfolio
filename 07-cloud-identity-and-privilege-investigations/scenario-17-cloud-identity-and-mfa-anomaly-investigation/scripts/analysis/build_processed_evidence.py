@@ -72,7 +72,7 @@ def write_csv(path: Path, rows: Iterable[dict[str, object]], fields: list[str] |
         fields = list(rows[0]) if rows else []
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as fh:
-        writer = csv.DictWriter(fh, fieldnames=fields, extrasaction="ignore")
+        writer = csv.DictWriter(fh, fieldnames=fields, extrasaction="ignore", lineterminator="\n")
         writer.writeheader()
         for row in rows:
             writer.writerow({key: clean(row.get(key, "")) for key in fields})
@@ -347,7 +347,7 @@ def main() -> int:
     ]
     excerpt_path = processed / "sanitised-evidence-excerpts.tsv"
     with excerpt_path.open("w", encoding="utf-8", newline="") as fh:
-        writer = csv.DictWriter(fh, fieldnames=list(excerpts[0]), delimiter="\t")
+        writer = csv.DictWriter(fh, fieldnames=list(excerpts[0]), delimiter="\t", lineterminator="\n")
         writer.writeheader()
         writer.writerows(excerpts)
 

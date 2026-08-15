@@ -22,11 +22,19 @@ Detect and correlate:
 - Require a time-bounded sequence for MFA-fatigue detection.
 - Treat MFA success as method completion, not authorization.
 - Treat `reportOnlyFailure` as evaluation only.
-- Use `SessionId` for session continuity, not as proof of token theft.
+- Use `SessionId` where the log source actually exposes it; do not assume Microsoft 365 `OfficeActivity` carries the Entra session identifier.
+- Treat user/IP/time correlation across Office audit as contextual linkage unless a stronger shared identifier is available.
 - Keep service principals and managed identities in dedicated analytic rules.
 - Use per-user baseline and approved-network inventories.
 - Correlate identity events with audit and business activity.
 - Preserve raw error code, failure reason, and additional details.
+
+## Deployment mapping
+
+- Microsoft Sentinel interactive sign-ins use `SigninLogs`; non-interactive user sign-ins use `AADNonInteractiveUserSignInLogs`.
+- Identity Protection user risk events use `AADUserRiskEvents` rather than a synthetic table name.
+- `OfficeActivity` follow-on correlation uses supported fields such as `UserId`, `ClientIP`, `Operation`, `ResultStatus`, `OfficeObjectId`, and time. It is not treated as a direct Entra `SessionId` join.
+- SPL and ES|QL examples require field mapping to the organization's ingestion schema before deployment.
 
 ## Core rules
 

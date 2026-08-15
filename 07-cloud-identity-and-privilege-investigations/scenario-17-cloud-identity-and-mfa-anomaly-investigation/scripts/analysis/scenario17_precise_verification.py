@@ -22,7 +22,7 @@ def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument(
         "--scenario-dir",
-        default="/Users/pamlee/Documents/GitHub/security-monitoring-portfolio/07-cloud-identity-and-privilege-investigations/scenario-17-cloud-identity-and-mfa-anomaly-investigation",
+        default=str(Path(__file__).resolve().parents[2]),
         help="Scenario 17 directory",
     )
     return p.parse_args()

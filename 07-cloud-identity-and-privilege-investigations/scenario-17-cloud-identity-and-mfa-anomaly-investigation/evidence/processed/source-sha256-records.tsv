@@ -1,7 +1,6 @@
 file_name	file_type	size_bytes	sha256	synthetic	redistribution
-.gitkeep	text	0	e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855	true	Generator-derived synthetic data; raw remains local by project convention
 DATASET-LICENSE.txt	text	229	38bbfeec580b558712db1bf1aecffdb6efa5a457987ab291af343a6741932dca	true	Generator-derived synthetic data; raw remains local by project convention
-acquisition-manifest.json	JSON	1872	cae03d11bdc84fe39eb1099a12bc20851b17f8e8195abd95ca2d9a051e011e7f	true	Generator-derived synthetic data; raw remains local by project convention
+acquisition-manifest.json	JSON	1724	c89e7f98bc72dd8a08d2362c4b256097807733149ddb8f840a473ca1d2ba6143	true	Generator-derived synthetic data; raw remains local by project convention
 business-context.json	JSON	5410	9657419c6a24f9f182f110dab14a2a455a0970a13b013d6ac2f57b819312eaa1	true	Generator-derived synthetic data; raw remains local by project convention
 entra-directory-audit.jsonl	JSONL	3378	cc33ee72a4d0503557f44af64a0e16eac111ec3baa97136e0c732fd0834553cd	true	Generator-derived synthetic data; raw remains local by project convention
 entra-signins.jsonl	JSONL	503055	b75f2a4cb26d3a311c40e6bf86037e808a009621196017536862da1f76a49000	true	Generator-derived synthetic data; raw remains local by project convention

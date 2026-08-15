@@ -1,15 +1,19 @@
-let IdentitySessions =
+// Contextual correlation: OfficeActivity does not expose the Entra SessionId.
+// Treat user/IP/time linkage as investigative correlation, not direct same-session proof.
+let IdentitySignins =
 SigninLogs
 | where ResultType == "0"
-| project SignInTime=TimeGenerated, UserPrincipalName, IPAddress,
+| project SignInTime=TimeGenerated, UserPrincipalName, SignInIP=IPAddress,
           CorrelationId, SessionId, AppDisplayName, RiskLevelDuringSignIn;
 OfficeActivity
-| extend Session=tostring(SessionId)
-| join kind=inner IdentitySessions on $left.UserId == $right.UserPrincipalName,
-                                      $left.Session == $right.SessionId
+| where Operation in~ ("New-InboxRule", "Set-InboxRule", "FileDownloaded",
+                       "Add-MailboxPermission", "Set-Mailbox")
+| join kind=inner IdentitySignins on $left.UserId == $right.UserPrincipalName
 | where TimeGenerated between (SignInTime .. SignInTime + 2h)
-| where Operation in~ ("New-InboxRule","Set-InboxRule","FileDownloaded",
-                       "Add-MailboxPermission","Set-Mailbox")
-| project SignInTime, TimeGenerated, UserPrincipalName, IPAddress,
-          AppDisplayName, Operation, OfficeWorkload, ObjectId, Parameters,
-          CorrelationId, SessionId
+| extend IPMatch = isnotempty(ClientIP) and ClientIP == SignInIP,
+         CorrelationStrength = iff(IPMatch, "user+IP+time", "user+time")
+| project SignInTime, AuditTime=TimeGenerated, UserPrincipalName,
+          SignInIP, AuditIP=ClientIP, AppDisplayName, Operation,
+          OfficeWorkload, ResultStatus, OfficeObjectId, Parameters,
+          CorrelationId, SessionId, CorrelationStrength
+| order by AuditTime desc

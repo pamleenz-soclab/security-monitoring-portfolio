@@ -1,12 +1,19 @@
+// Entra stable identifiers are used where the source table exposes them.
+// OfficeActivity is appended as contextual user/IP/time evidence because it does not expose Entra SessionId.
 let TargetSession="<SESSION_ID>";
 let TargetCorrelation="<CORRELATION_ID>";
+let TargetUser="<USER>";
+let TargetIP="<IP_ADDRESS>";
+let StartTime=datetime(2026-06-18T01:30:00Z);
+let EndTime=datetime(2026-06-18T04:00:00Z);
 union isfuzzy=true
 (
   SigninLogs
   | where SessionId == TargetSession or CorrelationId == TargetCorrelation
   | project TimeGenerated, Source="SigninLogs", UserPrincipalName,
             IPAddress, Activity=AppDisplayName, Result=tostring(ResultType),
-            CorrelationId, SessionId, OriginalRequestId, UniqueTokenIdentifier
+            CorrelationId, SessionId, OriginalRequestId, UniqueTokenIdentifier,
+            Linkage="stable Entra identifier"
 ),
 (
   AADNonInteractiveUserSignInLogs
@@ -14,7 +21,8 @@ union isfuzzy=true
   | project TimeGenerated, Source="AADNonInteractiveUserSignInLogs",
             UserPrincipalName, IPAddress, Activity=AppDisplayName,
             Result=tostring(ResultType), CorrelationId, SessionId,
-            OriginalRequestId, UniqueTokenIdentifier
+            OriginalRequestId, UniqueTokenIdentifier,
+            Linkage="stable Entra identifier"
 ),
 (
   AuditLogs
@@ -22,15 +30,19 @@ union isfuzzy=true
   | project TimeGenerated, Source="AuditLogs",
             UserPrincipalName=tostring(InitiatedBy.user.userPrincipalName),
             IPAddress=tostring(InitiatedBy.user.ipAddress),
-            Activity=ActivityDisplayName, Result,
-            CorrelationId, SessionId="", OriginalRequestId="", UniqueTokenIdentifier=""
+            Activity=ActivityDisplayName, Result=tostring(Result),
+            CorrelationId, SessionId="", OriginalRequestId="", UniqueTokenIdentifier="",
+            Linkage="correlation ID"
 ),
 (
   OfficeActivity
-  | where tostring(SessionId) == TargetSession
+  | where TimeGenerated between (StartTime .. EndTime)
+  | where UserId =~ TargetUser
+  | where isempty(TargetIP) or isempty(ClientIP) or ClientIP == TargetIP
   | project TimeGenerated, Source="OfficeActivity", UserPrincipalName=UserId,
-            IPAddress=ClientIP, Activity=Operation, Result,
-            CorrelationId="", SessionId=tostring(SessionId),
-            OriginalRequestId="", UniqueTokenIdentifier=""
+            IPAddress=ClientIP, Activity=Operation, Result=ResultStatus,
+            CorrelationId="", SessionId="", OriginalRequestId="", UniqueTokenIdentifier="",
+            Linkage=iff(isnotempty(ClientIP) and ClientIP == TargetIP,
+                        "contextual user+IP+time", "contextual user+time")
 )
 | order by TimeGenerated asc

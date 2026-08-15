@@ -1177,7 +1177,7 @@ def build_dataset(raw_dir: Path) -> dict[str, Any]:
         encoding="utf-8",
     )
 
-    files = sorted(p for p in raw_dir.iterdir() if p.is_file())
+    files = sorted(p for p in raw_dir.iterdir() if p.is_file() and not p.name.startswith("."))
     manifest = {
         "datasetName": "Scenario 17 Synthetic Entra Identity and MFA Anomaly Dataset",
         "datasetVersion": DATASET_VERSION,

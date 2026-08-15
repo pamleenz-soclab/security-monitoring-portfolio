@@ -1,14 +1,17 @@
-IdentityProtectionRiskEvents
+AADUserRiskEvents
 | where UserPrincipalName =~ "<USER>"
-| project RiskTime=TimeGenerated, UserPrincipalName, Activity, RiskEventType,
-          RiskLevel, RiskState, CorrelationId, RequestId, IPAddress
+| extend RiskTime=coalesce(ActivityDateTime, TimeGenerated)
+| project RiskTime, UserPrincipalName, Activity, RiskEventType,
+          RiskLevel, RiskState, CorrelationId, RequestId, RiskIPAddress=IpAddress
 | join kind=leftouter (
     SigninLogs
-    | project SignInTime=TimeGenerated, UserPrincipalName, IPAddress,
+    | project SignInTime=TimeGenerated, UserPrincipalName, SignInIP=IPAddress,
               AppDisplayName, ResultType, CorrelationId,
               RequestId=OriginalRequestId, SessionId
 ) on CorrelationId
-| project RiskTime, SignInTime, UserPrincipalName, IPAddress,
-          RiskEventType, RiskLevel, RiskState,
-          AppDisplayName, ResultType, CorrelationId, RequestId, SessionId
+| extend RequestIdMatch = isnotempty(RequestId) and RequestId == RequestId1
+| project RiskTime, SignInTime, UserPrincipalName, RiskIPAddress, SignInIP,
+          RiskEventType, RiskLevel, RiskState, AppDisplayName, ResultType,
+          CorrelationId, RiskRequestId=RequestId, SignInRequestId=RequestId1,
+          RequestIdMatch, SessionId
 | order by RiskTime asc

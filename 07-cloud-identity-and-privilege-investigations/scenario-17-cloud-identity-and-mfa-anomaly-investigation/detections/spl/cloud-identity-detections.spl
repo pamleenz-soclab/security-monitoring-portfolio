@@ -1,11 +1,14 @@
 # 1. Password spray
 index=entra sourcetype=entra:signin resultType=50126
 | bin _time span=10m
-| stats count as attempts dc(userPrincipalName) as distinct_users
+| stats count as user_attempts by _time ipAddress userPrincipalName
+| stats sum(user_attempts) as attempts dc(userPrincipalName) as distinct_users
+        max(user_attempts) as max_attempts_per_user
         values(userPrincipalName) as users by _time ipAddress
-| where distinct_users>=5
+| where distinct_users>=5 AND max_attempts_per_user<=3
 
 # 2. Repeated MFA denial/timeout followed by success
+# Field extraction must preserve authentication-step time and the overall sign-in result.
 index=entra sourcetype=entra:signin
 | spath input=authenticationDetails
 | mvexpand authenticationDetails{}
@@ -31,8 +34,16 @@ index=entra sourcetype=entra:signin
         authenticationProtocol conditionalAccessStatus resultType failureReason
 
 # 4. Suspicious successful sign-in plus follow-on activity
-(index=entra sourcetype=entra:signin resultType=0)
-OR (index=m365 sourcetype=m365:audit operation IN ("New-InboxRule","FileDownloaded"))
-| transaction sessionId maxspan=2h
-| search operation IN ("New-InboxRule","FileDownloaded")
-| table _time userPrincipalName ipAddress sessionId appDisplayName operation objectId
+# M365 audit is correlated by normalized user/IP/time fields; do not assume an Entra SessionId is present.
+index=entra sourcetype=entra:signin resultType=0
+| eval actor=userPrincipalName, signin_ip=ipAddress, signin_time=_time
+| fields actor signin_ip signin_time appDisplayName correlationId sessionId
+| join type=inner actor [
+    search index=m365 sourcetype=m365:audit operation IN ("New-InboxRule","Set-InboxRule","FileDownloaded")
+    | eval actor=userId, audit_ip=clientIP, audit_time=_time
+    | fields actor audit_ip audit_time operation officeWorkload resultStatus officeObjectId parameters
+]
+| where audit_time>=signin_time AND audit_time<=signin_time+7200
+| eval correlation_strength=if(audit_ip=signin_ip,"user+IP+time","user+time")
+| table signin_time audit_time actor signin_ip audit_ip appDisplayName operation
+        officeWorkload resultStatus officeObjectId correlationId sessionId correlation_strength

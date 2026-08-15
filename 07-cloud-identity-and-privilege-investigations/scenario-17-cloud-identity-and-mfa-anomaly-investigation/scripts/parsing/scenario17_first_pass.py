@@ -53,7 +53,7 @@ def sha256(path: Path) -> str:
 def write_csv(path: Path, rows: Iterable[dict[str, Any]], fields: list[str]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fields, extrasaction="ignore")
+        writer = csv.DictWriter(handle, fieldnames=fields, extrasaction="ignore", lineterminator="\n")
         writer.writeheader()
         for row in rows:
             clean = {}
@@ -70,7 +70,7 @@ def write_csv(path: Path, rows: Iterable[dict[str, Any]], fields: list[str]) -> 
 def write_tsv(path: Path, rows: Iterable[dict[str, Any]], fields: list[str]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fields, delimiter="\t", extrasaction="ignore")
+        writer = csv.DictWriter(handle, fieldnames=fields, delimiter="\t", extrasaction="ignore", lineterminator="\n")
         writer.writeheader()
         for row in rows:
             clean = {}
@@ -315,7 +315,7 @@ def main() -> int:
 
     # Source record and integrity manifest.
     source_rows = []
-    for path in sorted(p for p in raw.iterdir() if p.is_file()):
+    for path in sorted(p for p in raw.iterdir() if p.is_file() and not p.name.startswith(".")):
         source_rows.append({
             "file_name": path.name,
             "file_type": "JSONL" if path.suffix == ".jsonl" else ("JSON" if path.suffix == ".json" else "text"),

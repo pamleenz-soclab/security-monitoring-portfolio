@@ -1,43 +1,45 @@
-// Repeated MFA denial/timeout followed by a successful MFA sign-in.
-// Tune thresholds and field parsing for the tenant's actual export shape.
+// Repeated Authenticator denial/timeout events followed by a successful sign-in.
+// AuthenticationDetails is dynamic JSON in SigninLogs; tune string parsing for the tenant export.
 let Window = 15m;
 let MinFailures = 3;
 let Steps =
 SigninLogs
 | extend AuthDetails = todynamic(AuthenticationDetails)
 | mv-expand AuthStep = AuthDetails
-| extend
-    StepTime = todatetime(AuthStep.authenticationStepDateTime),
-    Method = tostring(AuthStep.authenticationMethod),
-    StepSucceeded = tobool(AuthStep.succeeded),
-    StepDetail = tostring(AuthStep.authenticationStepResultDetail)
+| extend StepTime = todatetime(AuthStep.authenticationStepDateTime),
+         Method = tostring(AuthStep.authenticationMethod),
+         StepSucceeded = tobool(AuthStep.succeeded),
+         StepDetail = tostring(AuthStep.authenticationStepResultDetail)
 | where Method has "Authenticator"
-| extend Outcome = case(
-    StepSucceeded == true, "success",
-    StepDetail has_any ("denied", "declined"), "denied",
-    StepDetail has_any ("timeout", "no response"), "timeout",
-    "other")
-| project TimeGenerated, StepTime, UserPrincipalName, IPAddress, CorrelationId,
+| extend EventTime = coalesce(StepTime, TimeGenerated),
+         Outcome = case(
+             StepSucceeded == true, "success",
+             StepDetail has_any ("denied", "declined"), "denied",
+             StepDetail has_any ("timeout", "no response"), "timeout",
+             "other")
+| project EventTime, UserPrincipalName, IPAddress, CorrelationId,
           SessionId, AppDisplayName, Outcome, ResultType, DeviceDetail;
 let Failures =
 Steps
 | where Outcome in ("denied", "timeout")
-| summarize FailureCount=count(),
-            DeniedCount=countif(Outcome=="denied"),
-            TimeoutCount=countif(Outcome=="timeout"),
-            FirstFailure=min(TimeGenerated),
-            LastFailure=max(TimeGenerated)
-  by UserPrincipalName, IPAddress;
+| project FailureTime=EventTime, UserPrincipalName, IPAddress, FailureOutcome=Outcome;
 let Successes =
 Steps
 | where Outcome == "success" and ResultType == "0"
-| project SuccessTime=TimeGenerated, UserPrincipalName, IPAddress,
+| project SuccessTime=EventTime, UserPrincipalName, IPAddress,
           CorrelationId, SessionId, AppDisplayName, DeviceDetail;
 Failures
-| where FailureCount >= MinFailures
 | join kind=inner Successes on UserPrincipalName, IPAddress
-| where SuccessTime between (FirstFailure .. FirstFailure + Window)
+| where FailureTime between (SuccessTime - Window .. SuccessTime)
+| summarize FailureCount=count(),
+            DeniedCount=countif(FailureOutcome == "denied"),
+            TimeoutCount=countif(FailureOutcome == "timeout"),
+            FirstFailure=min(FailureTime),
+            LastFailure=max(FailureTime)
+  by SuccessTime, UserPrincipalName, IPAddress, CorrelationId, SessionId,
+     AppDisplayName, tostring(DeviceDetail)
+| where FailureCount >= MinFailures and LastFailure < SuccessTime
 | project SuccessTime, UserPrincipalName, IPAddress, FailureCount,
-          DeniedCount, TimeoutCount, CorrelationId, SessionId,
-          AppDisplayName, DeviceDetail
+          DeniedCount, TimeoutCount, FirstFailure, LastFailure,
+          CorrelationId, SessionId, AppDisplayName, DeviceDetail
 | order by SuccessTime desc

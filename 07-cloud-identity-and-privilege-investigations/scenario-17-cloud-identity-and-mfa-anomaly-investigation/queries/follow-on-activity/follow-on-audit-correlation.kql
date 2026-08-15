@@ -8,11 +8,10 @@ union isfuzzy=true
   | where tostring(InitiatedBy.user.userPrincipalName) =~ TargetUser
      or TargetResources has TargetUser
   | project TimeGenerated, Source="Entra Audit",
-            Activity=ActivityDisplayName, Result,
+            Activity=ActivityDisplayName, Result=tostring(Result),
             Actor=tostring(InitiatedBy.user.userPrincipalName),
             ActorIP=tostring(InitiatedBy.user.ipAddress),
-            Target=tostring(TargetResources), CorrelationId,
-            SessionId=""
+            Target=tostring(TargetResources), CorrelationId
 ),
 (
   OfficeActivity
@@ -21,7 +20,7 @@ union isfuzzy=true
   | where Operation in~ ("New-InboxRule","Set-InboxRule","FileDownloaded",
                          "Add-MailboxPermission","Set-Mailbox")
   | project TimeGenerated, Source="M365 Audit", Activity=Operation,
-            Result, Actor=UserId, ActorIP=ClientIP,
-            Target=ObjectId, CorrelationId="", SessionId=tostring(SessionId)
+            Result=ResultStatus, Actor=UserId, ActorIP=ClientIP,
+            Target=OfficeObjectId, CorrelationId=""
 )
 | order by TimeGenerated asc
