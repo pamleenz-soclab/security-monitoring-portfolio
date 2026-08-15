@@ -15,9 +15,9 @@ Each hunt was evaluated in the following order:
 9. separate detection gaps from logging/visibility gaps;
 10. derive bounded detection opportunities without implementing new rules.
 
-## Local evaluator
+## Local analysis boundary
 
-The evaluator is a local Python query/correlation engine. It provides explicit, auditable semantics over processed CSV evidence.
+The hunts were evaluated with local Python query/correlation logic over processed CSV evidence. The original one-off evaluator is not published as a production engine. Query semantics are documented in `hunt-query-guide.md`, and the published package is checked by `scripts/validate_portfolio.py`.
 
 It does not emulate native SIEM behaviour such as:
 

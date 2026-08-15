@@ -11,7 +11,7 @@ A **Detection Gap** is registered only when:
 
 | gap_id | hunt_id | behaviour | telemetry_status | observed_status | current_detection_status | gap_classification | evidence_reference | reasoning | recommended_detection_opportunity | priority |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| DG-02 | HC-03 | Suspicious PowerShell with correlated follow-on context | Available | Observed | No detection | Detection gap | scenario10:process-chain.csv;powershell-behaviour-summary.csv | Observed endpoint behaviour has no Scenario10 rule artifact in the inventory. | Create a high-signal PowerShell primitive enriched with same-ProcessGuid child/file/network activity. | High |
+| DG-02 | HC-03 | Suspicious PowerShell with correlated follow-on context | Available | Observed | No detection | Detection gap | scenario10:process-chain.csv;powershell-behaviour-summary.csv | Observed endpoint behaviour had no dedicated Scenario 10 rule artifact in reviewed repository state `7f0f92b`. | Create a high-signal PowerShell primitive enriched with same-ProcessGuid child/file/network activity. | High |
 
 Only one confirmed detection gap remains after precision review.
 

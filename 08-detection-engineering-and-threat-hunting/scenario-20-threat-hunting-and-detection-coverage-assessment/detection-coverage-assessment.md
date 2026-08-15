@@ -55,4 +55,4 @@ No percentage is calculated from ATT&CK mappings or rule counts.
 
 - **HC-01:** the MFA failure-to-success sequence is detected by R19-01. Scenario 17 also contains a follow-on correlation KQL; precision review found that 4 of 5 observed post-authentication activities matched its exact user/session/2-hour/operation semantics. This is partial coverage, not a confirmed missing detection.
 - **HC-05:** Scenario 13 already has Sentinel and Splunk multi-event SMBExec correlation for the core 4624 Type 3 → 5145 `svcctl` → 4697 sequence within two minutes. The expanded hunt chain is partially detected because later process/follow-on context is not all joined into the same analytic.
-- **HC-03:** suspicious PowerShell and correlated endpoint context are observable, but the repository inventory found no dedicated Scenario 10 detection-rule artifact. This remains the confirmed detection gap.
+- **HC-03:** suspicious PowerShell and correlated endpoint context are observable, but reviewed repository state `7f0f92b` contained no dedicated Scenario 10 detection-rule artifact. This remains the confirmed detection gap.
