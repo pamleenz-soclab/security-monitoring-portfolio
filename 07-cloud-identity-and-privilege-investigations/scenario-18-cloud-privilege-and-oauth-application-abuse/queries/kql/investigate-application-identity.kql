@@ -18,13 +18,17 @@ union isfuzzy=true
     | project TimeGenerated, Source="AADServicePrincipalSignInLogs", Operation="Service principal sign-in",
               AppId, ServicePrincipalId, ServicePrincipalCredentialKeyId, FederatedCredentialId,
               ClientCredentialType, IPAddress, AutonomousSystemNumber, ResourceDisplayName,
-              ResultType, CorrelationId, UniqueTokenIdentifier
+              ResultType, CorrelationId, SessionId, UniqueTokenIdentifier
 ),
 (
     MicrosoftGraphActivityLogs
     | where TimeGenerated between (StartTime .. EndTime)
     | where AppId == IncidentAppId or ServicePrincipalId == IncidentServicePrincipalId
     | project TimeGenerated, Source="MicrosoftGraphActivityLogs", Operation=strcat(RequestMethod, " ", RequestUri),
-              AppId, ServicePrincipalId, RequestId, ResponseStatusCode, IPAddress
+              AppId, ServicePrincipalId, SignInActivityId, SessionId, UniqueTokenId,
+              RequestId, OperationId, Roles, Scopes, ResponseStatusCode, ResponseSizeBytes, IPAddress
 )
 | order by TimeGenerated asc
+
+// For a direct production token-level pivot, join Graph activity to service-principal sign-ins with:
+// MicrosoftGraphActivityLogs.SignInActivityId == AADServicePrincipalSignInLogs.UniqueTokenIdentifier

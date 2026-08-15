@@ -1,78 +1,147 @@
 #!/usr/bin/env python3
-"""Validate the final Scenario 18 portfolio in standalone or Git-aware mode."""
-
+"""Validate Scenario 18 publishable content and Git evidence boundaries."""
 from __future__ import annotations
-import argparse, csv, hashlib, json, re, subprocess, sys
+
+import argparse
+import os
+import re
+import subprocess
 from pathlib import Path
 
-REQUIRED = [
-    'README.md','dataset-decision-record.md','evidence-inventory.md','source-and-license-record.md',
-    'triage-note.md','investigation-notes.md','investigation-report.md','executive-summary.md',
-    'recommended-actions.md','containment-decision-record.md','revocation-and-recovery-plan.md',
-    'detection-engineering.md','false-positive-tuning.md','validation-checklist.md',
-    'github-publishing-guide.md','PACKAGE-MANIFEST.tsv',
-    'evidence/processed/cloud-privilege-event-timeline.csv',
-    'evidence/processed/principal-and-object-mapping.csv',
-    'evidence/processed/cloud-privilege-abuse-assessment.csv',
-    'scripts/parsing/first_pass_parser.py',
-    'scripts/correlation/precise_cloud_privilege_correlation.py',
-    'scripts/correlation/permission_risk.py',
-    'scripts/validation/sanitisation_test.py',
+REQUIRED_DOCS = [
+    "README.md", "dataset-decision-record.md", "evidence-inventory.md",
+    "source-and-license-record.md", "triage-note.md", "investigation-report.md",
+    "recommended-actions.md", "containment-decision-record.md",
+    "revocation-and-recovery-plan.md", "detection-engineering.md",
+    "false-positive-tuning.md", "cloud-object-and-id-guide.md",
 ]
-FORBIDDEN = ['-----BEGIN PRIVATE KEY-----','Bearer ','Authorization: Bearer','refresh_token=','access_token=','client_secret=']
+REQUIRED_PROCESSED = [
+    "cloud-privilege-event-timeline.csv", "application-and-service-principal-analysis.csv",
+    "application-baseline-analysis.csv", "administrator-baseline-analysis.csv",
+    "oauth-consent-analysis.csv", "permission-risk-assessment.csv",
+    "role-assignment-analysis.csv", "credential-change-analysis.csv",
+    "service-principal-signin-analysis.csv", "api-and-resource-activity-analysis.csv",
+    "precise-cloud-privilege-correlation.csv", "owner-verification-analysis.csv",
+    "cloud-privilege-abuse-assessment.csv", "detection-gap-analysis.csv",
+    "sanitised-evidence-excerpts.tsv", "source-sha256-records.tsv",
+]
+REQUIRED_CODE = [
+    "scripts/generation/generate_synthetic_event.py",
+    "scripts/validation/validate_synthetic_package.py",
+    "scripts/parsing/first_pass_parser.py",
+    "scripts/correlation/precise_cloud_privilege_correlation.py",
+    "scripts/correlation/permission_risk.py",
+    "scripts/validation/sanitisation_test.py",
+    "scripts/validation/portfolio_validator.py",
+    "scripts/safe-reproducibility-wrapper.sh",
+    "detections/sentinel/04-credential-followed-by-service-principal-signin.kql",
+    "detections/sentinel/05-application-permission-followed-by-sensitive-graph-use.kql",
+    "detections/generic/cloud-privilege-detection-catalog.yml",
+]
+FORBIDDEN_TRACKED = {
+    "PACKAGE-MANIFEST.tsv", "README-STAGE2.md", "executive-summary.md",
+    "github-publishing-guide.md", "interview-walkthrough.md", "investigation-notes.md",
+    "validation-checklist.md", "scenario18.gitignore.template", "screenshots/.gitkeep",
+    "evidence/raw/.gitkeep", "evidence/working/.gitkeep", "evidence/processed/.gitkeep",
+    "scripts/validation/git_aware_validator.py", "scripts/validation/sanitise_processed_evidence.py",
+}
+LOCAL_PREFIXES = ("evidence/raw", "evidence/working")
+RUNTIME_DIRS = {"__pycache__", ".pytest_cache", ".venv", "venv"}
+TEXT_SUFFIXES = {".md", ".txt", ".csv", ".tsv", ".json", ".jsonl", ".yml", ".yaml", ".py", ".sh", ".sql", ".kql", ".spl", ".esql"}
+USER_PATH = re.compile(r"(?:/Users/[^/\s]+|[A-Za-z]:\\\\Users\\\\[^\\\\\s]+)")
 
-def git(repo: Path, *args: str):
-    return subprocess.run(['git','-C',str(repo),*args], text=True, capture_output=True)
+
+def is_local(rel: Path) -> bool:
+    posix = rel.as_posix()
+    return any(posix == p or posix.startswith(p + "/") for p in LOCAL_PREFIXES)
+
+
+def publishable_files(root: Path):
+    for current, dirs, files in os.walk(root):
+        current_path = Path(current)
+        rel_current = current_path.relative_to(root)
+        kept = []
+        for d in dirs:
+            child = rel_current / d
+            if d in RUNTIME_DIRS or is_local(child):
+                continue
+            kept.append(d)
+        dirs[:] = kept
+        for name in files:
+            yield current_path / name
+
+
+def git(repo: Path, *args: str) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(["git", "-C", str(repo), *args], text=True, capture_output=True)
+
 
 def main() -> int:
-    ap=argparse.ArgumentParser()
-    ap.add_argument('--scenario-dir', required=True, type=Path)
-    ap.add_argument('--repo-root', type=Path)
-    ap.add_argument('--standalone', action='store_true')
-    args=ap.parse_args()
-    root=args.scenario_dir.resolve()
-    errors=[]; warnings=[]
-    for rel in REQUIRED:
-        if not (root/rel).is_file(): errors.append(f'Missing required file: {rel}')
-    for local_dir in ['evidence/raw','evidence/working']:
-        d=root/local_dir
-        if not d.is_dir(): errors.append(f'Missing directory: {local_dir}'); continue
-        if args.standalone:
-            extras=[p for p in d.rglob('*') if p.is_file() and p.name!='.gitkeep']
-            if extras: errors.append(f'Standalone {local_dir} contains local evidence: {extras}')
-    for p in root.rglob('*'):
-        if not p.is_file() or p.suffix in {'.zip','.png','.jpg','.jpeg','.webp','.sqlite'}: continue
-        try: text=p.read_text(encoding='utf-8')
-        except UnicodeDecodeError: continue
-        rel_text=str(p.relative_to(root))
-        if not rel_text.startswith('scripts/validation/'):
-            for marker in FORBIDDEN:
-                if marker.lower() in text.lower(): errors.append(f'Forbidden secret/token marker in {rel_text}: {marker}')
-        for n,line in enumerate(text.splitlines(),1):
-            if line.rstrip()!=line: errors.append(f'Trailing whitespace: {p.relative_to(root)}:{n}')
-    manifest=root/'PACKAGE-MANIFEST.tsv'
-    if manifest.is_file():
-        rows=list(csv.DictReader(manifest.open(encoding='utf-8'), delimiter='\t'))
-        listed={r['relative_path'] for r in rows}
-        for r in rows:
-            p=root/r['relative_path']
-            if not p.is_file(): errors.append(f'Manifest file missing: {r["relative_path"]}'); continue
-            if hashlib.sha256(p.read_bytes()).hexdigest()!=r['sha256']: errors.append(f'Manifest hash mismatch: {r["relative_path"]}')
-        actual={str(p.relative_to(root)) for p in root.rglob('*') if p.is_file() and p.name!='PACKAGE-MANIFEST.tsv'}
-        if listed!=actual:
-            errors.append(f'Manifest membership mismatch: missing={sorted(actual-listed)}, extra={sorted(listed-actual)}')
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--scenario-dir", required=True, type=Path)
+    ap.add_argument("--repo-root", type=Path)
+    args = ap.parse_args()
+    root = args.scenario_dir.expanduser().resolve()
+    errors: list[str] = []
+
+    for rel in REQUIRED_DOCS + [f"evidence/processed/{x}" for x in REQUIRED_PROCESSED] + REQUIRED_CODE:
+        if not (root / rel).is_file():
+            errors.append(f"missing_required_file: {rel}")
+
+    for rel in FORBIDDEN_TRACKED:
+        if (root / rel).exists():
+            errors.append(f"stale_publishable_artifact_present: {rel}")
+
+    for path in publishable_files(root):
+        rel = path.relative_to(root).as_posix()
+        if path.suffix.lower() not in TEXT_SUFFIXES:
+            continue
+        try:
+            text = path.read_text(encoding="utf-8")
+        except UnicodeDecodeError:
+            errors.append(f"unexpected_binary_publishable_file: {rel}")
+            continue
+        for line_no, line in enumerate(text.splitlines(), 1):
+            if line.rstrip() != line:
+                errors.append(f"trailing_whitespace: {rel}:{line_no}")
+        if rel not in {"scripts/validation/portfolio_validator.py", "scripts/validation/sanitisation_test.py"} and USER_PATH.search(text):
+            errors.append(f"hard_coded_local_user_path: {rel}")
+
     if args.repo_root:
-        repo=args.repo_root.resolve()
-        try: rel=root.relative_to(repo)
-        except ValueError: errors.append('Scenario directory is not under repo root'); rel=Path('.')
-        tracked=git(repo,'ls-files','--',str(rel/'evidence/raw'),str(rel/'evidence/working'))
-        bad=[x for x in tracked.stdout.splitlines() if x and not x.endswith('.gitkeep')]
-        if bad: errors.append('Raw/working evidence tracked: '+', '.join(bad))
-        for d in [root/'evidence/raw',root/'evidence/working']:
-            for p in d.rglob('*'):
-                if p.is_file() and p.name!='.gitkeep' and git(repo,'check-ignore','-q',str(p)).returncode!=0:
-                    errors.append(f'Local evidence not ignored: {p.relative_to(repo)}')
-    result={'status':'PASS' if not errors else 'FAIL','errors':errors,'warnings':warnings}
-    print(json.dumps(result,indent=2))
-    return 0 if not errors else 1
-if __name__=='__main__': raise SystemExit(main())
+        repo = args.repo_root.expanduser().resolve()
+        try:
+            rel_root = root.relative_to(repo).as_posix()
+        except ValueError:
+            errors.append("scenario_not_under_repo_root")
+            rel_root = ""
+
+        if rel_root:
+            local_paths = [f"{rel_root}/evidence/raw", f"{rel_root}/evidence/working"]
+            tracked = git(repo, "ls-files", "--", *local_paths)
+            if tracked.stdout.strip():
+                for item in tracked.stdout.splitlines():
+                    errors.append(f"local_evidence_tracked: {item}")
+
+            unignored = git(repo, "ls-files", "--others", "--exclude-standard", "--", *local_paths)
+            if unignored.stdout.strip():
+                for item in unignored.stdout.splitlines():
+                    errors.append(f"local_evidence_not_ignored: {item}")
+
+            tracked_scenario = git(repo, "ls-files", "--", rel_root)
+            for item in tracked_scenario.stdout.splitlines():
+                p = repo / item
+                if p.is_file() and p.stat().st_size > 5 * 1024 * 1024:
+                    errors.append(f"unexpected_large_tracked_file: {item}")
+
+    if errors:
+        print("FAIL")
+        for error in errors:
+            print(" -", error)
+        return 1
+
+    mode = "Git-aware" if args.repo_root else "publishable"
+    print(f"PASS: Scenario 18 {mode} portfolio validation completed with zero errors")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -24,7 +24,7 @@ def write_csv(path: Path, rows: list[dict[str, Any]], fields: list[str] | None =
     if fields is None:
         fields = sorted({key for row in rows for key in row}) if rows else ["status"]
     with path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fields, extrasaction="ignore")
+        writer = csv.DictWriter(handle, fieldnames=fields, extrasaction="ignore", lineterminator="\n")
         writer.writeheader()
         for row in rows:
             writer.writerow({k: "" if row.get(k) is None else row.get(k) for k in fields})
@@ -657,7 +657,7 @@ def main() -> int:
     fields = ["relative_path", "size_bytes", "sha256", "source_type", "original_modified"]
     for tsv_name in ["acquisition-manifest.tsv", "source-sha256-records.tsv"]:
         with (out / tsv_name).open("w", encoding="utf-8", newline="") as handle:
-            writer = csv.DictWriter(handle, fieldnames=fields, delimiter="\t")
+            writer = csv.DictWriter(handle, fieldnames=fields, delimiter="\t", lineterminator="\n")
             writer.writeheader()
             writer.writerows(acquisition_rows)
     evidence_source_record = {

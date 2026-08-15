@@ -72,7 +72,7 @@ def main() -> int:
 
     fields = list(rows[0].keys())
     with (out / "permission-risk-assessment.csv").open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fields)
+        writer = csv.DictWriter(handle, fieldnames=fields, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 

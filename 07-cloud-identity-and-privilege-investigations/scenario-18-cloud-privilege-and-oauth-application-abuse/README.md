@@ -61,8 +61,8 @@ These identifiers are synthetic. Application object ID, application/client ID, a
 ```text
 .
 ├── evidence/
-│   ├── raw/                 # Local only; Git ignored
-│   ├── working/             # Local only; Git ignored
+│   ├── raw/                 # Created locally; Git ignored
+│   ├── working/             # Created locally; Git ignored
 │   └── processed/           # Sanitised, publishable evidence
 ├── detections/
 │   ├── sentinel/
@@ -71,10 +71,11 @@ These identifiers are synthetic. Application object ID, application/client ID, a
 │   └── generic/
 ├── queries/
 ├── scripts/
-├── screenshots/
+├── triage-note.md
 ├── investigation-report.md
-├── detection-engineering.md
-└── PACKAGE-MANIFEST.tsv
+├── containment-decision-record.md
+├── revocation-and-recovery-plan.md
+└── detection-engineering.md
 ```
 
 ## Reproduce the analysis safely
@@ -82,8 +83,8 @@ These identifiers are synthetic. Application object ID, application/client ID, a
 From the repository root:
 
 ```bash
-export REPO_ROOT="/Users/pamlee/Documents/GitHub/security-monitoring-portfolio"
-export SCENARIO_DIR="$REPO_ROOT/07-cloud-identity-and-privilege-investigations/scenario-18-cloud-privilege-and-oauth-application-abuse"
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+SCENARIO_DIR="$REPO_ROOT/07-cloud-identity-and-privilege-investigations/scenario-18-cloud-privilege-and-oauth-application-abuse"
 
 "$SCENARIO_DIR/scripts/safe-reproducibility-wrapper.sh" \
   --repo-root "$REPO_ROOT"
@@ -104,16 +105,21 @@ The wrapper generates only synthetic raw evidence, validates it, produces workin
 | Which exact app-role claim authorised each API request? | Not available; inferred from assignments and operation capability |
 | Who controlled the application credentials? | Inferred; direct human attribution unavailable |
 
+## Production telemetry mapping note
+
+The synthetic package intentionally uses a direct `UniqueTokenIdentifier` field in both its service-principal sign-in and API-activity records so the portfolio can demonstrate deterministic token-level correlation. In Microsoft Sentinel, `AADServicePrincipalSignInLogs.UniqueTokenIdentifier` should be correlated with Microsoft Graph activity using the documented linkable-identifier fields, particularly `MicrosoftGraphActivityLogs.SignInActivityId`. Do not assume identically named token fields across products.
+
+The synthetic API records intentionally omit per-request permission claims. Production `MicrosoftGraphActivityLogs` can expose `Roles` and `Scopes`; use those fields when present, but retain the Scenario 18 conclusion that the exact permission claim is **Not available** because it is absent from this scenario's source evidence.
+
 ## Important documentation
 
-- [Executive summary](executive-summary.md)
 - [Triage note](triage-note.md)
 - [Investigation report](investigation-report.md)
 - [Containment decision record](containment-decision-record.md)
 - [Revocation and recovery plan](revocation-and-recovery-plan.md)
+- [Cloud object and identifier guide](cloud-object-and-id-guide.md)
 - [Detection engineering](detection-engineering.md)
 - [False-positive tuning](false-positive-tuning.md)
-- [GitHub publishing guide](github-publishing-guide.md)
 
 ## References
 
@@ -124,6 +130,7 @@ The wrapper generates only synthetic raw evidence, validates it, produces workin
 - [Apps and service principals in Microsoft Entra ID](https://learn.microsoft.com/en-us/entra/identity-platform/app-objects-and-service-principals) — accessed 2026-08-07.
 - [AADServicePrincipalSignInLogs table](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/aadserviceprincipalsigninlogs) — accessed 2026-08-07.
 - [Microsoft Graph activity logs overview](https://learn.microsoft.com/en-us/graph/microsoft-graph-activity-logs-overview) — accessed 2026-08-07.
+- [Track and investigate identity activities with linkable identifiers](https://learn.microsoft.com/en-us/entra/identity/authentication/how-to-authentication-track-linkable-identifiers) — accessed 2026-08-15.
 - [Review permissions granted to enterprise applications](https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/manage-application-permissions) — accessed 2026-08-07.
 - [Delete oAuth2PermissionGrant](https://learn.microsoft.com/en-us/graph/api/oauth2permissiongrant-delete?view=graph-rest-1.0) — accessed 2026-08-07.
 - [Delete appRoleAssignment](https://learn.microsoft.com/en-us/graph/api/serviceprincipal-delete-approleassignments?view=graph-rest-1.0) — accessed 2026-08-07.

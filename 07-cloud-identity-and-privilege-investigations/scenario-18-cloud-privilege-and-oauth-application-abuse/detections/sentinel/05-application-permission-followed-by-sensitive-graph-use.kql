@@ -1,18 +1,42 @@
-let SensitivePaths = dynamic(["/applications","/servicePrincipals","/roleManagement","/sites","/drives","/users","/groups"]);
+// Correlate an app-role assignment, a subsequent SP sign-in, and Microsoft Graph activity.
+// The sign-in-to-Graph join uses Microsoft's documented linkable identifier:
+// AADServicePrincipalSignInLogs.UniqueTokenIdentifier == MicrosoftGraphActivityLogs.SignInActivityId.
+let Lookback = 1d;
+let SensitivePaths = dynamic(["/applications", "/serviceprincipals", "/rolemanagement", "/sites", "/drives", "/users", "/groups"]);
 let Grants = AuditLogs
-| where TimeGenerated > ago(1d)
+| where TimeGenerated > ago(Lookback)
 | where coalesce(ActivityDisplayName, OperationName) has "Add app role assignment"
-| extend Targets=parse_json(TargetResources)
+| extend Targets=todynamic(TargetResources)
 | mv-expand Target=Targets
 | where tostring(Target.type) =~ "ServicePrincipal"
-| project GrantTime=TimeGenerated, ClientServicePrincipalId=tostring(Target.id), GrantOperation=coalesce(ActivityDisplayName, OperationName), GrantCorrelationId=CorrelationId;
+| project GrantTime=TimeGenerated,
+          CandidateServicePrincipalId=tostring(Target.id),
+          GrantOperation=coalesce(ActivityDisplayName, OperationName),
+          GrantCorrelationId=CorrelationId;
+let SuccessfulSpSignins = AADServicePrincipalSignInLogs
+| where TimeGenerated > ago(Lookback)
+| where ResultType == 0
+| where isnotempty(UniqueTokenIdentifier)
+| project SignInTime=TimeGenerated, ServicePrincipalId, AppId,
+          SignInActivityLink=UniqueTokenIdentifier,
+          ClientCredentialType, SignInIP=IPAddress, ResourceDisplayName, SignInId=Id;
+let SensitiveGraphActivity = MicrosoftGraphActivityLogs
+| where TimeGenerated > ago(Lookback)
+| where ResponseStatusCode between (200 .. 299)
+| extend RequestUriLower=tolower(RequestUri)
+| where RequestUriLower has_any (SensitivePaths)
+| where isnotempty(SignInActivityId)
+| project ApiTime=TimeGenerated, GraphServicePrincipalId=ServicePrincipalId,
+          GraphAppId=AppId, GraphSignInActivityId=SignInActivityId,
+          SessionId, RequestMethod, RequestUri, RequestId, OperationId,
+          ResponseStatusCode, ResponseSizeBytes, GraphIP=IPAddress, Roles, Scopes;
 Grants
-| join kind=inner (
-    MicrosoftGraphActivityLogs
-    | where TimeGenerated > ago(1d)
-    | where ResponseStatusCode between (200 .. 299)
-    | where RequestUri has_any (SensitivePaths)
-    | project ApiTime=TimeGenerated, ServicePrincipalId, AppId, RequestMethod, RequestUri, RequestId, ResponseStatusCode, IPAddress
-) on $left.ClientServicePrincipalId == $right.ServicePrincipalId
-| where ApiTime between (GrantTime .. GrantTime + 24h)
-| project GrantTime, ApiTime, ServicePrincipalId, AppId, RequestMethod, RequestUri, RequestId, IPAddress, GrantCorrelationId
+| join kind=inner SuccessfulSpSignins on $left.CandidateServicePrincipalId == $right.ServicePrincipalId
+| where SignInTime between (GrantTime .. GrantTime + 24h)
+| join kind=inner SensitiveGraphActivity on $left.SignInActivityLink == $right.GraphSignInActivityId
+| where GraphServicePrincipalId == ServicePrincipalId
+| where ApiTime between (SignInTime .. SignInTime + 24h)
+| project GrantTime, SignInTime, ApiTime, ServicePrincipalId, AppId,
+          ClientCredentialType, SignInIP, GraphIP, RequestMethod, RequestUri,
+          RequestId, OperationId, ResponseStatusCode, ResponseSizeBytes,
+          Roles, Scopes, GrantCorrelationId, SignInId

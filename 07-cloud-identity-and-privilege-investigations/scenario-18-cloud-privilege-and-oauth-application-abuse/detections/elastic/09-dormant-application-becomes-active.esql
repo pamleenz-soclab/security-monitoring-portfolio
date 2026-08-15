@@ -1,4 +1,11 @@
+// Normalised-field example. A no-history candidate can be a new application or a retention gap,
+// so creation/deployment context must be checked before calling it dormant.
 FROM logs-cloud_identity-*
 | WHERE event.dataset == "entra.service_principal_signin" AND event.outcome == "success" AND @timestamp > NOW() - 90 days
-| STATS first_seen=MIN(@timestamp), last_seen=MAX(@timestamp), signins=COUNT(*), ips=VALUES(source.ip), resources=VALUES(entra.resource.name) BY entra.service_principal.id, entra.app.id, entra.service_principal.name
-| WHERE first_seen < NOW() - 30 days AND last_seen > NOW() - 1 day
+| STATS historical_last=MAX(CASE(@timestamp < NOW() - 1 day, @timestamp, NULL)),
+        recent_first=MIN(CASE(@timestamp >= NOW() - 1 day, @timestamp, NULL)),
+        recent_ips=VALUES(CASE(@timestamp >= NOW() - 1 day, source.ip, NULL)),
+        recent_resources=VALUES(CASE(@timestamp >= NOW() - 1 day, entra.resource.name, NULL)),
+        recent_credential_types=VALUES(CASE(@timestamp >= NOW() - 1 day, entra.signin.client_credential_type, NULL))
+  BY entra.service_principal.id, entra.app.id, entra.service_principal.name
+| WHERE recent_first IS NOT NULL AND (historical_last IS NULL OR historical_last < NOW() - 30 days)

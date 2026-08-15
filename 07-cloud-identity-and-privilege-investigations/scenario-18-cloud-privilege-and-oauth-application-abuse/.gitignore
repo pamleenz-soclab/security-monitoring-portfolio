@@ -1,10 +1,29 @@
-# Local raw and working evidence
-/evidence/raw/**
-!/evidence/raw/.gitkeep
-/evidence/working/**
-!/evidence/working/.gitkeep
+# Raw and working evidence are local-only and never published.
+/evidence/raw/
+/evidence/working/
 
-# Local runtime artefacts
+# Python/runtime artefacts.
 __pycache__/
-*.pyc
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Local databases and caches.
+*.sqlite
+*.sqlite3
+*.db
+*.sqlite-wal
+*.sqlite-shm
+
+# Archives and generated packages.
+*.zip
+*.7z
+*.tar
+*.tar.gz
+*.tgz
+*.gz
+
+# Operating-system metadata.
 .DS_Store
+Thumbs.db

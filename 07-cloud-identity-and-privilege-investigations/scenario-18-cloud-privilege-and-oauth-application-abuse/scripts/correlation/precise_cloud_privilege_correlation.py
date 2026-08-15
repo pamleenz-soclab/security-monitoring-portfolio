@@ -37,7 +37,7 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
         "evidence_strength", "finding", "boundary",
     ]
     with path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fields)
+        writer = csv.DictWriter(handle, fieldnames=fields, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 
