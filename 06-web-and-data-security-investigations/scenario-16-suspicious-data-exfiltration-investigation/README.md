@@ -60,4 +60,4 @@ Source host and file
 
 This package contains no raw PCAP, full logs, DNS payload labels, document contents, credentials, tokens, or receiver files. It does not contain code that performs data exfiltration. Detection queries and reproducibility scripts are defensive and read-only.
 
-See `investigation-report.md` for the complete reasoning and `github-publishing-guide.md` before committing.
+See `investigation-report.md` for the complete reasoning. The repository intentionally excludes local publication checklists, packaging manifests, and raw/working evidence.

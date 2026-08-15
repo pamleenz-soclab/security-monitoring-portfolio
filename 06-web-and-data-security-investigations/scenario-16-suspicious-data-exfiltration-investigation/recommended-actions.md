@@ -6,7 +6,7 @@
 2. Block `email-19.kennedy-mendoza.info` and `192.168.230.122` at DNS, firewall, proxy, and threat-intelligence controls.
 3. Restrict endpoint DNS to approved recursive resolvers; block direct external UDP/TCP 53.
 4. Disable and preserve the `put` service and `/usr/bin/put` for forensic examination rather than deleting them immediately.
-5. Rotate privileged credentials and keys available to the host, especially root-equivalent or service credentials.
+5. Review privileged/service credentials and keys exposed to or used by the host; rotate those with confirmed or plausible exposure, rather than assuming credential theft from DNS exfiltration alone.
 6. Search all hosts and resolvers for the `3x6`/`3x7` grammar, the domain, and the receiver infrastructure.
 
 ## Evidence preservation

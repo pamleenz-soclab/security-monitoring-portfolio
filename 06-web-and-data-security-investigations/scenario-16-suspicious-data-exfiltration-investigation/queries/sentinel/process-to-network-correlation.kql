@@ -8,14 +8,15 @@ let SuspiciousProcesses = DeviceProcessEvents
           ProcessId, InitiatingProcessId;
 let SuspiciousDns = DeviceNetworkEvents
 | where Timestamp > ago(7d)
-| where RemotePort == 53 or Protocol =~ "Udp"
+| where RemotePort == 53
 | where RemoteUrl matches regex @"(^|\.)3x[67]-\.\d+-\."
-| project DeviceId, DeviceName, DnsTime=Timestamp, RemoteUrl,
-          RemoteIP, RemotePort, InitiatingProcessFileName,
-          InitiatingProcessId;
+| project DeviceId, DnsTime=Timestamp, RemoteUrl, RemoteIP, RemotePort,
+          DnsInitiatingProcessFileName=InitiatingProcessFileName,
+          DnsInitiatingProcessId=InitiatingProcessId;
 SuspiciousProcesses
 | join kind=inner SuspiciousDns on DeviceId
 | where DnsTime between (ProcessTime .. ProcessTime + Lookback)
-| project DeviceName, ProcessTime, DnsTime, FileName,
-          ProcessCommandLine, RemoteUrl, RemoteIP, RemotePort,
-          ProcessId, InitiatingProcessId
+| where ProcessId == DnsInitiatingProcessId
+| project DeviceName, ProcessTime, DnsTime, FileName, ProcessCommandLine,
+          RemoteUrl, RemoteIP, RemotePort, ProcessId, DnsInitiatingProcessId,
+          DnsInitiatingProcessFileName

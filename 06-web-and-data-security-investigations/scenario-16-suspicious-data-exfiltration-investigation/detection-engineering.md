@@ -36,3 +36,10 @@ Detect sustained structured DNS file transfer while avoiding the assumption that
 Do not alert solely on query length, entropy, UDP/53 volume, or a compression utility. Require multiple independent features and use allowlists for approved DNS security agents, content-distribution telemetry, service discovery, backup products, and enterprise resolvers.
 
 See `false-positive-tuning.md` and the platform-specific query directories.
+
+## Rule-role and outcome boundaries
+
+- The `3x6`/`3x7` grammar rule is intentionally **scenario-specific** and high confidence for this lab protocol; it should not be presented as a generic DNS-tunnelling signature.
+- Burst and byte-volume analytics are **supplemental**. This case averaged about 17.5 seconds between requests, so a short-window burst threshold can miss the observed low-and-slow behaviour.
+- Process-to-network correlation must use a stable process identifier when the platform provides one. Host-plus-time correlation is supportive, not direct process attribution.
+- A DNS alert, `NOERROR` response, or completion-like marker is not proof of completed data loss. Completion requires independent receiver, DLP, application, or reconstruction evidence.

@@ -16,6 +16,18 @@ evidence/working/*
 *.har
 *.part
 *.zip.part
+*.zip
+*.7z
+*.rar
+*.tar
+*.gz
+*.tgz
+*.xlsx
+*.xls
+*.docx
+*.doc
+*.pptx
+*.ppt
 
 # Local runtime artefacts.
 __pycache__/

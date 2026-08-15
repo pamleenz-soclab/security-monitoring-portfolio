@@ -28,5 +28,5 @@ python3 "$SCENARIO_DIR/scripts/correlation/precise_correlation.py" \
 python3 "$SCENARIO_DIR/scripts/volume-analysis/baseline_volume_analysis.py" \
   --input "$VOLUME" --output "$TMP/recomputed-volume-summary.csv"
 
-echo "Safe reproducibility checks completed."
+echo "Safe reproducibility checks completed against publishable processed evidence."
 echo "Temporary outputs: $TMP (removed on exit)"

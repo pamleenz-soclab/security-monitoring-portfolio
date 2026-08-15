@@ -1,5 +1,6 @@
-index=dns earliest=-14d
-| eval request_bytes=coalesce(request_bytes, bytes_out, transport_bytes, 0)
+index=dns earliest=-14d request_bytes=*
+| eval request_bytes=tonumber(request_bytes)
+| where isnotnull(request_bytes)
 | bin _time span=1h
 | stats count as requests sum(request_bytes) as bytes dc(query) as unique_queries by _time src
 | eventstats avg(bytes) as avg_bytes stdev(bytes) as std_bytes

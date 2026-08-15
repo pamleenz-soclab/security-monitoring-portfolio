@@ -12,7 +12,7 @@ This investigation reconstructed the source host, execution context, data object
 
 ### Source host, account, and process
 
-The source was `internal_share` at `10.143.0.103`. Ground-truth deployment configuration defined a service named `put`, running as `root`, with script path `/usr/bin/put`. Linux audit independently recorded the `put` unit lifecycle under systemd. The dataset did not provide a Windows Process GUID, Logon ID, or stable Linux process-to-flow identifier, so exact process-to-packet linkage is strongly inferred rather than directly joined.
+The source was `internal_share` at `10.143.0.103`. Ground-truth deployment configuration defined a service named `put`, running as `root`, with script path `/usr/bin/put`. Linux audit independently recorded the `put` unit lifecycle under systemd. The dataset did not provide a Windows Process GUID, Logon ID, or stable Linux process-to-flow identifier, so exact process-to-packet linkage is inferred from host, time, protocol grammar, and configuration rather than directly joined.
 
 ### Data collection and staging
 
@@ -52,7 +52,7 @@ Thirty-one files met all completion criteria:
 
 ### Data scope
 
-Confirmed synthetic data included billing invoices, customer-record spreadsheets, payroll/management spreadsheets, and two business-report documents. Formal owners, enterprise sensitivity labels, retention rules, and real business impact were not available.
+Confirmed synthetic data included billing invoices, customer-record spreadsheets, payroll/management spreadsheets, and two business-report documents. Formal owners, enterprise sensitivity labels, retention rules, and real business impact were not available. Receiver-side hash equality confirms technical data loss, but does not by itself establish a Critical business severity.
 
 ### Baseline and anomaly context
 

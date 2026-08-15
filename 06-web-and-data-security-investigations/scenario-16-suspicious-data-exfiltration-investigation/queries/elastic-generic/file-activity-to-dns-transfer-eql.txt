@@ -1,0 +1,5 @@
+sequence by host.id with maxspan=30m
+  [file where event.type in ("access", "creation", "change") and
+    file.path != null]
+  [network where destination.port == 53 and network.transport == "udp" and
+    dns.question.name regex~ ".*3x[67]-\\.\\d+-\\..*"]

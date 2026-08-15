@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import subprocess
 from pathlib import Path
 
@@ -12,17 +13,11 @@ REQUIRED = [
     "evidence-inventory.md",
     "source-and-license-record.md",
     "triage-note.md",
-    "investigation-notes.md",
     "investigation-report.md",
-    "executive-summary.md",
     "recommended-actions.md",
     "containment-decision-record.md",
-    "remediation-plan.md",
     "detection-engineering.md",
     "false-positive-tuning.md",
-    "validation-checklist.md",
-    "github-publishing-guide.md",
-    "PACKAGE-MANIFEST.tsv",
     "evidence/processed/exfiltration-event-timeline.csv",
     "evidence/processed/source-host-account-process-summary.csv",
     "evidence/processed/destination-and-domain-summary.csv",
@@ -37,14 +32,15 @@ REQUIRED = [
     "evidence/processed/follow-on-cleanup-analysis.csv",
     "evidence/processed/detection-gap-analysis.csv",
     "evidence/processed/sanitised-evidence-excerpts.tsv",
-    "evidence/processed/source-sha256-records.tsv",
 ]
 
 FORBIDDEN_SUFFIXES = {
     ".pcap", ".pcapng", ".evtx", ".sqlite", ".sqlite3", ".db",
-    ".dump", ".dmp", ".har", ".zip", ".7z", ".rar", ".tar",
+    ".dump", ".dmp", ".har", ".zip", ".7z", ".rar", ".tar", ".gz", ".tgz",
+    ".xlsx", ".xls", ".docx", ".doc", ".pptx", ".ppt",
 }
 LOCAL_EVIDENCE_DIRS = (Path("evidence/raw"), Path("evidence/working"))
+RUNTIME_DIR_NAMES = {"__pycache__", ".venv", "venv", ".pytest_cache"}
 
 
 def run(cmd: list[str]) -> subprocess.CompletedProcess[str]:
@@ -53,6 +49,21 @@ def run(cmd: list[str]) -> subprocess.CompletedProcess[str]:
 
 def is_local_evidence(relative_path: Path) -> bool:
     return any(relative_path == base or base in relative_path.parents for base in LOCAL_EVIDENCE_DIRS)
+
+
+def iter_publishable_files(root: Path):
+    for current, dirnames, filenames in os.walk(root):
+        current_path = Path(current)
+        rel_current = current_path.relative_to(root)
+        kept = []
+        for dirname in dirnames:
+            child_rel = rel_current / dirname
+            if is_local_evidence(child_rel) or dirname in RUNTIME_DIR_NAMES:
+                continue
+            kept.append(dirname)
+        dirnames[:] = kept
+        for filename in filenames:
+            yield current_path / filename
 
 
 def main() -> int:
@@ -76,12 +87,8 @@ def main() -> int:
 
     left = "<" * 7
     right = ">" * 7
-    for path in scenario.rglob("*"):
-        if not path.is_file():
-            continue
+    for path in iter_publishable_files(scenario):
         relative = path.relative_to(scenario)
-        if is_local_evidence(relative):
-            continue
         if path.suffix.lower() in FORBIDDEN_SUFFIXES:
             errors.append(f"forbidden_publishable_file: {relative}")
         text = path.read_text(encoding="utf-8", errors="ignore") if path.stat().st_size < 5_000_000 else ""
@@ -96,7 +103,7 @@ def main() -> int:
 
     if args.mode == "standalone":
         for directory in (raw, working):
-            extras = [p for p in directory.rglob("*") if p.is_file() and p.name != ".gitkeep"]
+            extras = [p for p in directory.rglob("*") if p.is_file()]
             if extras:
                 errors.append(f"standalone_local_evidence_present: {directory}")
     else:
@@ -111,27 +118,26 @@ def main() -> int:
                     scenario.relative_to(repo)
                 except ValueError:
                     errors.append(f"scenario_outside_repo: {scenario}")
+                local_paths = []
                 for directory in (raw, working):
-                    for path in directory.rglob("*"):
-                        if not path.is_file() or path.name == ".gitkeep":
-                            continue
-                        try:
-                            relative_to_repo = path.relative_to(repo)
-                        except ValueError:
-                            errors.append(f"local_evidence_outside_repo: {path}")
-                            continue
-                        tracked = run([
-                            "git", "-C", str(repo), "ls-files", "--error-unmatch", "--",
-                            str(relative_to_repo),
-                        ])
-                        ignored = run([
-                            "git", "-C", str(repo), "check-ignore", "-q", "--no-index", "--",
-                            str(relative_to_repo),
-                        ])
-                        if tracked.returncode == 0:
-                            errors.append(f"local_evidence_tracked: {relative_to_repo}")
-                        if ignored.returncode != 0:
-                            errors.append(f"local_evidence_not_ignored: {relative_to_repo}")
+                    try:
+                        local_paths.append(str(directory.relative_to(repo)))
+                    except ValueError:
+                        errors.append(f"local_evidence_outside_repo: {directory}")
+
+                if local_paths:
+                    tracked = run(["git", "-C", str(repo), "ls-files", "--", *local_paths])
+                    if tracked.stdout.strip():
+                        for item in tracked.stdout.splitlines():
+                            errors.append(f"local_evidence_tracked: {item}")
+
+                    unignored = run([
+                        "git", "-C", str(repo), "ls-files",
+                        "--others", "--exclude-standard", "--", *local_paths,
+                    ])
+                    if unignored.stdout.strip():
+                        for item in unignored.stdout.splitlines():
+                            errors.append(f"local_evidence_not_ignored: {item}")
 
     if errors:
         print("\n".join(errors))

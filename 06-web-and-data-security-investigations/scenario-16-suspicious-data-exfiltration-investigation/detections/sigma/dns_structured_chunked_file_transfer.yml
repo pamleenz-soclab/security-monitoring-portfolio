@@ -1,7 +1,7 @@
-title: Structured Chunked File Transfer in DNS Query Name
+title: Scenario-Specific Structured DNS Transfer Grammar
 id: 2f3c33b1-4172-4a79-9b46-e4e4b831ce60
 status: experimental
-description: Detects DNS queries containing a transfer marker, numeric chunk index, encoded labels, and a filename-like component.
+description: Detects the scenario-specific 3x6/3x7 DNS transfer grammar with a numeric chunk index, long query name, and filename-like component. A match indicates high-confidence suspicious transfer activity but does not prove receiver reconstruction or completed exfiltration.
 author: Pam Lee SOC Portfolio
 logsource:
   category: dns_query
@@ -22,7 +22,7 @@ detection:
   condition: selection_marker and selection_filetype and selection_long
 falsepositives:
   - Approved security exercises using an identical protocol grammar
-level: critical
+level: high
 tags:
   - attack.exfiltration
   - attack.t1048.003

@@ -2,7 +2,7 @@
 
 ## Decision
 
-Immediately isolate `internal_share`, block `email-19.kennedy-mendoza.info` and `192.168.230.122`, restrict DNS egress to approved resolvers, and disable the unauthorised `put` service after volatile and on-disk evidence is preserved.
+Contain `internal_share` promptly using host isolation or equivalent DNS/egress controls appropriate to business criticality; block `email-19.kennedy-mendoza.info` and `192.168.230.122`; restrict DNS egress to approved resolvers; and preserve then disable the suspicious `put` service. In the lab ground truth this service implements the exfiltration mechanism; production authorization would still need to be verified.
 
 ## Rationale
 
@@ -16,7 +16,7 @@ Immediately isolate `internal_share`, block `email-19.kennedy-mendoza.info` and 
 
 - **Monitor only:** rejected because exfiltration was already confirmed.
 - **Block only the domain:** insufficient because the mechanism can rotate domains or use direct authoritative DNS infrastructure.
-- **Delete the script immediately:** rejected before evidence preservation because it could destroy forensic context.
+- **Delete the service/script immediately:** rejected before evidence preservation because it could destroy forensic context.
 - **Reimage without collection:** rejected because it would lose process, filesystem, and persistence evidence.
 
 ## Evidence-preservation prerequisite

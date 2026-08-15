@@ -1,9 +1,8 @@
 index=endpoint sourcetype=*file*
 (action=created OR action=renamed OR action=modified OR action=read)
-(file_path="*/tmp/*" OR file_path="*\\Temp\\*" OR file_name="*.zip" OR file_name="*.7z" OR file_name="*.gz")
 | eval host_key=coalesce(dest, host, device_name)
 | rename _time as file_time
-| table host_key file_time user file_path file_name file_size process_name process_id
+| table host_key file_time action user file_path file_name file_size process_name process_id
 | join type=inner host_key
     [ search index=dns earliest=-7d
       | eval query=lower(coalesce(query, query_name, dns_query))

@@ -1,3 +1,4 @@
+// Companion high-rate analytic; this exact low-and-slow dataset is not expected to meet the 200 queries/5m threshold.
 DnsEvents
 | where TimeGenerated > ago(24h)
 | extend Query=tostring(QueryName), QueryLength=strlen(tostring(QueryName))

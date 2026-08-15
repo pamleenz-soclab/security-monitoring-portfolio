@@ -1,0 +1,20 @@
+// Field-mapping example. DeviceFileEvents may not expose file-read events in every tenant.
+// Use this only when the selected file-event schema represents access/collection activity.
+let CollectionWindow = 30m;
+let FileActivity = DeviceFileEvents
+| where Timestamp > ago(7d)
+| where ActionType in ("FileCreated", "FileRenamed", "FileModified", "FileRead")
+| project DeviceId, DeviceName, FileTime=Timestamp, ActionType, FolderPath, FileName,
+          FileSize, InitiatingProcessFileName, InitiatingProcessCommandLine;
+let DnsTransfer = DeviceNetworkEvents
+| where Timestamp > ago(7d)
+| where RemotePort == 53
+| where RemoteUrl matches regex @"(^|\.)3x[67]-\.\d+-\."
+| project DeviceId, DnsTime=Timestamp, RemoteUrl, RemoteIP,
+          DnsProcess=InitiatingProcessFileName, DnsProcessId=InitiatingProcessId;
+FileActivity
+| join kind=inner DnsTransfer on DeviceId
+| where DnsTime between (FileTime .. FileTime + CollectionWindow)
+| project DeviceName, FileTime, DnsTime, ActionType, FolderPath, FileName,
+          FileSize, InitiatingProcessFileName, InitiatingProcessCommandLine,
+          RemoteUrl, RemoteIP, DnsProcess, DnsProcessId

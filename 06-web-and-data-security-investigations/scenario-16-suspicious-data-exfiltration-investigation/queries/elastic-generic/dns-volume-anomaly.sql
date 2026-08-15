@@ -1,4 +1,4 @@
--- Adapt names to the DNS/NetFlow schema. request_bytes must be client-to-server only.
+-- Adapt names to the DNS/NetFlow schema. request_bytes must be client-to-resolver only; do not substitute bidirectional counters.
 WITH hourly AS (
   SELECT
     source_ip,

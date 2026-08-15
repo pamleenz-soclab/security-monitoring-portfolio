@@ -6,7 +6,7 @@ A file server generated sustained, highly structured DNS queries to a dedicated 
 
 ## Initial severity
 
-**High**, escalated to **Critical** after receiver-side hash verification.
+**High.** Receiver-side hash verification confirms data loss, but the dataset does not provide real enterprise sensitivity labels, owners, or business-criticality context needed to justify a Critical business severity.
 
 ## Entities
 
@@ -33,4 +33,4 @@ A file server generated sustained, highly structured DNS queries to a dedicated 
 - Overall incident: **Confirmed exfiltration**
 - Completed object scope: **31 files / 2,042,802 bytes**
 - Additional object: **Attempted exfiltration**
-- Immediate response: isolate the source host, block the domain and receiver infrastructure, preserve volatile and disk evidence, and rotate privileged credentials associated with the host.
+- Immediate response: isolate the source host, block the domain and receiver infrastructure, preserve volatile and disk evidence, and review privileged/service credentials exposed to or used by the host and rotate them when compromise or exposure is established.

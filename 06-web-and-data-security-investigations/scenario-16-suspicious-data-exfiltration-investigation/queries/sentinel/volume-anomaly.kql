@@ -1,8 +1,10 @@
+// Map RequestBytes to client-to-resolver request bytes. Do not substitute bidirectional counters without validation.
 let BaselineDays = 14d;
 let Bin = 1h;
 let Hourly = DnsEvents
 | where TimeGenerated > ago(BaselineDays)
-| extend RequestBytes=coalesce(tolong(RequestBytes), tolong(NetworkBytes), 0L)
+| extend RequestBytes=tolong(RequestBytes)
+| where isnotnull(RequestBytes)
 | summarize Requests=count(), Bytes=sum(RequestBytes), UniqueQueries=dcount(QueryName)
   by SrcIpAddr, bin(TimeGenerated, Bin);
 let Baseline = Hourly

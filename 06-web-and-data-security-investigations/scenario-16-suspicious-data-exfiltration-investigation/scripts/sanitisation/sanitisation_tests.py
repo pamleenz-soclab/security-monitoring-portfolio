@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import re
 from pathlib import Path
 
@@ -17,13 +18,30 @@ PATTERNS = {
 }
 FORBIDDEN = {
     ".pcap", ".pcapng", ".evtx", ".sqlite", ".sqlite3", ".db",
-    ".har", ".dmp", ".dump", ".zip", ".7z", ".rar", ".tar",
+    ".har", ".dmp", ".dump", ".zip", ".7z", ".rar", ".tar", ".gz", ".tgz",
+    ".xlsx", ".xls", ".docx", ".doc", ".pptx", ".ppt",
 }
 LOCAL_EVIDENCE_DIRS = (Path("evidence/raw"), Path("evidence/working"))
+RUNTIME_DIR_NAMES = {"__pycache__", ".venv", "venv", ".pytest_cache"}
 
 
 def is_local_evidence(relative_path: Path) -> bool:
     return any(relative_path == base or base in relative_path.parents for base in LOCAL_EVIDENCE_DIRS)
+
+
+def iter_publishable_files(root: Path):
+    for current, dirnames, filenames in os.walk(root):
+        current_path = Path(current)
+        rel_current = current_path.relative_to(root)
+        kept = []
+        for dirname in dirnames:
+            child_rel = rel_current / dirname
+            if is_local_evidence(child_rel) or dirname in RUNTIME_DIR_NAMES:
+                continue
+            kept.append(dirname)
+        dirnames[:] = kept
+        for filename in filenames:
+            yield current_path / filename
 
 
 def main() -> int:
@@ -33,12 +51,8 @@ def main() -> int:
     root = Path(args.scenario).expanduser().resolve()
     errors: list[str] = []
 
-    for path in root.rglob("*"):
-        if not path.is_file():
-            continue
+    for path in iter_publishable_files(root):
         relative = path.relative_to(root)
-        if is_local_evidence(relative):
-            continue
         if path.suffix.lower() in FORBIDDEN:
             errors.append(f"forbidden publishable extension: {relative}")
         if path.stat().st_size > 10_000_000:
